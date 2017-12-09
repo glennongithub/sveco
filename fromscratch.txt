@@ -1,0 +1,48 @@
+As in https://laravel.com/docs/5.5/homestead
+To create machine for project 
+
+In folder you want to use for project
+composer require laravel/homestead --dev
+vendor\\bin\\homestead make    (mac/linux php vendor/bin/homestead make)
+
+Edit Homestead.yml acording to your wiches
+in our case
+
+ip: 192.168.19.14
+memory: 2048
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: 'C:\Users\jd\Dev\singlehomestead\sveco.dev'
+        to: /home/vagrant/code
+        type: "nfs"
+sites:
+    -
+        map: sveco.dev
+        to: /home/vagrant/code/{{projectname}}/public
+        type: symfony4
+databases:
+    - sveco
+name: sveco-dev
+hostname: sveco-dev
+
+
+make sure hoste file is updated acoringly
+
+then vagrant up
+
+the ssh into your newly created machine
+vagrant ssh sveco-dev   (or whatever name you chose in obove config)
+
+then 
+cd code   (or whatever path used in above config)
+
+then
+composer create-project symfony/skeleton sveco  (or any proj-name)
+
+    
+

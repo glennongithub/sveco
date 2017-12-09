@@ -1,0 +1,22 @@
+ip: 192.168.19.14
+memory: 2048
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: 'C:\Users\jd\Dev\singlehomestead\sveco.dev'
+        to: /home/vagrant/code
+        type: "nfs"
+sites:
+    -
+        map: sveco.dev
+        to: /home/vagrant/code/sveco/public
+        type: symfony4
+databases:
+    - sveco
+name: sveco-dev
+hostname: sveco-dev
+    
