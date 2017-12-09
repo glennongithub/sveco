@@ -44,5 +44,12 @@ cd code   (or whatever path used in above config)
 then
 composer create-project symfony/skeleton sveco  (or any proj-name)
 
+then go to https://sveco.dev/index.php
+
+installera annotations och twig
+
+composer require annotations
+composer require twig
+
     
 
