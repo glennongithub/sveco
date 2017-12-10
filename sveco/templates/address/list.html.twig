@@ -1,0 +1,10 @@
+{# templates/address/list.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}
+Your lucky number is {{ number }}
+{% endblock %}
+{% block body %}
+    <h1>Your lucky number is {{ number }} {{ 'Testing2'|trans }}</h1>
+    {% trans %} Testing {% endtrans %}
+{% endblock %}
+{% block javascripts %}{% endblock %}
