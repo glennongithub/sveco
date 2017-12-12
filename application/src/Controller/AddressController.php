@@ -6,11 +6,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Translation\Translator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AddressController extends Controller
 {
     /**
     * @Route("/address/list", name="address_list")
+     * @Security("has_role('ROLE_USER')")
      * @param Request $request
      * @return Response
     */

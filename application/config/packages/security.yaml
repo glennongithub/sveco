@@ -37,8 +37,9 @@ security:
             # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     access_control:
+            # most auth requirements are sett as annotation but some are better to keep here
             # require ROLE_ADMIN for /admin*
             - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/failed_login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/createuser, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/address/list, roles: ROLE_USER }
+

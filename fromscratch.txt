@@ -46,10 +46,15 @@ composer create-project symfony/skeleton application  (use application as projec
 
 then go to https://sveco.dev/index.php
 
-installera annotations och twig
+installera annotations och twig och security
 
+cd /home/vagrant/code/application
 composer require annotations
 composer require twig
+
+
+installera ngt som behövs för security annotations
+composer require symfony/expression-language
 
     
 
