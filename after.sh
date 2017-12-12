@@ -4,7 +4,7 @@
 # add any commands you wish to this file and they will
 # be run after the Homestead machine is provisioned.
 
-cd /vagrant/sveco
+cd /home/vagrant/code/sveco
 # make sure everything is installed
 composer install
 
