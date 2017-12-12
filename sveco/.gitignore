@@ -5,3 +5,8 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+
+# ignore vagrant metadata, and local config
+/.vagrant
+/vagrant.local.yml
