@@ -12,7 +12,7 @@ folders:
         type: "nfs"
 sites:
     -
-        map: sveco.dev
+        map: sveco.test
         to: /home/vagrant/code/application/public
         type: symfony4
 databases:
