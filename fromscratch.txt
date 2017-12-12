@@ -56,5 +56,8 @@ composer require twig
 installera ngt som behövs för security annotations
 composer require symfony/expression-language
 
+
+composer require asset
+
     
 
