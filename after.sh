@@ -7,3 +7,7 @@
 cd /vagrant/sveco
 # make sure everything is installed
 composer install
+
+#create database
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
