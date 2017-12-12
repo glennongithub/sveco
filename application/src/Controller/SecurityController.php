@@ -4,6 +4,7 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
@@ -32,33 +33,25 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/login2", name="login2")
-     */
-    public function login2(Request $request, AuthenticationUtils $authUtils)
-    {
-        // get the login error if there is one
-        $error = $authUtils->getLastAuthenticationError();
-
-        return $this->render('security/login.html.twig', array(
-            'last_username' => 'tho',
-            'error'         => $error,
-        ));
-    }
-
-    /**
      * @Route("/logout", name="logout")
      */
     public function logout(Request $request, AuthenticationUtils $authUtils)
     {
-        echo "logging out!";
+
+        // if we need to do something on logut do it here.
+        // it will automagically be done by telling sexurity.yml to do it by this route:
+        // but this route need to exist for it to work .. even if we do not do anything in thes controller really
+        return new Response("loggin out!");
     }
+
 
     /**
      * @Route("/logout/success", name="logout_success")
      */
     public function logout_success(Request $request, AuthenticationUtils $authUtils)
     {
-        echo "loged out!";
+        //TODO create nicer view .. or redir to something meaningfull .. like login ..
+        return new Response("loged out!");
     }
 
 
@@ -68,12 +61,17 @@ class SecurityController extends Controller
      */
     public function failed_login(Request $request, AuthenticationUtils $authUtils)
     {
-        echo "Failed!";
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
+        return new Response("Failed! ". $error->getMessage());
+
+        // When we rebuild this to use a real twig temple .. we just pass $error to template an echo out what we want from there
     }
 
 
     /**
      * @param UserPasswordEncoderInterface $encoder
+     * @return Response
      * @Route("/createuser", name="create_user")
      */
     public function register(UserPasswordEncoderInterface $encoder)
@@ -92,6 +90,8 @@ class SecurityController extends Controller
 
         $em->persist($user);
         $em->flush();
+
+        return new Response("user created!");
     }
 
 }
