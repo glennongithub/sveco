@@ -10,7 +10,7 @@ use Symfony\Component\Translation\Translator;
 class AddressController extends Controller
 {
     /**
-    * @Route("/address/list")
+    * @Route("/address/list", name="address_list")
      * @param Request $request
      * @return Response
     */

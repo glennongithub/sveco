@@ -7,21 +7,22 @@ security:
         user_db_provider:
             entity:
                 class: App\Entity\User
-                property: username
+                # property: username  # comment this to use loadUserByUsername() method on UserRepository will be called.
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: ^/
+            # pattern: ^/
             anonymous: ~
             provider: user_db_provider
             form_login:
                 login_path: login
-                check_path: login
-                target_path_parameter: address/list
+                check_path: login2
+                target_path_parameter: address_list
                 failure_path_parameter: failed_login
+                require_previous_session: false
             logout:
                 path: /logout
                 target: /logout/success
@@ -37,6 +38,7 @@ security:
 
     access_control:
             # require ROLE_ADMIN for /admin*
-            - { path: ^/admin, roles: ROLE_ADMIN }
             - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/, roles: ROLE_ADMIN }
+            - { path: ^/login2, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/createuser, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/address/list, roles: IS_AUTHENTICATED_ANONYMOUSLY }
