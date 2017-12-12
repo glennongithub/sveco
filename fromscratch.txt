@@ -23,7 +23,7 @@ folders:
 sites:
     -
         map: sveco.dev
-        to: /home/vagrant/code/{{projectname}}/public
+        to: /home/vagrant/code/application/public
         type: symfony4
 databases:
     - sveco
@@ -42,7 +42,7 @@ then
 cd code   (or whatever path used in above config)
 
 then
-composer create-project symfony/skeleton sveco  (or any proj-name)
+composer create-project symfony/skeleton application  (use application as project-name to make it easier to use same code everywhere)
 
 then go to https://sveco.dev/index.php
 

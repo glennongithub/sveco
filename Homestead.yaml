@@ -13,7 +13,7 @@ folders:
 sites:
     -
         map: sveco.dev
-        to: /home/vagrant/code/sveco/public
+        to: /home/vagrant/code/application/public
         type: symfony4
 databases:
     - sveco
