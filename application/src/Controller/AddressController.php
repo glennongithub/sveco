@@ -10,22 +10,5 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AddressController extends Controller
 {
-    /**
-    * @Route("/address/list", name="address_list")
-     * @Security("has_role('ROLE_USER')")
-     * @param Request $request
-     * @return Response
-    */
-    public function number(Request $request)
-    {
-        $request->setLocale('sv');
-        $number = mt_rand(0, 100);
-        //$translator = new Translator('en');
-        //$translated = $translator->trans('Testing');
-        return $this->render('address/list.html.twig', array(
-            'number' => $number,
-            //'text' => $translated
-        ));
-
-    }
+    // see FirstControlller for template-code on how we can buld things here
 }

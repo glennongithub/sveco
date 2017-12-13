@@ -1,11 +1,13 @@
 {# templates/address/list.html.twig #}
 {% extends 'base.html.twig' %}
-{% set locale_u = 'sv' %}
+{% set _locale = 'sv' %}
 {% block title %}
 Your lucky number is {{ number }}
 {% endblock %}
 {% block body %}
     <h1>Your lucky number is {{ number }} {{ 'Testing2'|trans }}</h1>
     {% trans %} Testing {% endtrans %}
+
+    <a href="{{ url('test') }}">Testsida</a>
 {% endblock %}
 {% block javascripts %}{% endblock %}
