@@ -38,7 +38,7 @@ if [ ! -f /home/vagrant/code/webapp ]; then
     # npm update > /dev/null
 
     # clean out old node_modules dirs .-- this will have to be updated/installed from npm via host
-    sudo rm -fr /home/vagrant/code/webapp/node_modules
+    #sudo rm -fr /home/vagrant/code/webapp/node_modules
 
     # aaand symlink it
     ln -sf /home/vagrant/code/webapp/www/ /home/vagrant/code/application/public/app
