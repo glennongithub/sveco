@@ -1,6 +1,6 @@
 {# templates/address/list.html.twig #}
 {% extends 'base.html.twig' %}
-{% set locale_u = 'sv' %}
+{% set _locale = 'sv' %}
 {% block title %}
 Your lucky number is {{ number }}
 {% endblock %}
@@ -202,5 +202,6 @@ Your lucky number is {{ number }}
             </section>
         </main>
     </div>
+
 {% endblock %}
 {% block javascripts %}{% endblock %}

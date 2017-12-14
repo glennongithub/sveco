@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Test
+{% endblock %}
+{% block body %}
+    <h1> {{ 'Testing2'|trans }}</h1>
+    {% trans %} Testing {% endtrans %}
+{% endblock %}
+{% block javascripts %}{% endblock %}

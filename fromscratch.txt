@@ -1,4 +1,4 @@
-As in https://laravel.com/docs/5.5/homestead
+﻿As in https://laravel.com/docs/5.5/homestead
 To create machine for project 
 
 In folder you want to use for project
@@ -58,6 +58,30 @@ composer require symfony/expression-language
 
 
 composer require asset
+
+
+
+exit to your host machine
+install node.js
+make sure you have ionic installed globally
+npm install -g cordova ionic
+
+then build an ned ionic app name dwebapp
+ionic start webapp tabs  (tabs or whatever template you like to use)
+answer no to question if you want to integrate cordova to target ios and andriod   (only yes if you really will build an app)
+cd into that new dir and remove .git folder
+
+
+vagrant into machine again and
+now symlink that www folder of newly created ionic app to public
+ln -s /home/vagrant/code/webapp/www/ /home/vagrant/code/application/public/app
+
+also make sure to add that above line to after.sh so it's done when provisioned
+
+Then exit to host again .
+cd into webapp folder
+run ionic server
+ if works .. then commit and push to repo .. now someone else should ba able to get it going by a vagrant up .. and follow readme
 
     
 
