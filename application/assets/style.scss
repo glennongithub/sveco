@@ -1,5 +1,1053 @@
-body {
-    h1 {
-        text-align: center;
+/************************************************
+
+Stylesheet: Main Stylesheet
+
+*************************************************/
+
+/*********************
+GENERAL STYLES
+*********************/
+
+/*********************
+LINK STYLES
+*********************/
+a, a:visited {
+
+    // Mobile tap color
+    &:link {
+        //Highlight links on iOS, Similar to :hover for mobile devices.
+        -webkit-tap-highlight-color : rgba( 0, 0, 0, 0.3 );
+    }
+}
+
+
+/*********************
+H1, H2, H3, H4, H5 P STYLES
+*********************/
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+
+    // Removing text decoration from all headline links
+    a {
+        text-decoration: none;
+    }
+}
+
+h1, .h1 {
+
+}
+
+h2, .h2 {
+
+}
+
+h3, .h3 {
+
+}
+
+h4, .h4 {
+
+}
+
+h5, .h5 {
+
+}
+
+/*********************
+HEADER STYLES
+*********************/
+.header {
+
+}
+
+/*********************
+NAVIGATION STYLES
+*********************/
+.top-bar {
+    background-color: #363d46;
+    .title-area {
+        z-index: 1;
+    }
+    .top-bar-left {
+        ul {
+            background: none;
+            li {
+                a {
+                    color: #fff;
+                    text-transform: uppercase;
+                    font-weight: 300;
+                    font-size: 18px;
+                    letter-spacing: 1px;
+                }
+            }
+        }
+    }
+    .top-bar-right {
+        ul {
+            background: none;
+            li {
+                a {
+                    color: #808FA2;
+                    text-transform: uppercase;
+                    font-weight: 400;
+                    font-size: 14px;
+                    letter-spacing: 1px;
+                    &:hover {
+                        color: #fff;
+                    }
+                }
+                &.active {
+                    a {
+                        font-weight: 700;
+                        color: #808FA2;
+                    }
+                }
+            }
+        }
+    }
+    .hamburger {
+        width: auto;
+        position: absolute;
+        right: 16px;
+        top: 16px;
+    }
+}
+
+
+/*********************
+FRONT PAGE STYLE
+*********************/
+
+body.home {
+    background: #f3f1f1;
+    #content {
+        padding-top: 20px;
+        padding-bottom: 40px;
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+            padding-top: 20px;
+        }
+        main {
+            #message {
+                padding: 5px 15px;
+                margin-bottom: 10px;
+                border-radius: 3px;
+                background-color: #d9edf7;
+                border: 1px solid #bcdff1;
+                color: #31708f;
+                font-size: 12px;
+                p {
+                    margin-bottom: 0;
+                }
+            }
+            form#acf-form {
+                background: #fff;
+                border-radius: 3px;
+                padding: 20px;
+                div.acf-fields {
+                    width: 100%;
+                    float: left;
+                    #acf-added {
+                        display: none;
+                    }
+                    #acf-address {
+                        width: 100%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        padding: 5px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        .acf-label {
+                            display: none;
+                        }
+                        .acf-input {
+                            position: relative;
+                            overflow: hidden;
+                            .acf-google-map {
+                                border: 0px;
+                                .canvas {
+                                    display: none;
+
+                                }
+                                .title {
+                                    border-bottom: 0px;
+                                    input {
+                                        border:1px solid #DFDFDF;
+                                        height: 39px;
+                                        border-radius: 3px;
+                                        &:focus {
+                                            border-color:#7872ff;
+                                        }
+                                    }
+                                    .actions {
+                                        a.-search {
+                                            display: none !important;
+                                        }
+                                        a.-location {
+                                            display: none !important;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #acf-type {
+                        width: 100%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        padding: 5px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        .acf-label {
+                            float: left;
+                            border-right-width: 0;
+                            border-radius: 3px 0 0 3px;
+                            background: #F4F4F4;
+                            border: #DFDFDF solid 1px;
+                            margin: 0;
+                            height: 39px;
+                            min-width: 90px;
+                            padding: 0 10px;
+                            border-right: 0px;
+                            label {
+                                margin: 0;
+                                font-size: 12px;
+                                line-height: 39px;
+                            }
+                        }
+                        .acf-input {
+                            position: relative;
+                            overflow: hidden;
+                            select {
+                                border-color: #DFDFDF;
+                                width: 100%;
+                                padding: 3px 30px 3px 15px;
+                                resize: none;
+                                margin: 0;
+                                -webkit-box-sizing: border-box;
+                                -moz-box-sizing: border-box;
+                                box-sizing: border-box;
+                                font-size: 14px;
+                                line-height: 1.4;
+                                border-radius: 0 3px 3px 0 !important;
+                                &:focus {
+                                    border-color:#7872ff;
+                                }
+                            }
+                        }
+                    }
+                    #acf-unit {
+                        width: 98%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        margin: 1%;
+                        padding: 10px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        background: #F4F4F4;
+                        border: #DFDFDF solid 1px;
+                        border-radius: 3px;
+                        .acf-label {
+                            display: none;
+                        }
+                        .acf-input {
+                            .acf-repeater {
+                                table {
+                                    border:0px;
+                                    thead {
+                                        display: none;
+                                    }
+                                    tbody {
+                                        tr {
+                                            td.order {
+                                                display: none;
+                                            }
+                                            td.acf-fields {
+                                                border: 0px;
+                                                div.acf-field {
+                                                    padding: 0px;
+                                                    div.acf-input {
+                                                        div.acf-input-wrap {
+                                                            input {
+                                                                background: #fff;
+                                                                border: #DFDFDF solid 1px;
+                                                                box-shadow: none;
+                                                                height: 39px;
+                                                                padding: 3px 15px;
+
+                                                                &:focus {
+                                                                    border-color:#7872ff;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            td.remove {
+                                                background: #F4F4F4;
+                                                border: #DFDFDF solid 1px;
+                                                margin: 0;
+                                                height: 30px;
+                                                min-width: 40px;
+                                                padding: 0 10px;
+                                                border-left: 0px;
+                                                a.-plus {
+                                                    display: none;
+                                                }
+                                                a.-minus {
+                                                    display: block !important;
+                                                    top: 40%;
+                                                    width: 24px;
+                                                    height: 24px;
+                                                    line-height: 24px;
+                                                    font-size: 14px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .acf-actions {
+                                    li {
+                                        width: 100%;
+                                        margin-left: 0;
+                                        a {
+                                            width: 100%;
+                                            border-radius: 3px;
+                                            background: #fff;
+                                            color: #7872ff;
+                                            margin: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #acf-territory {
+                        width: 100%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        padding: 5px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        border-top: 0px;
+                        .acf-label {
+                            float: left;
+                            border-right-width: 0;
+                            border-radius: 3px 0 0 3px;
+                            background: #F4F4F4;
+                            border: #DFDFDF solid 1px;
+                            margin: 0;
+                            height: 39px;
+                            min-width: 90px;
+                            padding: 0 10px;
+                            border-right: 0px;
+                            label {
+                                margin: 0;
+                                font-size: 12px;
+                                line-height: 39px;
+                            }
+                        }
+                        .acf-input {
+                            position: relative;
+                            overflow: hidden;
+                            input {
+                                border-color: #DFDFDF;
+                                width: 100%;
+                                padding: 3px 30px 3px 15px;
+                                resize: none;
+                                margin: 0;
+                                -webkit-box-sizing: border-box;
+                                -moz-box-sizing: border-box;
+                                box-sizing: border-box;
+                                font-size: 14px;
+                                line-height: 1.4;
+                                height: 39px;
+                                border-radius: 0 3px 3px 0 !important;
+                                box-shadow: none;
+                                &:focus {
+                                    border-color:#7872ff;
+                                }
+                            }
+                        }
+                    }
+                    #acf-status {
+                        width: 100%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        padding: 5px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        .acf-label {
+                            float: left;
+                            border-right-width: 0;
+                            border-radius: 3px 0 0 3px;
+                            background: #F4F4F4;
+                            border: #DFDFDF solid 1px;
+                            margin: 0;
+                            height: 39px;
+                            min-width: 90px;
+                            padding: 0 10px;
+                            border-right: 0px;
+                            label {
+                                margin: 0;
+                                font-size: 12px;
+                                line-height: 39px;
+                            }
+                        }
+                        .acf-input {
+                            position: relative;
+                            overflow: hidden;
+                            select {
+                                border-color: #DFDFDF;
+                                width: 100%;
+                                padding: 3px 30px 3px 15px;
+                                resize: none;
+                                margin: 0;
+                                -webkit-box-sizing: border-box;
+                                -moz-box-sizing: border-box;
+                                box-sizing: border-box;
+                                font-size: 14px;
+                                line-height: 1.4;
+                                border-radius: 0 3px 3px 0 !important;
+                                &:focus {
+                                    border-color:#7872ff;
+                                }
+                            }
+                        }
+                    }
+                    #acf-language {
+                        width: 100%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        padding: 5px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        .acf-label {
+                            float: left;
+                            border-right-width: 0;
+                            border-radius: 3px 0 0 3px;
+                            background: #F4F4F4;
+                            border: #DFDFDF solid 1px;
+                            margin: 0;
+                            height: 39px;
+                            min-width: 90px;
+                            padding: 0 10px;
+                            border-right: 0px;
+                            label {
+                                margin: 0;
+                                font-size: 12px;
+                                line-height: 39px;
+                            }
+                        }
+                        .acf-input {
+                            position: relative;
+                            overflow: hidden;
+                            select {
+                                border-color: #DFDFDF;
+                                width: 100%;
+                                padding: 3px 30px 3px 15px;
+                                resize: none;
+                                margin: 0;
+                                -webkit-box-sizing: border-box;
+                                -moz-box-sizing: border-box;
+                                box-sizing: border-box;
+                                font-size: 14px;
+                                line-height: 1.4;
+                                border-radius: 0 3px 3px 0 !important;
+                                &:focus {
+                                    border-color:#7872ff;
+                                }
+                            }
+                        }
+                    }
+                    #acf-notes {
+                        width: 100%;
+                        float: left;
+                        clear: none;
+                        vertical-align: middle;
+                        padding: 5px;
+                        line-height: 34px;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-top: 0px;
+                        .acf-label {
+                            margin-top: 10px;
+                            margin-bottom: 0px;
+                            label {
+                                font-size: 12px;
+                            }
+                        }
+                        .acf-input {
+                            position: relative;
+                            overflow: hidden;
+                            textarea {
+                                box-shadow: none;
+                                border-color: #DFDFDF;
+                                width: 100%;
+                                padding: 3px 30px 3px 15px;
+                                resize: none;
+                                margin: 0;
+                                -webkit-box-sizing: border-box;
+                                -moz-box-sizing: border-box;
+                                box-sizing: border-box;
+                                font-size: 14px;
+                                line-height: 1.4;
+                                border-radius: 3px !important;
+                                &:focus {
+                                    border-color:#7872ff;
+                                }
+                            }
+                        }
+                    }
+                }
+                .acf-form-submit {
+                    input {
+                        width: 100%;
+                        background: #7872ff;
+                        text-transform: uppercase;
+                        border-radius: 3px;
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*********************
+LOCATONS PAGE STYLE
+*********************/
+body#location-list {
+    background: #f3f1f1;
+    #content {
+        padding-top: 20px;
+        padding-bottom: 40px;
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+            padding-top: 20px;
+        }
+        main {
+            section {
+                position: relative;
+                padding-top: 40px;
+                #entry-content-wrapper {
+                    background: #fff;
+                    padding: 20px;
+                    position: relative;
+                    height: 100%;
+                    padding-bottom: 40px;
+                    form {
+                        background: #fff;
+                        border-radius: 3px;
+                        padding: 20px;
+                        div.acf-fields {
+                            width: 100%;
+                            float: left;
+                            #acf-added {
+                                padding: 0;
+                                float: left;
+                                .acf-label {
+                                    display: none;
+                                }
+                            }
+                            #acf-address {
+                                width: 90%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                padding: 0px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                .acf-label {
+                                    display: none;
+                                }
+                                .acf-input {
+                                    position: relative;
+                                    overflow: hidden;
+                                    .acf-google-map {
+                                        border: 0px;
+                                        .canvas {
+                                            display: none;
+
+                                        }
+                                        .title {
+                                            border-bottom: 0px;
+                                            input {
+                                                border:1px solid #DFDFDF;
+                                                height: 39px;
+                                                border-radius: 3px;
+                                                &:focus {
+                                                    border-color:#7872ff;
+                                                }
+                                            }
+                                            .actions {
+                                                a.-search {
+                                                    display: none !important;
+                                                }
+                                                a.-location {
+                                                    display: none !important;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-type {
+                                width: 100%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                padding: 5px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                .acf-label {
+                                    float: left;
+                                    border-right-width: 0;
+                                    border-radius: 3px 0 0 3px;
+                                    background: #F4F4F4;
+                                    border: #DFDFDF solid 1px;
+                                    margin: 0;
+                                    height: 39px;
+                                    min-width: 90px;
+                                    padding: 0 10px;
+                                    border-right: 0px;
+                                    label {
+                                        margin: 0;
+                                        font-size: 12px;
+                                        line-height: 39px;
+                                    }
+                                }
+                                .acf-input {
+                                    position: relative;
+                                    overflow: hidden;
+                                    select {
+                                        border-color: #DFDFDF;
+                                        width: 100%;
+                                        padding: 3px 30px 3px 15px;
+                                        resize: none;
+                                        margin: 0;
+                                        -webkit-box-sizing: border-box;
+                                        -moz-box-sizing: border-box;
+                                        box-sizing: border-box;
+                                        font-size: 14px;
+                                        line-height: 1.4;
+                                        border-radius: 0 3px 3px 0 !important;
+                                        &:focus {
+                                            border-color:#7872ff;
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-unit {
+                                width: 98%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                margin: 1%;
+                                padding: 10px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                background: #F4F4F4;
+                                border: #DFDFDF solid 1px;
+                                border-radius: 3px;
+                                .acf-label {
+                                    display: none;
+                                }
+                                .acf-input {
+                                    .acf-repeater {
+                                        table {
+                                            border:0px;
+                                            thead {
+                                                display: none;
+                                            }
+                                            tbody {
+                                                tr {
+                                                    td.order {
+                                                        display: none;
+                                                    }
+                                                    td.acf-fields {
+                                                        border: 0px;
+                                                        div.acf-field {
+                                                            padding: 0px;
+                                                            div.acf-input {
+                                                                div.acf-input-wrap {
+                                                                    input {
+                                                                        background: #fff;
+                                                                        border: #DFDFDF solid 1px;
+                                                                        box-shadow: none;
+                                                                        height: 39px;
+                                                                        padding: 3px 15px;
+
+                                                                        &:focus {
+                                                                            border-color:#7872ff;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    td.remove {
+                                                        background: #F4F4F4;
+                                                        border: #DFDFDF solid 1px;
+                                                        margin: 0;
+                                                        height: 30px;
+                                                        min-width: 40px;
+                                                        padding: 0 10px;
+                                                        border-left: 0px;
+                                                        a.-plus {
+                                                            display: none;
+                                                        }
+                                                        a.-minus {
+                                                            display: block !important;
+                                                            top: 40%;
+                                                            width: 24px;
+                                                            height: 24px;
+                                                            line-height: 24px;
+                                                            font-size: 14px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        .acf-actions {
+                                            li {
+                                                width: 100%;
+                                                margin-left: 0;
+                                                a {
+                                                    width: 100%;
+                                                    border-radius: 3px;
+                                                    background: #fff;
+                                                    color: #7872ff;
+                                                    margin: 0;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-territory {
+                                width: 100%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                padding: 5px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                border-top: 0px;
+                                .acf-label {
+                                    float: left;
+                                    border-right-width: 0;
+                                    border-radius: 3px 0 0 3px;
+                                    background: #F4F4F4;
+                                    border: #DFDFDF solid 1px;
+                                    margin: 0;
+                                    height: 39px;
+                                    min-width: 90px;
+                                    padding: 0 10px;
+                                    border-right: 0px;
+                                    label {
+                                        margin: 0;
+                                        font-size: 12px;
+                                        line-height: 39px;
+                                    }
+                                }
+                                .acf-input {
+                                    position: relative;
+                                    overflow: hidden;
+                                    input {
+                                        border-color: #DFDFDF;
+                                        width: 100%;
+                                        padding: 3px 30px 3px 15px;
+                                        resize: none;
+                                        margin: 0;
+                                        -webkit-box-sizing: border-box;
+                                        -moz-box-sizing: border-box;
+                                        box-sizing: border-box;
+                                        font-size: 14px;
+                                        line-height: 1.4;
+                                        height: 39px;
+                                        border-radius: 0 3px 3px 0 !important;
+                                        box-shadow: none;
+                                        &:focus {
+                                            border-color:#7872ff;
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-status {
+                                width: 100%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                padding: 5px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                .acf-label {
+                                    float: left;
+                                    border-right-width: 0;
+                                    border-radius: 3px 0 0 3px;
+                                    background: #F4F4F4;
+                                    border: #DFDFDF solid 1px;
+                                    margin: 0;
+                                    height: 39px;
+                                    min-width: 90px;
+                                    padding: 0 10px;
+                                    border-right: 0px;
+                                    label {
+                                        margin: 0;
+                                        font-size: 12px;
+                                        line-height: 39px;
+                                    }
+                                }
+                                .acf-input {
+                                    position: relative;
+                                    overflow: hidden;
+                                    select {
+                                        border-color: #DFDFDF;
+                                        width: 100%;
+                                        padding: 3px 30px 3px 15px;
+                                        resize: none;
+                                        margin: 0;
+                                        -webkit-box-sizing: border-box;
+                                        -moz-box-sizing: border-box;
+                                        box-sizing: border-box;
+                                        font-size: 14px;
+                                        line-height: 1.4;
+                                        border-radius: 0 3px 3px 0 !important;
+                                        &:focus {
+                                            border-color:#7872ff;
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-language {
+                                width: 100%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                padding: 5px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                .acf-label {
+                                    float: left;
+                                    border-right-width: 0;
+                                    border-radius: 3px 0 0 3px;
+                                    background: #F4F4F4;
+                                    border: #DFDFDF solid 1px;
+                                    margin: 0;
+                                    height: 39px;
+                                    min-width: 90px;
+                                    padding: 0 10px;
+                                    border-right: 0px;
+                                    label {
+                                        margin: 0;
+                                        font-size: 12px;
+                                        line-height: 39px;
+                                    }
+                                }
+                                .acf-input {
+                                    position: relative;
+                                    overflow: hidden;
+                                    select {
+                                        border-color: #DFDFDF;
+                                        width: 100%;
+                                        padding: 3px 30px 3px 15px;
+                                        resize: none;
+                                        margin: 0;
+                                        -webkit-box-sizing: border-box;
+                                        -moz-box-sizing: border-box;
+                                        box-sizing: border-box;
+                                        font-size: 14px;
+                                        line-height: 1.4;
+                                        border-radius: 0 3px 3px 0 !important;
+                                        &:focus {
+                                            border-color:#7872ff;
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-notes {
+                                width: 100%;
+                                float: left;
+                                clear: none;
+                                vertical-align: middle;
+                                padding: 5px;
+                                line-height: 34px;
+                                -moz-box-sizing: border-box;
+                                -webkit-box-sizing: border-box;
+                                box-sizing: border-box;
+                                border-top: 0px;
+                                .acf-label {
+                                    margin-top: 10px;
+                                    margin-bottom: 0px;
+                                    label {
+                                        font-size: 12px;
+                                    }
+                                }
+                                .acf-input {
+                                    position: relative;
+                                    overflow: hidden;
+                                    textarea {
+                                        box-shadow: none;
+                                        border-color: #DFDFDF;
+                                        width: 100%;
+                                        padding: 3px 30px 3px 15px;
+                                        resize: none;
+                                        margin: 0;
+                                        -webkit-box-sizing: border-box;
+                                        -moz-box-sizing: border-box;
+                                        box-sizing: border-box;
+                                        font-size: 14px;
+                                        line-height: 1.4;
+                                        border-radius: 3px !important;
+                                        &:focus {
+                                            border-color:#7872ff;
+                                        }
+                                    }
+                                }
+                            }
+                            #acf-delete {
+                                border-top: 0px;
+                            }
+                        }
+                        .acf-form-submit {
+                            input {
+                                width: 100%;
+                                background: #7872ff;
+                                text-transform: uppercase;
+                                border-radius: 3px;
+                                margin-top: 20px;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+/*********************
+SIDEBARS & ASIDES
+*********************/
+.sidebar {
+}
+
+#searchsubmit {
+}
+
+.widgettitle {
+}
+
+.widget {
+    ul {
+        margin: 0;
+
+        li {
+            list-style: none;
+
+            &:first-child {}
+
+            &:last-child {}
+
+            a {}
+
+            // deep nesting
+            ul {}
+
+        }
+    }
+}
+/*********************
+FOOTER STYLES
+*********************/
+.footer {
+    clear: both;
+    padding: 0px 0;
+    max-width: 100% !important;
+    background: #222427;
+    #inner-footer {
+        background: #222427;
+        max-width: 100% !important;
+        #box-wrapper {
+            #box {
+                color: #999;
+                padding:40px;
+                h4 {
+                    font-weight: 700;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    color: #ccc;
+                }
+                p {
+                    font-size: 12px;
+                }
+                ul {
+                    list-style: none;
+                    margin: 0;
+                    li {
+                        a {
+                            color: #999;
+                            text-transform: uppercase;
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+        #footer-bottom {
+            background: #191a1b;
+            p {
+                color: #999;
+                margin-bottom: 0;
+                line-height: 50px;
+                padding: 10px 30px;
+                font-size: 14px;
+            }
+        }
     }
 }
