@@ -7,8 +7,18 @@ import { NavController } from 'ionic-angular';
 })
 export class AboutPage {
 
+ fakeApiData :any;
   constructor(public navCtrl: NavController) {
-
-  }
+    this.fakeApiData = [
+        {
+          id: 1,
+          name: 'Glenn'
+        },
+        {
+          id: 2,
+          name: 'Glenn2'
+        },
+      ];
+    }
 
 }
