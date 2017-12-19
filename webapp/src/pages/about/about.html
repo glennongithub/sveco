@@ -1,17 +1,43 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About test
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title text-center>255 Locations</ion-title>
+    </ion-navbar>
+    <ion-row>
+        <ion-col col-6>
+            <ion-icon name="ios-options"></ion-icon>Sort
+        </ion-col>
+        <ion-col col-6>
+            <ion-icon name="ios-funnel"></ion-icon>Filter
+        </ion-col>
+    </ion-row>
 </ion-header>
 
-<ion-content padding>
+<ion-content >
   <ion-list *ngFor="let result of fakeApiData">
-    <ion-item >
-      <ion-label>
-        Test: {{result.id}} and {{result.name}}
-      </ion-label>
-    </ion-item>
+
+          <ion-item class="item" (click)="this.navCtrl.push(location, {
+          address: result.address,
+          status: result.status,
+          language: result.language,
+          note: result.note,
+          type: result.type
+          })">
+              <ion-row>
+                  <ion-col col-1>
+                      <ion-icon  *ngIf=" result.type == 'house'" name="ios-home"></ion-icon>
+                      <ion-icon  *ngIf=" result.type == 'appartment'" name="ios-people"></ion-icon>
+                  </ion-col>
+                  <ion-col col-10>
+                      {{result.address}}
+                  </ion-col>
+                  <ion-col col-1>
+                      {{result.visits}}
+                  </ion-col>
+              </ion-row>
+          </ion-item>
+
   </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>
