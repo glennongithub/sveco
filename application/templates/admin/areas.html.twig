@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}{% endblock %}
+{% block title %}
+    {% trans %} Available_areas {% endtrans %}
+{% endblock %}
+{% block body %}
+    <h1>
+        {% trans %} Available_areas {% endtrans %}
+    </h1>
+    Here comes a list of available areas to select for a location
+    <ul>
+        {% for area in areas %}
+            <li>
+                Areaname: {{ area.areaName }}
+            </li>
+        {% endfor %}
+    </ul>
+
+
+    <br>
+    <br>
+    <br>
+    Maybe included is a add new area form
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

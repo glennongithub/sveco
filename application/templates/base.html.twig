@@ -6,11 +6,21 @@
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" media="all">
         {% endblock %}
+
+        <script>
+            {% for flashbMessage in app.session.flashbag.get('notice') %}
+                alert('{{ flashbMessage }}');
+            {% endfor %}
+
+        </script>
+
+        {% block javascripts %}
+        {% endblock %}
+
     </head>
     <body>
         {% block body %}
         {% endblock %}
-        {% block javascripts %}
-        {% endblock %}
+
     </body>
 </html>
