@@ -51,6 +51,8 @@ installera annotations och twig och security
 cd /home/vagrant/code/application
 composer require annotations
 composer require twig
+composer require form
+composer require validator
 
 
 installera ngt som behövs för security annotations

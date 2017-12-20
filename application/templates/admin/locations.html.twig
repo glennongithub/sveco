@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+
+{% endblock %}
+
+{% block title %}
+    {% trans %} All_locations {% endtrans %}
+{% endblock %}
+{% block body %}
+    <h1>
+        {% trans %} All_locations {% endtrans %}
+    </h1>
+    Here comes a list of locations
+
+    <ul>
+        {% for location in locations %}
+            <li>
+                Address: {{ location.area.areaName }}, Address: {{ location.address }}, Type: {{ location.type }}
+            </li>
+        {% endfor %}
+    </ul>
+
+
+    <br>
+    <br>
+    <br>
+    Maybe included is a add new area form
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
