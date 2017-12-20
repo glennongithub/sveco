@@ -39,7 +39,68 @@
         </ion-item>
     </ion-list>
 
-    <button ion-button block (click)="openMenu()">
-        Add Visit
-    </button>
+    <ion-list id="visit-list">
+        <ion-list-header>
+        VISITS
+        </ion-list-header>
+        <ion-item>
+            <ion-row>
+                <ion-col col-4>
+                    <p>20/12-2017</p>
+                </ion-col>
+                <ion-col col-4>
+                    <p>At home</p>
+                </ion-col>
+                <ion-col col-4>
+                    <p>Andreas Budin</p>
+                </ion-col>
+                <ion-col col-12>
+                    Friendly
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row>
+                <ion-col col-4>
+                    <p>11/11-2017</p>
+                </ion-col>
+                <ion-col col-4>
+                    <p>No at home</p>
+                </ion-col>
+                <ion-col col-4>
+                    <p>Glenn Vinblah</p>
+                </ion-col>
+                <ion-col col-12>
+                    This was a very nice visit with a nice man who had a cute cat
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row>
+                <ion-col col-4>
+                    <p>02/10-2017</p>
+                </ion-col>
+                <ion-col col-4>
+                    <p>At home</p>
+                </ion-col>
+                <ion-col col-4>
+                    <p>Marlene Budin</p>
+                </ion-col>
+                <ion-col col-12>
+                    Left a tract
+                </ion-col>
+            </ion-row>
+        </ion-item>
+    </ion-list>
+
+    <ion-fab bottom class="add-visit">
+        <ion-row>
+            <ion-col col-12>
+                <button ion-button block (click)="openMenu()">
+                    Add visit
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-fab>
+
 </ion-content>
