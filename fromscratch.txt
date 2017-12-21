@@ -53,6 +53,7 @@ composer require annotations
 composer require twig
 composer require form
 composer require validator
+composer require ramsey/uuid
 
 
 installera ngt som behövs för security annotations

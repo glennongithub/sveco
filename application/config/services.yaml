@@ -27,3 +27,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+
+    #Authenticator for ApiKey-requests
+    authentication.apikey_authenticator:
+        class:  'App\Security\ApiKeyAuthenticator'
+        public: false
+
+    # ApiKeyProvider
+    authentication.api_key_user_provider:
+        class: 'App\Security\ApiKeyUserProvider'
+        arguments: ['@doctrine.orm.entity_manager']

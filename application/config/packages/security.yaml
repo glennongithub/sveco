@@ -8,11 +8,21 @@ security:
             entity:
                 class: App\Entity\User
                 # property: username  # comment this to use loadUserByUsername() method on UserRepository will be called.
+        api_key_user_provider:
+                id: authentication.api_key_user_provider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        api_calls:
+            pattern: ^/api
+            stateless: true
+            simple_preauth:
+                authenticator: authentication.apikey_authenticator
+            provider: api_key_user_provider
+
         main:
             pattern: ^/
             anonymous: ~

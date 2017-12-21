@@ -43,9 +43,12 @@ class LocationController extends Controller
 
         $locations = $em->getRepository(Location::class)->findAll();
 
+        $user = $this->getUser();
+
         return $this->render('admin/locations.html.twig', array(
             'form' => $form->createView(),
             'locations' => $locations,
+            'user' => $user,
         ));
 
     }

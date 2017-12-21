@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -8,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -80,11 +84,11 @@ class SecurityController extends Controller
         /** @var EntityManager $em */
         $em = $this->get('doctrine')->getManager();
         // whatever *your* User object is
-        $user = new User();
+        $user = new User('glenn');
         $plainPassword = 'password';
         $encoded = $encoder->encodePassword($user, $plainPassword);
 
-        $user->setUsername('glenn');
+        //$user->setUsername('glenn'); //done in constructor
         $user->setEmail('glenn@edgeweb.se');
         $user->setPassword($encoded);
 
@@ -94,4 +98,101 @@ class SecurityController extends Controller
         return new Response("user created!");
     }
 
+    /**
+     * @Route("{_locale}/admin/createapikey")
+     * @Template("admin/apikeycreated.html.twig")
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function createApiKeyAction(Request $request)
+    {
+        /** @var \Doctrine\ORM\EntityManager $em */
+        $em = $this->get('doctrine')->getManager();
+
+        $user = $this->getUser();
+
+        // if no key set - set new
+        if (!$user->getApiKey()) {
+            $user->regenerateApiKey();
+            $em->persist($user);
+            $em->flush();
+        }
+
+        return [
+            'apiKey' => $user->getApiKey(),
+        ];
+    }
+
+    /**
+     * @Route("/api/whoami")
+     * @param Request $request
+     * @Security("has_role('ROLE_USER')")
+     * Template("debug.html.twig")
+     * @return Response
+     */
+    public function apiWhoamiAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $response = new JsonResponse([
+            'user' => $user->getUsername()
+        ]);
+
+        return $response;
+        //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
+
+    }
+
+    /**
+     * @Route("/account/generate-api-token")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
+     */
+    public function generateApiToken(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $username = $request->get('username');
+        $password = $request->get('password');
+
+        /** @var \Doctrine\ORM\EntityManager $em */
+        $em = $this->get('doctrine')->getManager();
+
+        if (!$username || !$password) {
+            $response = new JsonResponse(['error' => 'Username and/or password cannot be empty!', 422]);
+            return $response;
+            //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
+        }
+
+        // search for user
+        /** @var User $userEntity */
+        $userEntity = $em->getRepository(User::class)->loadUserByUsername($username);
+        if(!$userEntity) {
+            // the response here should be the same as the below when no user is found to avoid give away if a user exists or not
+            $response = new JsonResponse(['error' => 'Authentication failed', 400]);
+            return $response;
+            //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
+        }
+
+        //now test if password match
+        if(!$encoder->isPasswordValid($userEntity,$password)) {
+            // the response here should be the same as the above when no user is found to avoid give away if a user exists or not
+            $response = new JsonResponse(['error' => 'Authentication failed!', 400]);
+            return $response;
+            //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
+        }
+
+        //Success.. return the apiKey
+        $response = new JsonResponse([
+            'key' => $userEntity->getApiKey(),
+            'username' => $userEntity->getUsername()
+        ]);
+
+        return $response;
+        //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
+
+    }
 }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}{% endblock %}
+{% block title %}
+    {% trans %} API_KEY {% endtrans %}
+{% endblock %}
+{% block body %}
+    <h1>
+        {% trans %} API_KEY_KREATION {% endtrans %}
+    </h1>
+   ApiKey: {{ apiKey }} now ready for use
+
+{% endblock %}

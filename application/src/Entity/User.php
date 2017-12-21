@@ -4,6 +4,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Ramsey\Uuid\Uuid;
+
 
 /**
 * @ORM\Table(name="app_users")
@@ -17,6 +19,11 @@ class User implements AdvancedUserInterface, \Serializable
     * @ORM\GeneratedValue(strategy="AUTO")
     */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $fullname;
 
     /**
     * @ORM\Column(type="string", length=25, unique=true)
@@ -43,12 +50,21 @@ class User implements AdvancedUserInterface, \Serializable
     */
     private $isActive;
 
-    public function __construct()
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="api_key", type="guid", nullable=true)
+     */
+    private $apiKey;
+
+    public function __construct($username)
     {
-    $this->isActive = true;
-    // may not be needed, see section on salt below
-    // $this->salt = md5(uniqid('', true));
+        $this->username = $username;
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid('', true));
     }
+
 
     public function getUsername()
     {
@@ -74,6 +90,14 @@ class User implements AdvancedUserInterface, \Serializable
         //TODO fix up annaotaions .. and some validation
         $this->email = $email;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function setRoles(array $roles)
@@ -127,6 +151,57 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->isActive;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
+    }
+
+    /**
+     * @param mixed $fullname
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * Set accessKey
+     *
+     * @param string $apiKey
+     * @return User
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+        return $this;
+    }
+
+    /**
+     * Regenerate apiKey
+     *
+     * @return User
+     */
+    public function regenerateApiKey()
+    {
+        $this->apiKey = Uuid::uuid4()->toString();
+        return $this;
+    }
+
+
 
     /** @see \Serializable::serialize() */
     public function serialize()

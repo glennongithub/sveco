@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}{% endblock %}
+{% block title %}
+    {% trans %} Debugging {% endtrans %}
+{% endblock %}
+{% block body %}
+    <h1>
+        {% trans %} Debugging {% endtrans %}
+    </h1>
+
+    user: {{ user.username }} , {{ user.email }}
+
+{% endblock %}
