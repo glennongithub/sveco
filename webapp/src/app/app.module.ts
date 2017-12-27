@@ -2,42 +2,60 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpModule } from '@angular/http'; /*this is not added automatically when generating a provider .. but needed :(*/
+import { HttpClientModule } from '@angular/common/http';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { LocationsPage } from '../pages/locations/locations';
+import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LocationPage } from '../pages/location/location';
 
+import { ModalErrorPage } from '../pages/modal-error/modal-error';
+import { ModalInfoPage } from "../pages/modal-info/modal-info";
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CustomApiProvider } from '../providers/custom-api/custom-api';
+import { TestComProvider } from '../providers/test-com/test-com';
 
 @NgModule({
   declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-      LocationPage
+      MyApp,
+      LocationsPage,
+      SettingsPage,
+      HomePage,
+      TabsPage,
+      LocationPage,
+      ModalErrorPage,
+      ModalInfoPage
+
   ],
   imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
+      BrowserModule,
+      IonicModule.forRoot(MyApp),
+      HttpModule, /*this is not added automatically when generateing a provider .. but needed :(*/
+      HttpClientModule,
+      IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    LocationsPage,
+    SettingsPage,
     HomePage,
     TabsPage,
-      LocationPage
+    LocationPage,
+    ModalErrorPage,
+    ModalInfoPage
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+      StatusBar,
+      SplashScreen,
+      {provide: ErrorHandler, useClass: IonicErrorHandler},
+      CustomApiProvider,
+      TestComProvider
   ]
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{this.navParams.get('address')}}</ion-title>
+        <ion-title>{{location.address}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -8,21 +8,21 @@
     <ion-list>
         <ion-item>
             <ion-label color="primary" stacked>Address</ion-label>
-            <ion-input type="text" value="{{this.navParams.get('address')}}" placeholder="Add address here"></ion-input>
+            <ion-input type="text" value="{{location.address}}" placeholder="Add address here"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Type</ion-label>
             <ion-select [(ngModel)]="Type" placeholder="Choose type">
-                <ion-option value="house" *ngIf=" this.navParams.get('type') == 'house'" selected="true">House</ion-option>
-                <ion-option value="appartment" *ngIf=" this.navParams.get('type') == 'appartment'" selected="true">Appartment</ion-option>
+                <ion-option value="house" *ngIf=" location.type == 'BUSINESS_HOUSE' || location.type == 'PRIVATE_HOUSE'" selected="true">House</ion-option>
+                <ion-option value="appartment" *ngIf=" location.type == 'PRIVATE_APARTMENT' || location.type == 'BUSINESS_APARTMENT'" selected="true">Appartment</ion-option>
             </ion-select>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Language</ion-label>
-            <ion-select [(ngModel)]="Language" placeholder="Choose language">
-                <ion-option value="swedish" *ngIf=" this.navParams.get('language') == 'swedish'" selected="true">Swedish</ion-option>
-                <ion-option value="norweigan" *ngIf=" this.navParams.get('language') == 'norweigan'" selected="true">Norweigan</ion-option>
-                <ion-option value="danish" *ngIf=" this.navParams.get('language') == 'danish'" selected="true">Danish</ion-option>
+            <ion-select [(ngModel)]="location.language" placeholder="Choose language">
+                <ion-option value="SWEDISH" >Swedish</ion-option>
+                <ion-option value="NORWEGIAN" >Norweigan</ion-option>
+                <ion-option value="DANISH" >Danish</ion-option>
             </ion-select>
         </ion-item>
         <ion-item>
@@ -31,7 +31,7 @@
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Note</ion-label>
-            <ion-textarea value="{{this.navParams.get('note')}}" placeholder="Add note"></ion-textarea>
+            <ion-textarea value="{{ location.note }}" placeholder="Add note"></ion-textarea>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Status</ion-label>

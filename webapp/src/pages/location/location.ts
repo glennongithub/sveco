@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
+import { CustomApiProvider, location } from '../../providers/custom-api/custom-api';
 
 
 @Component({
@@ -11,12 +12,15 @@ import { Platform, ActionSheetController } from 'ionic-angular';
 
 
 export class LocationPage {
+    location:location;
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         public platform: Platform,
         public actionsheetCtrl: ActionSheetController
-    ) { }
+    ) {
+        this.location = this.navParams.get('location');
+    }
 
     openMenu() {
         let actionSheet = this.actionsheetCtrl.create({

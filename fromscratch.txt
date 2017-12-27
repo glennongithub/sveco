@@ -54,6 +54,7 @@ composer require twig
 composer require form
 composer require validator
 composer require ramsey/uuid
+composer require symfony/serializer
 
 
 installera ngt som behövs för security annotations

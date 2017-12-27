@@ -21,16 +21,6 @@ class Area
 
 
     /**
-     * This extra field is probaly never needed .. just added to test some stuff.
-     * Only usefull if we on an area would like to easily find all locations using it.
-     * And then we mostlikely could just build a specific query for that.
-     * @var Location[]
-     *
-     * @ORM\OneToMany(targetEntity="Location", mappedBy="area")
-     */
-    private $locations;
-
-    /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=100, nullable=false, unique=true)
@@ -68,23 +58,5 @@ class Area
     {
         $this->area_name = $area_name;
     }
-
-    /**
-     * @return Location[]
-     */
-    public function getLocations()
-    {
-        return $this->locations;
-    }
-
-    /**
-     * @param Location[] $locations
-     */
-    public function setLocations($locations)
-    {
-        $this->locations = $locations;
-    }
-
-
 
 }

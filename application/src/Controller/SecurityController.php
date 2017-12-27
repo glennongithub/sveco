@@ -12,6 +12,7 @@ use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Services\CORSService;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -128,21 +129,23 @@ class SecurityController extends Controller
     /**
      * @Route("/api/whoami")
      * @param Request $request
+     * @param CORSService $CORSService
      * @Security("has_role('ROLE_USER')")
      * Template("debug.html.twig")
      * @return Response
      */
-    public function apiWhoamiAction(Request $request)
+    public function apiWhoamiAction(Request $request, CORSService $CORSService)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         /** @var User $user */
         $user = $this->getUser();
 
         $response = new JsonResponse([
-            'user' => $user->getUsername()
+            'username'  => $user->getUsername(),
+            'key'   => $user->getApiKey(),
         ]);
 
-        return $response;
+        return $CORSService->getResponseCORS($request, $response);
         //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
 
     }
@@ -151,9 +154,10 @@ class SecurityController extends Controller
      * @Route("/account/generate-api-token")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
+     * @param CORSService $CORSService
      * @return Response
      */
-    public function generateApiToken(Request $request, UserPasswordEncoderInterface $encoder)
+    public function generateApiToken(Request $request, UserPasswordEncoderInterface $encoder, CORSService $CORSService)
     {
         $username = $request->get('username');
         $password = $request->get('password');
@@ -163,7 +167,7 @@ class SecurityController extends Controller
 
         if (!$username || !$password) {
             $response = new JsonResponse(['error' => 'Username and/or password cannot be empty!', 422]);
-            return $response;
+            return $CORSService->getResponseCORS($request, $response);
             //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
         }
 
@@ -173,7 +177,7 @@ class SecurityController extends Controller
         if(!$userEntity) {
             // the response here should be the same as the below when no user is found to avoid give away if a user exists or not
             $response = new JsonResponse(['error' => 'Authentication failed', 400]);
-            return $response;
+            return $CORSService->getResponseCORS($request, $response);
             //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
         }
 
@@ -181,7 +185,7 @@ class SecurityController extends Controller
         if(!$encoder->isPasswordValid($userEntity,$password)) {
             // the response here should be the same as the above when no user is found to avoid give away if a user exists or not
             $response = new JsonResponse(['error' => 'Authentication failed!', 400]);
-            return $response;
+            return $CORSService->getResponseCORS($request, $response);
             //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
         }
 
@@ -191,8 +195,7 @@ class SecurityController extends Controller
             'username' => $userEntity->getUsername()
         ]);
 
-        return $response;
-        //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
+        return $CORSService->getResponseCORS($request, $response);
 
     }
 }

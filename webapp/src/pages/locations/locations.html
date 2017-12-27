@@ -13,25 +13,19 @@
 </ion-header>
 
 <ion-content >
-  <ion-list *ngFor="let result of fakeApiData">
+  <ion-list *ngFor="let location of locations">
 
-          <ion-item class="item" (click)="this.navCtrl.push(location, {
-          address: result.address,
-          status: result.status,
-          language: result.language,
-          note: result.note,
-          type: result.type
-          })">
+          <ion-item class="item" (click)="viewLocation(location)">
               <ion-row>
                   <ion-col col-1>
-                      <ion-icon  *ngIf=" result.type == 'house'" name="ios-home"></ion-icon>
-                      <ion-icon  *ngIf=" result.type == 'appartment'" name="ios-people"></ion-icon>
+                      <ion-icon  *ngIf=" location.type == 'BUSINESS_APARTMENT' || location.type == 'BUSINESS_HOUSE'" name="ios-home"></ion-icon>
+                      <ion-icon  *ngIf=" location.type == 'PRIVATE_APARTMENT' || location.type == 'PRIVATE_HOUSE'" name="ios-people"></ion-icon>
                   </ion-col>
                   <ion-col col-10>
-                      {{result.address}}
+                      {{location.address}}
                   </ion-col>
                   <ion-col col-1 class="visits">
-                      {{result.visits}}
+                      {{ location.visits.length }}
                   </ion-col>
               </ion-row>
           </ion-item>

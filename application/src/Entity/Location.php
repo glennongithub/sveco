@@ -53,7 +53,7 @@ class Location
     /**
      * @var Area
      *
-     * @ORM\ManyToOne(targetEntity="Area", inversedBy="locations")
+     * @ORM\ManyToOne(targetEntity="Area")
      * @ORM\JoinColumn(name="area_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $area;
