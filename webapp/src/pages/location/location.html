@@ -42,6 +42,10 @@
                     <ion-option value="INTERESTED">Interested</ion-option>
                 </ion-select>
             </ion-item>
+        <ion-item>
+            <ion-label>My Return Visit</ion-label>
+            <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
         <button *ngIf="showSaveButton" ion-button (click)="updateLocation(location)">Save changes</button>
     </ion-list>
 
