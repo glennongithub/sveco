@@ -40,12 +40,11 @@ class LocationType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'private_apartment' => 'PRIVATE_APARTMENT',
-                    'private_house' => 'PRIVATE_HOUSE',
-                    'business_apartment' => 'BUSINESS_APARTMENT',
-                    'business_house' => 'BUSINESS_HOUSE',
+                    'apartment' => 'APARTMENT',
+                    'house' => 'HOUSE',
                 ]
             ])
+            ->add('isBusiness' )
             ->add('save', SubmitType::class)
         ;
     }

@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Entity\Location;
 
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,8 +22,18 @@ class VisitType extends AbstractType
             ->add('location', EntityType::class, [
                 // query choices from this entity
                 'class' => Location::class,
-                // use the Area.areaName property as the visible option string
+                // use the location.address property as the visible option string
                 'choice_label' => 'address',
+                // used to render a select box, check boxes or radios
+                // 'multiple' => true,
+                // 'expanded' => true,
+            ])
+            ->add('user', EntityType::class, [
+                // query choices from this entity
+                'class' => User::class,
+                // use the User.fullname property as the visible option string
+                'choice_label' => 'fullname',
+                //'attr' => ['' => 'disabled'], //nope .. this prevents it from be handled and saved properly
                 // used to render a select box, check boxes or radios
                 // 'multiple' => true,
                 // 'expanded' => true,

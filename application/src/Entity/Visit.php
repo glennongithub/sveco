@@ -25,6 +25,14 @@ class Visit
      */
     protected $location;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -59,12 +67,17 @@ class Visit
 
     /**
      * Constructor
+     * @param User $user
      */
-    public function __construct()
+    public function __construct(User $user)
     {
         //always set default visitdate to now
         $dt_now = new \DateTime(date('Y-m-d H:i:s'));
         $this->visit_date = $dt_now;
+
+        // All visits must belong to a user. so its kind of required
+        $this->user = $user;
+
     }
 
     /**
@@ -145,6 +158,22 @@ class Visit
     public function setNote($note)
     {
         $this->note = $note;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 
 

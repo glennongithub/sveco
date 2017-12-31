@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {LoadingController, ModalController, NavController, NavParams} from 'ionic-angular';
-import { CustomApiProvider, location } from '../../providers/custom-api/custom-api';
+import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { ModalErrorPage } from "../modal-error/modal-error";
 import { ModalInfoPage } from "../modal-info/modal-info";
 
 import { LocationPage } from '../location/location';
 import {Storage} from "@ionic/storage";
+import {location} from "../../model/location.model";
+import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
 
 @Component({
   selector: 'page-locations',
@@ -19,28 +21,15 @@ export class LocationsPage {
     locations:location[];
     loader:any;
 
- fakeApiData :any;
-
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private storage: Storage,
-              private modal: ModalController,
-              public loadingCtrl: LoadingController,
-              private customApi: CustomApiProvider) {
+    constructor(public navCtrl: NavController,
+                  public navParams: NavParams,
+                  private storage: Storage,
+                  private modal: ModalController,
+                  public loadingCtrl: LoadingController,
+                  private customApi: CustomApiProvider,
+                  private locationsProvider: LocationsProvider) {
 
       this.getLocations();
-
-      this.fakeApiData = [
-        {
-            id: 1,
-            type: 'appartment',
-            address: 'Vista Alegre 24, 07015 Palma de Mallorca',
-            status: 'unknown',
-            language: 'swedish',
-            visits: '3',
-            note: 'This was a strange address'
-        }
-      ];
     }
 
     viewLocation(location) {
@@ -57,16 +46,12 @@ export class LocationsPage {
         //pop overlay
         this.loader.present();
 
-        this.customApi.getLocations().subscribe(
-            //NOW .. for now keep this handling of subsribe and stuff .. but
-            //TODO lets think through if possible to generalize those calls to a provider so code in pages can be minimized
+        this.locationsProvider.loadRemoteLocations().then(
             data => { //a successful connection
-                console.log(data);
-                this.locations = data;
-                //always remove overlay when done
+                // now locations is loaded in locationsProvider
+                // we could use them from there .. or load them to local var
+                this.locations = this.locationsProvider.getLocations();
                 this.loader.dismiss();
-                data.forEach(item =>{ console.log(item.address) })
-
                 /** always make sure to handle failed connections*/
             } , errdata => { //failed connection
                 //always remove overlay when done
@@ -74,7 +59,9 @@ export class LocationsPage {
                 this.openErrorModal('Communication with server failed .. : '+errdata.statusText);
             }
         );
+
     }
+
 
     openErrorModal(errorMessage: string) {
         const errorModal = this.modal.create(ModalErrorPage, {errorMessage: errorMessage});

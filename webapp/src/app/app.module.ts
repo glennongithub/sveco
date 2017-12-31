@@ -18,7 +18,7 @@ import { ModalInfoPage } from "../pages/modal-info/modal-info";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CustomApiProvider } from '../providers/custom-api/custom-api';
-import { TestComProvider } from '../providers/test-com/test-com';
+import {LocationsProvider} from "../providers/locations-provider/locations-provider";
 
 @NgModule({
   declarations: [
@@ -55,7 +55,7 @@ import { TestComProvider } from '../providers/test-com/test-com';
       SplashScreen,
       {provide: ErrorHandler, useClass: IonicErrorHandler},
       CustomApiProvider,
-      TestComProvider
+      LocationsProvider
   ]
 })
 export class AppModule {}

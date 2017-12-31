@@ -68,13 +68,11 @@ class Location
     /**
      * @var array
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false, options={"default":"APARTMENT"})
      * @Assert\Choice(multiple = false, min = 1,
      *   choices = {
-     *     "PRIVATE_APARTMENT",
-     *     "PRIVATE_HOUSE",
-     *     "BUSINESS_APARTMENT",
-     *     "BUSINESS_HOUSE"
+     *     "APARTMENT",
+     *     "HOUSE",
      *   },
      *   message = "assert_choice.msg",
      *   minMessage = "min_msg",
@@ -82,6 +80,14 @@ class Location
      * )
      */
     protected $type;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+
+     */
+    protected $isBusiness;
 
     /**
      * @var string
@@ -264,6 +270,55 @@ class Location
     public function setApartmentNr($apartment_nr)
     {
         $this->apartment_nr = $apartment_nr;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsBusiness()
+    {
+        return $this->isBusiness;
+    }
+
+    /**
+     * @param bool $isBusiness
+     */
+    public function setIsBusiness($isBusiness)
+    {
+        $this->isBusiness = $isBusiness;
+    }
+
+    /**
+     * Helper function to get status from latest visit since that represents status of this location
+     * if no visits registered .. we use status unknown
+     * @return array|string
+     */
+    public function getStatus()
+    {
+        $visits = $this->getVisits();
+
+        // if no visits registered we know it's unknown
+        if(count($visits) < 1)
+            return 'UNKNOWN';
+
+        //set latest visit to the first in array
+        $latestKnownVisit = $visits[0];
+
+        // if only one visits registered we know we are going to return this
+        if(count($visits) == 1)
+            return $latestKnownVisit->getStatus();
+
+        //we actually have some visit. Find latest one
+        foreach($visits as $visit)
+        {
+            //replace latestKnown with current if later
+            if($visit->getVisitDate() > $latestKnownVisit->getVisitDate())
+                $latestKnownVisit = $visit;
+
+        }
+
+        //return latest visit-status
+        return $latestKnownVisit->getStatus();
     }
 
 }

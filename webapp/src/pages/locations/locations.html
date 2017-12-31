@@ -18,8 +18,8 @@
           <ion-item class="item" (click)="viewLocation(location)">
               <ion-row>
                   <ion-col col-1>
-                      <ion-icon  *ngIf=" location.type == 'BUSINESS_APARTMENT' || location.type == 'BUSINESS_HOUSE'" name="ios-home"></ion-icon>
-                      <ion-icon  *ngIf=" location.type == 'PRIVATE_APARTMENT' || location.type == 'PRIVATE_HOUSE'" name="ios-people"></ion-icon>
+                      <ion-icon  *ngIf=" location.type == 'HOUSE' " name="ios-home"></ion-icon>
+                      <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-people"></ion-icon>
                   </ion-col>
                   <ion-col col-10>
                       {{location.address}}

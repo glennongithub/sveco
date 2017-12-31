@@ -1,6 +1,7 @@
 <?PHP
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Visit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,9 @@ class VisitController extends Controller
     {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $visit = new Visit();
+        /** @var User $user */
+        $user = $this->getUser();
+        $visit = new Visit($user);
         $form = $this->createForm(VisitType::class, $visit);
 
         $form->handleRequest($request);

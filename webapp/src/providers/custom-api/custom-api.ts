@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { location } from "../../model/location.model";
 
 
 /**
@@ -19,35 +20,6 @@ interface getApiKeyResponse {
     username: string;
     key: string;
     error: string;
-}
-
-interface visit {
-    id: number;
-    visitDate: object;
-    status: string;
-    note: string;
-}
-
-interface area {
-    id: number;
-    areaName: string;
-}
-
-export interface location {
-    id: number;
-    createdAt: object;
-    modifiedAt: object;
-    visits: visit[];
-    language: string;
-    address: string;
-    area: area;
-    note: string;
-    type: string;
-    apartmentNr: string;
-}
-
-interface getLocationsResponse {
-
 }
 
 /*
@@ -155,6 +127,14 @@ export class CustomApiProvider {
     getLocations() {
         let urlToCall:string = this.buildApiUrlForCommand('locations')
         return this.http.get<location[]>(urlToCall);
+    }
+
+    updateLocation(location) {
+        //TOBECREATED
+        return new Promise((resolve, reject) => {
+            resolve('updated location');
+        });
+
     }
 
     buildApiUrlForCommand(command: string, params?:Map<string, string>)

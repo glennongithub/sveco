@@ -6,44 +6,50 @@
 
 <ion-content>
     <ion-list>
-        <ion-item>
-            <ion-label color="primary" stacked>Address</ion-label>
-            <ion-input type="text" value="{{location.address}}" placeholder="Add address here"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label color="primary" stacked>Type</ion-label>
-            <ion-select [(ngModel)]="Type" placeholder="Choose type">
-                <ion-option value="house" *ngIf=" location.type == 'BUSINESS_HOUSE' || location.type == 'PRIVATE_HOUSE'" selected="true">House</ion-option>
-                <ion-option value="appartment" *ngIf=" location.type == 'PRIVATE_APARTMENT' || location.type == 'BUSINESS_APARTMENT'" selected="true">Appartment</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label color="primary" stacked>Language</ion-label>
-            <ion-select [(ngModel)]="location.language" placeholder="Choose language">
-                <ion-option value="SWEDISH" >Swedish</ion-option>
-                <ion-option value="NORWEGIAN" >Norweigan</ion-option>
-                <ion-option value="DANISH" >Danish</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label>Business</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label color="primary" stacked>Note</ion-label>
-            <ion-textarea value="{{ location.note }}" placeholder="Add note"></ion-textarea>
-        </ion-item>
-        <ion-item>
-            <ion-label color="primary" stacked>Status</ion-label>
-            <ion-input type="text" value="Don't know"></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-label color="primary" stacked>Address</ion-label>
+                <ion-input type="text" [(ngModel)]="location.address" placeholder="Add address here"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" stacked>Type</ion-label>
+                <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.type" placeholder="Choose type">
+                    <ion-option value="HOUSE">House</ion-option>
+                    <ion-option value="APARTMENT">Apartment</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" stacked>Language</ion-label>
+                <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.language"  placeholder="Choose language">
+                    <ion-option *ngFor = "let supportedLanguage of supportedLanguages" [value]="supportedLanguage.languageValue">
+                        {{supportedLanguage.languageLabel}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Business</ion-label>
+                <ion-toggle (ionChange)="onChangeAnything(location)" [(ngModel)]="location.isBusiness" ></ion-toggle>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" stacked>Note</ion-label>
+                <ion-textarea (ionChange)="onChangeAnything(location)" [(ngModel)]="location.note" placeholder="Add note"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" stacked>Status</ion-label>
+                <ion-select [(ngModel)]="location.status" placeholder="Current status">
+                    <ion-option value="UNKNOWN">Unknown</ion-option>
+                    <ion-option value="NOT_AT_HOME">Not at home</ion-option>
+                    <ion-option value="NOT_INTERESTED">Not interested</ion-option>
+                    <ion-option value="INTERESTED">Interested</ion-option>
+                </ion-select>
+            </ion-item>
+        <button *ngIf="showSaveButton" ion-button (click)="updateLocation(location)">Save changes</button>
     </ion-list>
 
     <ion-list id="visit-list">
         <ion-list-header>
         VISITS
         </ion-list-header>
-        <ion-item>
+        <ion-item *ngFor="let visit of location.visits">
             <ion-row>
                 <ion-col col-4>
                     <p>20/12-2017</p>
@@ -52,42 +58,10 @@
                     <p>At home</p>
                 </ion-col>
                 <ion-col col-4>
-                    <p>Andreas Budin</p>
+                    <p>{{ visit.user.fullname }}</p>
                 </ion-col>
                 <ion-col col-12>
-                    Friendly
-                </ion-col>
-            </ion-row>
-        </ion-item>
-        <ion-item>
-            <ion-row>
-                <ion-col col-4>
-                    <p>11/11-2017</p>
-                </ion-col>
-                <ion-col col-4>
-                    <p>No at home</p>
-                </ion-col>
-                <ion-col col-4>
-                    <p>Glenn Vinblah</p>
-                </ion-col>
-                <ion-col col-12>
-                    This was a very nice visit with a nice man who had a cute cat
-                </ion-col>
-            </ion-row>
-        </ion-item>
-        <ion-item>
-            <ion-row>
-                <ion-col col-4>
-                    <p>02/10-2017</p>
-                </ion-col>
-                <ion-col col-4>
-                    <p>At home</p>
-                </ion-col>
-                <ion-col col-4>
-                    <p>Marlene Budin</p>
-                </ion-col>
-                <ion-col col-12>
-                    Left a tract
+                    {{ visit.note }}
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -96,11 +70,12 @@
     <ion-fab bottom class="add-visit">
         <ion-row>
             <ion-col col-12>
-                <button ion-button block (click)="openMenu()">
+                <button  ion-fab block (click)="openMenu()">
                     Add visit
                 </button>
             </ion-col>
         </ion-row>
     </ion-fab>
+
 
 </ion-content>
