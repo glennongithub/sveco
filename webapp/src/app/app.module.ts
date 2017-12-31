@@ -12,6 +12,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LocationPage } from '../pages/location/location';
 
+
 import { ModalErrorPage } from '../pages/modal-error/modal-error';
 import { ModalInfoPage } from "../pages/modal-info/modal-info";
 
@@ -19,6 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CustomApiProvider } from '../providers/custom-api/custom-api';
 import {LocationsProvider} from "../providers/locations-provider/locations-provider";
+import {GogletestPage} from "../pages/gogletest/gogletest";
 
 @NgModule({
   declarations: [
@@ -29,8 +31,8 @@ import {LocationsProvider} from "../providers/locations-provider/locations-provi
       TabsPage,
       LocationPage,
       ModalErrorPage,
-      ModalInfoPage
-
+      ModalInfoPage,
+      GogletestPage
   ],
   imports: [
       BrowserModule,
@@ -48,7 +50,8 @@ import {LocationsProvider} from "../providers/locations-provider/locations-provi
     TabsPage,
     LocationPage,
     ModalErrorPage,
-    ModalInfoPage
+    ModalInfoPage,
+    GogletestPage
   ],
   providers: [
       StatusBar,

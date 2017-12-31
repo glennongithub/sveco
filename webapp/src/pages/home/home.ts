@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { ModalErrorPage } from "../modal-error/modal-error";
+import {GogletestPage} from "../gogletest/gogletest";
 
 @Component({
   selector: 'page-home',
@@ -39,6 +40,10 @@ export class HomePage {
           const errorModal = this.modal.create(ModalErrorPage, {errorMessage: message});
           errorModal.present();
         });
+  }
+
+  open_googletestpage() {
+      this.navCtrl.push(GogletestPage)
   }
 
 }

@@ -1,0 +1,38 @@
+.toolbar-background-md {
+  background: #9370DB; }
+
+.header .toolbar-title {
+  color: #fff !important; }
+.header .row {
+  background: #9370DB;
+  padding: 0 0 10px;
+  color: #E6E6FA;
+  font-weight: bold;
+  font-size: 16px; }
+  .header .row ion-icon {
+    font-size: 18px;
+    color: #E6E6FA;
+    padding-right: 5px; }
+
+.content {
+  background: #f9fafb; }
+
+.header .toolbar-title {
+  color: #fff; }
+.header:after {
+  content: none; }
+
+.list-md {
+  margin: 0;
+  border-bottom: 1px solid #efefef; }
+
+ion-col {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 5px !important; }
+
+.visits {
+  text-align: right; }
+
+/*# sourceMappingURL=app.css.map */

@@ -91,6 +91,7 @@ class SecurityController extends Controller
 
         //$user->setUsername('glenn'); //done in constructor
         $user->setEmail('glenn@edgeweb.se');
+        $user->setFullname('glenn vinbladh');
         $user->setPassword($encoded);
 
         $em->persist($user);
