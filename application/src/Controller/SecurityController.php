@@ -91,7 +91,7 @@ class SecurityController extends Controller
 
         //$user->setUsername('glenn'); //done in constructor
         $user->setEmail('glenn@edgeweb.se');
-        $user->setFullname('glenn vinbladh');
+        $user->setFullname('Glenn Vinbladh');
         $user->setPassword($encoded);
 
         $em->persist($user);
@@ -189,6 +189,15 @@ class SecurityController extends Controller
             return $CORSService->getResponseCORS($request, $response);
             //return $this->get('sirvoy_cors')->getResponseCORS($request, $response);
         }
+
+        // for now if no key exist .. create a new one
+        // this may be bad practice .. so think this trough ... and adjust in future
+        if(!$userEntity->getApiKey()) {
+            $userEntity->regenerateApiKey();
+            $em->persist($userEntity);
+            $em->flush();
+        }
+
 
         //Success.. return the apiKey
         $response = new JsonResponse([

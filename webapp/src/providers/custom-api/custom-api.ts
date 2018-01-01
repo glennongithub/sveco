@@ -10,6 +10,7 @@ import { location } from "../../model/location.model";
 /**
  * This is an interesting thing .. we benefit from defining the expected interface returned from all api-requests .. so
  * we should probably define those in a specific file .. but start by just tossing them in here now.
+ * NOTE .. have started moving to model-folder.  and import from there.
  */
 interface WhoAmIResponse {
     username: string;
