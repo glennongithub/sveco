@@ -1,0 +1,11 @@
+page-about header {
+  text-align: center; }
+page-about .item {
+  background: #fff;
+  color: #555; }
+page-about .content .searchbar-md .searchbar-input {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+/*# sourceMappingURL=about.css.map */

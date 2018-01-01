@@ -1,0 +1,11 @@
+page-locations header {
+  text-align: center; }
+page-locations .item {
+  background: #fff;
+  color: #555; }
+page-locations .content .searchbar-md .searchbar-input {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+/*# sourceMappingURL=locations.css.map */

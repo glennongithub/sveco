@@ -1,7 +1,16 @@
 page-locations {
- text-align: center;
+ header {
+  text-align: center;
+ }
  .item {
   background: #fff;
   color: #555;
+ }
+ .content {
+  .searchbar-md .searchbar-input {
+   -webkit-box-shadow: none;
+   -moz-box-shadow: none;
+   box-shadow: none;
+  }
  }
 }
