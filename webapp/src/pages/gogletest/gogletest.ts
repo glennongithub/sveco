@@ -1,4 +1,5 @@
 import { Component, NgZone } from '@angular/core';
+import {} from '@types/googlemaps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
