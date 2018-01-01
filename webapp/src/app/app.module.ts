@@ -21,6 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CustomApiProvider } from '../providers/custom-api/custom-api';
 import {LocationsProvider} from "../providers/locations-provider/locations-provider";
 import {GogletestPage} from "../pages/gogletest/gogletest";
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {GogletestPage} from "../pages/gogletest/gogletest";
       SplashScreen,
       {provide: ErrorHandler, useClass: IonicErrorHandler},
       CustomApiProvider,
+      Geolocation,
       LocationsProvider
   ]
 })
