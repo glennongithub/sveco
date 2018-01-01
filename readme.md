@@ -8,7 +8,7 @@ npm install -g cordova ionic
 cd into repo
 
 cd into webapp 
-then make sure your hos mashine is handling that ionic app 
+then make sure your host mashine is handling that ionic app 
 run 
 npm install
 
