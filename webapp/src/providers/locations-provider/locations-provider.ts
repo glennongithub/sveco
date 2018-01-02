@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import {location} from "../../model/location.model";
 import {CustomApiProvider} from "../custom-api/custom-api";
+import {LoadingController} from "ionic-angular";
 
 
 @Injectable()
 export class LocationsProvider {
 
     private locations:location[];
+    loader:any;
 
     constructor(
         private customApi: CustomApiProvider,
+        public loadingCtrl: LoadingController, //adding this to test if I can control spinner popping from here
     ) {
 
         console.log('constructing Locations Provider');
@@ -21,30 +24,59 @@ export class LocationsProvider {
 
     }
 
-    updateLocation(location: location) {
-        // if a copy of locations is used .. not ref . we need to update the location in
+    // make async so we always return a promise and can await if we want.
+    async updateLocation(location: location, waitForResolve: boolean = true) {
+        let updatedLocation;
+        // first update corresponding item in this master array
+        // and take back the updated item.
+        updatedLocation = this.updateLocationInLocations(location);
+
+        // Now do the api-stuff  comment this if we don't use it
+            try {
+                // then make sure backend is updated to.
+                // should return the updated location
+                if(waitForResolve) {
+                    // pop spinner
+                    this.loader = this.loadingCtrl.create({
+                        content:"Talking to server",
+                    });
+                    //pop overlay
+                    this.loader.present();
+                    // wait for com to finish
+                    updatedLocation = await this.customApi.updateLocation(location);
+                    // remove spinner
+                    this.loader.dismiss();
+
+                }
+                else
+                    this.customApi.updateLocation(location); //ignoring promise intentionally
+            } catch (e) {
+                console.log('catch in locations-provider .. updateLocation waiting for resolve. :'+e.toString());
+            }
+
+        // always return copy of current state of locationsArray
+        return updatedLocation;
     }
 
     getLocations() {
         return this.locations.slice(); //slice apparently returns a copy instead of a ref.
     }
 
-    loadRemoteLocations() {
-        return new Promise((resolve, reject) => {
-            this.customApi.getLocations().subscribe(
-                data => { //a successful connection
-                    console.log(data);
-                    this.locations = data;
-                    //always remove overlay when done
-                    resolve("OK");
-                    /** always make sure to handle failed connections*/
-                } , errdata => { //failed connection
-                    //always remove overlay when done
-                    reject("Connection to server totally failed when running whoami ;( ! Errors was: "+errdata.statusText);
-
-                }
-            );
-        });
+    async loadRemoteLocations() {
+        try {
+            // pop spinner
+            this.loader = this.loadingCtrl.create({
+                content:"Talking to server: loading locations",
+            });
+            //pop overlay
+            this.loader.present();
+            this.locations = await this.customApi.getLocations();
+            // remove spinner
+            this.loader.dismiss();
+            return this.getLocations();
+        } catch (e) {
+            console.log(e.toString())
+        }
     }
 
 
@@ -64,7 +96,7 @@ export class LocationsProvider {
 
         // Update the actual item in array
         this.locations[index] = updatedLocation;
-
+        return this.locations[index];
     }
 
     findItemById(lookingAtItem) {

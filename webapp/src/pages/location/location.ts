@@ -2,8 +2,9 @@ import { Component, ViewChild  } from '@angular/core';
 import { NavController, NavParams, Navbar  } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
-import {$BACKSLASH} from "@angular/compiler/src/chars";
 import { location } from "../../model/location.model";
+import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
+
 
 
 @Component({
@@ -16,7 +17,7 @@ import { location } from "../../model/location.model";
 export class LocationPage {
     @ViewChild(Navbar) navbarCustom: Navbar;
     location:location;
-    showSaveButton:boolean;
+    changeDetected: boolean = false
 
     supportedLanguages = [
         {languageValue: 'SWEDISH', languageLabel: 'Swedish' },
@@ -31,9 +32,9 @@ export class LocationPage {
         public platform: Platform,
         public actionsheetCtrl: ActionSheetController,
         public customApi: CustomApiProvider,
+        public locationsProvider: LocationsProvider,
     ) {
         this.location = this.navParams.get('location');
-        this.showSaveButton = false;
     }
 
     ionViewDidLoad() {
@@ -43,40 +44,25 @@ export class LocationPage {
     setBackButtonAction(){
         this.navbarCustom.backButtonClick = () => {
             console.log("going back");
-            // Now we can control if we actually want to persist something to the db.
+            // Updating master-array and possibly backend via api
+            if(this.changeDetected)
+                this.updateLocation(this.location);
 
-            if(this.waitingForPersist())
-                // if we still have un-resolved promises from our api (or if we just have not even tried to save anything yet.)
-                // we let them finish first.
-                // pop spinner
-                // and when when all done .. pop back
-
+            //if communication with server takes time .. to navigation will happen instantly but spinner will stay on top until done
             this.navCtrl.pop()
         }
     }
 
-    waitingForPersist() {
-
+    updateLocation(location) {
+        this.locationsProvider.updateLocation(location).then( updatedLocationReturned => {
+            console.log("Updated location:"+JSON.stringify(updatedLocationReturned))
+            }
+        );
     }
-
-
 
     onChangeAnything(location) {
-        //if note is changed.. handle in some special way .. not sure yet.
-        // or .. show a button with this function .. to save changes .. which is not visible from start.
-        this.showSaveButton = true;
-        //console.log(location);
-    }
-
-    updateLocation(location) {
-        // update db.. hmm .. and somehow make prev page update to.
-        this.customApi.updateLocation(location).then( okVal=> {
-            console.log(okVal)
-            this.navCtrl.pop();
-            }
-           // instead of below .. make locationsPage reload locations in some way.
-           // response => { this.getItems(); }
-        );
+        this.changeDetected = true;
+        console.log('change detected . but dont do anything until be gp back');
     }
 
 

@@ -35,7 +35,7 @@
             </ion-item>
             <ion-item>
                 <ion-label color="primary" stacked>Status</ion-label>
-                <ion-select [(ngModel)]="location.status" placeholder="Current status">
+                <ion-select [ngModel]="location.status" placeholder="Current status" disabled>
                     <ion-option value="UNKNOWN">Unknown</ion-option>
                     <ion-option value="NOT_AT_HOME">Not at home</ion-option>
                     <ion-option value="NOT_INTERESTED">Not interested</ion-option>
@@ -46,7 +46,6 @@
             <ion-label>My Return Visit</ion-label>
             <ion-toggle checked="false"></ion-toggle>
         </ion-item>
-        <button *ngIf="showSaveButton" ion-button (click)="updateLocation(location)">Save changes</button>
     </ion-list>
 
     <ion-list id="visit-list">
