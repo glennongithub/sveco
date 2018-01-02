@@ -39,23 +39,24 @@ export class LocationsPage {
      *
      */
     getLocations() {
-        //needs to be recreated each time
-        this.loader = this.loadingCtrl.create({
-            content:"Talking to server",
-        });
-        //pop overlay
-        this.loader.present();
+        // //needs to be recreated each time
+        // this.loader = this.loadingCtrl.create({
+        //     content:"Talking to server",
+        // });
+        // //pop overlay
+        // this.loader.present();
+
 
         this.locationsProvider.loadRemoteLocations().then(
-            data => { //a successful connection
+            returnedCopyOfLocations => { //a successful connection
                 // now locations is loaded in locationsProvider
                 // we could use them from there .. or load them to local var
-                this.locations = this.locationsProvider.getLocations();
-                this.loader.dismiss();
+                this.locations = returnedCopyOfLocations;
+                //this.loader.dismiss();
                 /** always make sure to handle failed connections*/
             } , errdata => { //failed connection
                 //always remove overlay when done
-                this.loader.dismiss();
+                //this.loader.dismiss();
                 this.openErrorModal('Communication with server failed .. : '+errdata.statusText);
             }
         );

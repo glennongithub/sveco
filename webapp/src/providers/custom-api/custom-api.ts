@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { location } from "../../model/location.model";
+import {Observable} from "rxjs/Observable";
 
 
 /**
@@ -126,16 +127,16 @@ export class CustomApiProvider {
     }
 
     getLocations() {
-        let urlToCall:string = this.buildApiUrlForCommand('locations')
-        return this.http.get<location[]>(urlToCall);
+        let urlToCall:string = this.buildApiUrlForCommand('locations');
+        return this.observableToPromise<location[]>(this.http.get<location[]>(urlToCall));
     }
 
     updateLocation(location) {
-        //TOBECREATED
-        return new Promise((resolve, reject) => {
-            resolve('updated location');
-        });
-
+        let urlToCall:string = this.buildApiUrlForCommand('location/'+location.id); //TODO pass in as param instead
+        return this.observableToPromise<location>(this.http.post<location>(urlToCall, JSON.stringify(location)));
+        // To set header ad third param like this ..
+        //, {headers: new HttpHeaders().set('Authorization', 'my-auth-token'),
+        //    params: new HttpParams().set('id', '3'),}
     }
 
     buildApiUrlForCommand(command: string, params?:Map<string, string>)
@@ -161,6 +162,30 @@ export class CustomApiProvider {
     {
         let urlToCall:string = this.buildApiUrlForCommand('whoami')
         return this.http.get<WhoAmIResponse>(urlToCall);
+    }
+
+    /**
+     * Support functions
+     *
+     */
+
+    /**
+     *
+     */
+    observableToPromise<T>(passedObservable): Promise<T>{
+        return new Promise((resolve, reject) => {
+            passedObservable.subscribe( //when successfully retrieved data
+                data => {
+                    resolve(data);
+                },
+                errData => { //when something went wrong
+                    // by returning this on error we can use try catch on the returned promise .. which gives us cleaner code
+                    console.log(errData.toString());
+                    //always remove overlay when done
+                    reject("Connection to server failed ;( ! Errors was: "+errData.statusText);
+                }
+            )
+        });
     }
 
 }
