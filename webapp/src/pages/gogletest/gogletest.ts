@@ -60,5 +60,18 @@ export class GogletestPage {
                 });
             });
         }
-}
 
+    selectSearchResult (item) {
+        var request = { placeId: item.place_id };
+
+        var service = new google.maps.places.PlacesService(document.createElement('div'));
+        service.getDetails(request, callback);
+
+        function callback(place, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                console.log(place.formatted_address);
+                alert(place.formatted_address);
+            }
+        }
+    }
+}
