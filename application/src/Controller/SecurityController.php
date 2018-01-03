@@ -85,13 +85,13 @@ class SecurityController extends Controller
         /** @var EntityManager $em */
         $em = $this->get('doctrine')->getManager();
         // whatever *your* User object is
-        $user = new User('glenn');
+        $user = new User('andi');
         $plainPassword = 'password';
         $encoded = $encoder->encodePassword($user, $plainPassword);
 
         //$user->setUsername('glenn'); //done in constructor
-        $user->setEmail('glenn@edgeweb.se');
-        $user->setFullname('Glenn Vinbladh');
+        $user->setEmail('andreas@edgeweb.se');
+        $user->setFullname('Andreas Budin');
         $user->setPassword($encoded);
 
         $em->persist($user);
@@ -202,7 +202,8 @@ class SecurityController extends Controller
         //Success.. return the apiKey
         $response = new JsonResponse([
             'key' => $userEntity->getApiKey(),
-            'username' => $userEntity->getUsername()
+            'username' => $userEntity->getUsername(),
+            'fullname' => $userEntity->getFullname(),
         ]);
 
         return $CORSService->getResponseCORS($request, $response);

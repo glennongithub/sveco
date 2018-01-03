@@ -23,7 +23,7 @@ class VisitType extends AbstractType
                 // query choices from this entity
                 'class' => Location::class,
                 // use the location.address property as the visible option string
-                'choice_label' => 'address',
+                'choice_label' => 'formattedAddressString',
                 // used to render a select box, check boxes or radios
                 // 'multiple' => true,
                 // 'expanded' => true,

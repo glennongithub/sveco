@@ -33,7 +33,11 @@ export class LocationsPage {
     }
 
     viewLocation(location) {
-      this.navCtrl.push(this.locationPage, {location:location})
+      this.navCtrl.push(this.locationPage,
+          {
+              location:location,
+              authCustomUser:this.customApi.authCustomUser //pas logged in user to .. so we can use that in view conditions
+          })
     }
     /**
      *

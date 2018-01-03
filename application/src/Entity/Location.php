@@ -30,6 +30,14 @@ class Location
     protected $modified_at;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
+
+    /**
      * @var Visit[]
      *
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="location")
@@ -46,9 +54,25 @@ class Location
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="json_array", nullable=false)
      */
     protected $address;
+
+    /**
+     * This location is only set if we in future decide to allow to specify a pin-location that is diferent from the
+     * one sugested by google-api.  and will contain som parts of a pin or a full pin .. who knows :)
+     * @var string
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    protected $overRideLocation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=false)
+     */
+    protected $formattedAddressString;
 
     /**
      * @var Area
@@ -90,19 +114,34 @@ class Location
     protected $isBusiness;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+
+     */
+    protected $isReturnVisit;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $apartment_nr;
 
+
     /**
-     * Constructor
+     * Location constructor.
+     * @param array $address
+     * @param User $user
      */
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->updatedTimestamps();
-       $this->visits = new ArrayCollection();
+        $this->address = [];
+        $this->visits = new ArrayCollection();
+
+        $this->overRideLocation = []; //always set it to empty
+
 
     }
 
@@ -193,7 +232,7 @@ class Location
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getAddress()
     {
@@ -319,6 +358,70 @@ class Location
 
         //return latest visit-status
         return $latestKnownVisit->getStatus();
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormattedAddressString()
+    {
+        return $this->formattedAddressString;
+    }
+
+    /**
+     * @param string $formattedAddressString
+     */
+    public function setFormattedAddressString($formattedAddressString)
+    {
+        $this->formattedAddressString = $formattedAddressString;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsReturnVisit()
+    {
+        return $this->isReturnVisit;
+    }
+
+    /**
+     * @param bool $isReturnVisit
+     */
+    public function setIsReturnVisit($isReturnVisit)
+    {
+        $this->isReturnVisit = $isReturnVisit;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOverRideLocation()
+    {
+        return $this->overRideLocation;
+    }
+
+    /**
+     * @param string $overRideLocation
+     */
+    public function setOverRideLocation($overRideLocation)
+    {
+        $this->overRideLocation = $overRideLocation;
     }
 
 }

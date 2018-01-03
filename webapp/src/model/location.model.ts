@@ -1,15 +1,19 @@
 export interface location {
     id: number;
+    user: user;
     createdAt: object;
     modifiedAt: object;
     visits: visit[];
     language: string;
-    address: string;
+    address: {};
+    formattedAddressString: string,
     area: area;
     note: string;
     type: string;
     status: string;
     isBusiness: boolean;
+    isReturnVisit: boolean,
+    overRideLocation: {}, //not used for now.
     apartmentNr: string;
 }
 

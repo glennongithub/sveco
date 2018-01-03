@@ -67,6 +67,7 @@ export class SettingsPage {
             // even if we had some working before .. kill tha local storage values ..
             this.customApi.authCustomUser.userName = '';
             this.customApi.authCustomUser.apiKey = '';
+            this.customApi.authCustomUser.fullname = '';
             //if successful store in local storage
             this.storage.set(this.customApi.customLocalStorageIdentifier, JSON.stringify(this.customApi.authCustomUser));
 
@@ -78,11 +79,12 @@ export class SettingsPage {
             {
               this.customApi.authCustomUser.userName = jsonData.username;
               this.customApi.authCustomUser.apiKey = jsonData.key;
+              this.customApi.authCustomUser.fullname = jsonData.fullname;
               //if successful store in local storage
               this.storage.set(this.customApi.customLocalStorageIdentifier, JSON.stringify(this.customApi.authCustomUser)).then(() => {
                     // ok now we have a auth user stored ..
                     //pop infoModal and
-                    this.openInfoModal('You successfully authenticated as user: '+ this.customApi.authCustomUser.userName +'. This device will continue to be logged in as thi user until key is removed or changed.');
+                    this.openInfoModal('You successfully authenticated as user: '+ this.customApi.authCustomUser.fullname +'. This device will continue to be logged in as thi user until key is removed or changed.');
                     //behind it load HomePage
                     this.navCtrl.parent.select(0);
                   }

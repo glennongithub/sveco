@@ -20,6 +20,7 @@ interface WhoAmIResponse {
 
 interface getApiKeyResponse {
     username: string;
+    fullname: string;
     key: string;
     error: string;
 }
@@ -40,6 +41,7 @@ export class CustomApiProvider {
     customLocalStorageIdentifier:string; /* using this to be able to use unique ids in local storage */
     public authCustomUser:{
         userName: string,
+        fullname: string,
         apiKey: string
     };
 
@@ -49,6 +51,7 @@ export class CustomApiProvider {
         // the init method should be used to set it to proper values
         this.authCustomUser = {
             userName: '',
+            fullname: '',
             apiKey: ''
         };
         this.customApiEndpoint = 'https://sveco.test/';
@@ -96,6 +99,7 @@ export class CustomApiProvider {
                     //just set storedUsername to emptyString
                     this.authCustomUser.userName = '';
                     this.authCustomUser.apiKey = '';
+                    this.authCustomUser.fullname = '';
                 } else {
                     //ok .. we got something .. lets se if its something sane
                     let tmpAuthCustomUser = JSON.parse(authCustomUserFromStorage);
@@ -107,11 +111,13 @@ export class CustomApiProvider {
                         //not sure if object are just referenced as in php so copying val by val
                         this.authCustomUser.userName = tmpAuthCustomUser.userName;
                         this.authCustomUser.apiKey = tmpAuthCustomUser.apiKey;
+                        this.authCustomUser.fullname = tmpAuthCustomUser.fullname;
 
                     } else {
                         //no sane values .. treat as nothing saved
                         this.authCustomUser.userName = '';
                         this.authCustomUser.apiKey = '';
+                        this.authCustomUser.fullname = '';
                     }
                 }
                 //as last thing.. resolve to let caller continue

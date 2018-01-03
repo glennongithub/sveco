@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Area;
 use App\Entity\Location;
+use App\Entity\User;
 use App\Form\LocationType;
 use App\Services\CORSService;
 use function MongoDB\BSON\toJSON;
@@ -33,7 +34,9 @@ class LocationController extends Controller
     {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $location = new Location();
+        /** @var User $user */
+        $user = $this->getUser();
+        $location = new Location($user);
         $form = $this->createForm(LocationType::class, $location);
 
         $form->handleRequest($request);
@@ -97,6 +100,67 @@ class LocationController extends Controller
     }
 
     /**
+     * @Route("api/location", name="api/add_location")
+     * @Method("POST")
+     * @Security("has_role('ROLE_USER')")
+     * @param Request $request
+     * @param CORSService $CORSService
+     * @return Response
+     */
+    public function addLocationApiAction(Request $request, CORSService $CORSService)
+    {
+        // we need to be able to convert objects from repositories to serialized objects .. to ba able to create json of them
+        $encoders = [ new JsonEncoder()];
+        $normalizer = new ObjectNormalizer();
+        //Fix circular exception error throwing
+
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getVisits();
+        });
+
+        //$normalizer->setCircularReferenceLimit(1);
+        $serializer = new Serializer(array($normalizer), $encoders);
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $em = $this->getDoctrine()->getManager();
+        $body = $request->getContent();
+        $location = json_decode($body, true);
+
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        /** @var Location $locationEntity */
+        $locationEntity = new Location($user); //Setting it on creation .. only updating if Myreturnvisit set
+
+        /** @var Area $area */
+        $area = $em->getRepository(Area::class)->find($location['area']['id']);
+
+        // just set all fields manually for now .. maybe use formType later
+        $locationEntity->setAddress($location['address']);
+        $locationEntity->setLanguage($location['language']);
+        $locationEntity->setType($location['type']);
+        $locationEntity->setArea($area);
+        $locationEntity->setApartmentNr($location['apartmentNr']);
+        $locationEntity->setNote($location['note']);
+        $locationEntity->setIsBusiness($location['isBusiness']);
+
+        //persist
+        $em->persist($locationEntity);
+        $em->flush();
+
+        //refetch and return
+        $updatedLocation = $em->getRepository(Location::class)->find($location['id']);
+
+        $serializedLocation = $serializer->serialize($updatedLocation, 'json');
+
+        $response = JsonResponse::fromJsonString($serializedLocation);
+
+        return $CORSService->getResponseCORS($request, $response);
+    }
+
+    /**
      * Would like to have this as a PUT request .. but I cannot get it to work .. and since troubleshooting is very hard
      * when running via api i leave it for now
      *
@@ -136,6 +200,7 @@ class LocationController extends Controller
         $area = $em->getRepository(Area::class)->find($location['area']['id']);
 
         // just set all fields manually for now .. maybe use formType later
+        $locationEntity->setFormattedAddressString($location['formattedAddressString']);
         $locationEntity->setAddress($location['address']);
         $locationEntity->setLanguage($location['language']);
         $locationEntity->setType($location['type']);
@@ -143,6 +208,14 @@ class LocationController extends Controller
         $locationEntity->setApartmentNr($location['apartmentNr']);
         $locationEntity->setNote($location['note']);
         $locationEntity->setIsBusiness($location['isBusiness']);
+
+        //If isReturnVisit or user changed has changed .. we also update user
+        if($location['isReturnVisit'] != $locationEntity->getIsReturnVisit() || $location['user']['username'] != $locationEntity->getUser()->getUsername()){
+            /** @var User $user */
+            $user = $this->getUser();
+            $locationEntity->setUser($user);
+            $locationEntity->setIsReturnVisit($location['isReturnVisit']);
+        }
 
         //persist
         $em->persist($locationEntity);

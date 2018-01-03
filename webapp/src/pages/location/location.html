@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{location.address}}</ion-title>
+        <ion-title>{{location.formattedAddressString}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
     <ion-list>
             <ion-item>
                 <ion-label color="primary" stacked>Address</ion-label>
-                <ion-input type="text" [(ngModel)]="location.address" placeholder="Add address here"></ion-input>
+                <ion-input type="text" [(ngModel)]="location.formattedAddressString" placeholder="Add address here"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label color="primary" stacked>Type</ion-label>
@@ -42,9 +42,12 @@
                     <ion-option value="INTERESTED">Interested</ion-option>
                 </ion-select>
             </ion-item>
+        <ion-item *ngIf="location.isReturnVisit">
+            <ion-label>Is Return Visit to {{location.user.fullname}}</ion-label>
+        </ion-item>
         <ion-item>
-            <ion-label>My Return Visit</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
+            <ion-label>Is my return visit</ion-label>
+            <ion-toggle (ionChange)="changeReturnVisitStatusHandler(location)" [(ngModel)]="isMyReturnVisit" ></ion-toggle>
         </ion-item>
     </ion-list>
 

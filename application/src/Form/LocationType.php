@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Location;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,7 +25,9 @@ class LocationType extends AbstractType
                     'nan' => 'NOT_KNOWN',
                 ]
             ])
-            ->add('address')
+            ->add('formattedAddressString')
+            // TODO well we do not have anny add->address  since that should be a array with information fetched from googleAPI..
+                //just leave it empty for now uppdating that from API app
             ->add('area', EntityType::class, [
                 // query choices from this entity
                 'class' => Area::class,
@@ -44,7 +47,18 @@ class LocationType extends AbstractType
                     'house' => 'HOUSE',
                 ]
             ])
+            ->add('user', EntityType::class, [
+                // query choices from this entity
+                'class' => User::class,
+                // use the User.fullname property as the visible option string
+                'choice_label' => 'fullname',
+                //'attr' => ['' => 'disabled'], //nope .. this prevents it from be handled and saved properly
+                // used to render a select box, check boxes or radios
+                // 'multiple' => true,
+                // 'expanded' => true,
+            ])
             ->add('isBusiness' )
+            ->add('isReturnVisit' )
             ->add('save', SubmitType::class)
         ;
     }

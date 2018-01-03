@@ -23,7 +23,7 @@
                       <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-people"></ion-icon>
                   </ion-col>
                   <ion-col col-10>
-                      {{location.address}}
+                      {{location.formattedAddressString}}
                   </ion-col>
                   <ion-col col-1 class="visits">
                       {{ location.visits.length }}

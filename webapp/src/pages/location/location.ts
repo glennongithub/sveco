@@ -1,5 +1,5 @@
 import { Component, ViewChild  } from '@angular/core';
-import { NavController, NavParams, Navbar  } from 'ionic-angular';
+import { NavController, NavParams, Navbar, AlertController  } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { location } from "../../model/location.model";
@@ -17,6 +17,12 @@ import {LocationsProvider} from "../../providers/locations-provider/locations-pr
 export class LocationPage {
     @ViewChild(Navbar) navbarCustom: Navbar;
     location:location;
+    skipNextRvChange:boolean;
+    isMyReturnVisit: boolean;
+    authCustomUser:{
+        userName: string,
+        apiKey: string
+    };
     changeDetected: boolean = false
 
     supportedLanguages = [
@@ -28,6 +34,7 @@ export class LocationPage {
 
     constructor(
         public navCtrl: NavController,
+        private alertCtrl: AlertController,
         public navParams: NavParams,
         public platform: Platform,
         public actionsheetCtrl: ActionSheetController,
@@ -35,8 +42,13 @@ export class LocationPage {
         public locationsProvider: LocationsProvider,
     ) {
         this.location = this.navParams.get('location');
-    }
+        this.authCustomUser = this.navParams.get('authCustomUser');
 
+        // set if it is my RV
+        this.isMyReturnVisit = (this.location.user.username == this.customApi.authCustomUser.userName && this.location.isReturnVisit);
+        this.skipNextRvChange = false; // this is so when a isMyRv status is changed but cancelled we are not poping confirmations
+
+    }
     ionViewDidLoad() {
         this.setBackButtonAction()
     }
@@ -59,6 +71,103 @@ export class LocationPage {
             }
         );
     }
+
+    test() {
+        console.log(this.isMyReturnVisit);
+    }
+
+    changeReturnVisitStatusHandler(location){
+       if(this.skipNextRvChange)
+       {
+           // Make sure next change is handled
+           this.skipNextRvChange = false;
+       } else {
+           //
+           // It's not my RV already ..
+           //
+           // value of isMyReturnVissit is what it became after click .. so if true .. it mean it was false .. and now user want to claim it.
+           if(this.isMyReturnVisit)
+           {
+               // But it already was someone else's
+               if(location.isReturnVisit && location.user.username != this.customApi.authCustomUser.userName)
+               {
+                   let alert = this.alertCtrl.create({
+                       title: 'Confirm RV-claim',
+                       message: 'This is already a RV to : '+location.user.fullname+'. Are you sure you want to claim it as your\'s',
+                       buttons: [
+                           {
+                               text: 'Cancel',
+                               role: 'cancel',
+                               handler: () => {
+                                   console.log('Cancel clicked');
+                                   this.isMyReturnVisit = false; // force it back to not mine RV
+                                   this.skipNextRvChange = true;
+
+                               }
+                           },
+                           {
+                               text: 'Claim',
+                               handler: () => {
+                                   console.log('Claim clicked and set to new user');
+                                   this.changeReturnVisitStatus(location); // perform necessary actions to update rv fields
+                               }
+                           }
+                       ]
+                   });
+                   alert.present();
+               } else {
+                   // No one else already had it .. so just update it to be ours
+                   this.changeReturnVisitStatus(location); // perform necessary actions to update rv fields
+               }
+               // End of making it my RV
+               ///////////////////////////
+
+           } else {
+               ///////////////////////////////////////////
+               //it was our RV but we want to remove it
+               // always require confirm
+
+               let alert = this.alertCtrl.create({
+                   title: 'Confirm RV removal',
+                   message: 'Are you sure you want to remove this as you\'r RV',
+                   buttons: [
+                       {
+                           text: 'Cancel',
+                           role: 'cancel',
+                           handler: () => {
+                               console.log('Cancel clicked');
+                               this.isMyReturnVisit = true; //force it back
+                               this.skipNextRvChange = true;
+                           }
+                       },
+                       {
+                           text: 'Remove',
+                           handler: () => {
+                               console.log('RV removed from user');
+                               this.changeReturnVisitStatus(location); // perform necessary actions to update rv fields
+                           }
+                       }
+                   ]
+               });
+               alert.present();
+           }
+       }
+
+    }
+
+    changeReturnVisitStatus(location) {
+        this.changeDetected = true; //make sure we run update when clicking back
+        // setting both those values below .. should force updating of isReturnVisit and user on server-side.
+        location.isReturnVisit = this.isMyReturnVisit;
+        location.user.username = this.customApi.authCustomUser.userName;
+        //also setting fullname so that local data display correctly without reload
+        location.user.fullname = this.customApi.authCustomUser.fullname;
+        // maybe also kill id .. so that we crash if we try to use that on local copy of user
+        // since the id now is not correctly connected to the id in db ..
+        location.user.id = null;
+    }
+
+
 
     onChangeAnything(location) {
         this.changeDetected = true;

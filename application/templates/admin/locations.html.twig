@@ -16,7 +16,7 @@
     <ul>
         {% for location in locations %}
             <li>
-                Address: {{ location.area.areaName }}, Address: {{ location.address }}, Type: {{ location.type }}
+                Address: {{ location.area.areaName }}, Address: {{ location.formattedAddressString }}, Type: {{ location.type }}
             </li>
         {% endfor %}
     </ul>
