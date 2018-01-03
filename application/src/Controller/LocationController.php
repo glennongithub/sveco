@@ -1,9 +1,11 @@
 <?PHP
 namespace App\Controller;
 
+use App\Entity\Area;
 use App\Entity\Location;
 use App\Form\LocationType;
 use App\Services\CORSService;
+use function MongoDB\BSON\toJSON;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +73,7 @@ class LocationController extends Controller
      */
     public function locationsApiAction(Request $request, CORSService $CORSService)
     {
-        // we need to be able to convert obects from repositories to serialzed objects .. to ba able to create json of them
+        // we need to be able to convert objects from repositories to serialized objects .. to ba able to create json of them
         $encoders = [ new JsonEncoder()];
         $normalizer = new ObjectNormalizer();
         //Fix circular exception error throwing
@@ -91,6 +93,68 @@ class LocationController extends Controller
 
         $response = JsonResponse::fromJsonString($serializedLocations);
         //$response = new JsonResponse($serializedLocations);
+        return $CORSService->getResponseCORS($request, $response);
+    }
+
+    /**
+     * Would like to have this as a PUT request .. but I cannot get it to work .. and since troubleshooting is very hard
+     * when running via api i leave it for now
+     *
+     * @Route("api/location/{id}", name="api/update_location")
+     * @Method("POST")
+     * @Security("has_role('ROLE_USER')")
+     * @param Request $request
+     * @param CORSService $CORSService
+     * @param int $id
+     * @return Response
+     */
+    public function updateLocationApiAction(Request $request, CORSService $CORSService, $id)
+    {
+        // we need to be able to convert objects from repositories to serialized objects .. to ba able to create json of them
+        $encoders = [ new JsonEncoder()];
+        $normalizer = new ObjectNormalizer();
+        //Fix circular exception error throwing
+
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getVisits();
+        });
+
+        //$normalizer->setCircularReferenceLimit(1);
+        $serializer = new Serializer(array($normalizer), $encoders);
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $em = $this->getDoctrine()->getManager();
+        $body = $request->getContent();
+        $location = json_decode($body, true);
+
+
+        /** @var Location $locationEntity */
+        $locationEntity = $em->getRepository(Location::class)->find($id);
+
+        /** @var Area $area */
+        $area = $em->getRepository(Area::class)->find($location['area']['id']);
+
+        // just set all fields manually for now .. maybe use formType later
+        $locationEntity->setAddress($location['address']);
+        $locationEntity->setLanguage($location['language']);
+        $locationEntity->setType($location['type']);
+        $locationEntity->setArea($area);
+        $locationEntity->setApartmentNr($location['apartmentNr']);
+        $locationEntity->setNote($location['note']);
+        $locationEntity->setIsBusiness($location['isBusiness']);
+
+        //persist
+        $em->persist($locationEntity);
+        $em->flush();
+
+        //refetch and return
+        $updatedLocation = $em->getRepository(Location::class)->find($location['id']);
+
+        $serializedLocation = $serializer->serialize($updatedLocation, 'json');
+
+        $response = JsonResponse::fromJsonString($serializedLocation);
+
         return $CORSService->getResponseCORS($request, $response);
     }
 }

@@ -25,7 +25,7 @@ export class LocationsProvider {
     }
 
     // make async so we always return a promise and can await if we want.
-    async updateLocation(location: location, waitForResolve: boolean = true) {
+    async updateLocation(location: location, waitForResolve: boolean = false) {
         let updatedLocation;
         // first update corresponding item in this master array
         // and take back the updated item.

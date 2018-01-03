@@ -28,20 +28,20 @@ export class GogletestPage {
       this.autocomplete = { input: '' };
       this.autocompleteItems = [];
       this.geolocation.getCurrentPosition().then((resp) => {
-              this.lat=resp.coords.latitude;
-              this.long=resp.coords.longitude;
+          this.lat=resp.coords.latitude;
+          this.long=resp.coords.longitude;
       }).catch((error) => {
           console.log('Error getting location', error);
       });
   }
 
     ionViewDidLoad() {
-    console.log('ionViewDidLoad GogletestPage');
+        console.log('ionViewDidLoad GoogletestPage');
     }
 
     updateSearchResults(){
 
-        var defaultBounds = new google.maps.LatLngBounds(
+        let defaultBounds = new google.maps.LatLngBounds(
             new google.maps.LatLng(this.lat, this.long)
         );
 
@@ -62,16 +62,52 @@ export class GogletestPage {
         }
 
     selectSearchResult (item) {
-        var request = { placeId: item.place_id };
+        let request = { placeId: item.place_id };
+        console.log(item.place_id);
 
-        var service = new google.maps.places.PlacesService(document.createElement('div'));
-        service.getDetails(request, callback);
+        let service = new google.maps.places.PlacesService(document.createElement('div'));
 
-        function callback(place, status) {
+        service.getDetails(request, (place, status) => {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log(place.formatted_address);
-                alert(place.formatted_address);
+
+                let dataToSaveInDB = this.parsePlaceToCustomData(place);
+                //tack on placd_id used when retrieving this place
+                dataToSaveInDB['place_id'] = item.place_id;
+                console.log(dataToSaveInDB);
             }
-        }
+        });
+    }
+
+    parsePlaceToCustomData(place) {
+
+        /*
+          Define what fields/types in address_component part of the returned place we want to extract
+          and whether to use long or short name
+           */
+        let address_parts = {
+            street_number: 'short_name', //street-nr
+            route: 'long_name', //Typ street-name
+            postal_town: 'long_name', //city
+            administrative_area_level_1: 'short_name', //typ skåne län
+            country: 'long_name', //country
+            postal_code: 'short_name' //postal_code
+        };
+
+        // the parsed obect we want to save in DB
+        let parsedAddress = { /* init as empty and fill with same keys as in address_parts above*/ };
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        place.address_components.forEach((addressRow)=> {
+            let addressType = addressRow.types[0];
+            if (address_parts[addressType] ) {
+                parsedAddress[addressType] = addressRow[address_parts[addressType]];
+            }
+        });
+
+        //add on long, lat
+        parsedAddress['geolocation'] = {lng:place.geometry.location.lng(), lat:place.geometry.location.lat()};
+
+        return parsedAddress;
     }
 }
