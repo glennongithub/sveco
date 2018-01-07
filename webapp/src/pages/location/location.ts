@@ -2,8 +2,11 @@ import { Component, ViewChild  } from '@angular/core';
 import { NavController, NavParams, Navbar, AlertController  } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
-import { location } from "../../model/location.model";
+import { location, area } from "../../model/location.model";
 import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
+
+import { ModalErrorPage } from "../modal-error/modal-error";
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 
 
@@ -32,9 +35,12 @@ export class LocationPage {
         {languageValue: 'UNKNOWN', languageLabel: 'Unknown' },
     ];
 
+    availableAreas : area[];
+
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
+        private modal: ModalController,
         public navParams: NavParams,
         public platform: Platform,
         public actionsheetCtrl: ActionSheetController,
@@ -43,6 +49,13 @@ export class LocationPage {
     ) {
         this.location = this.navParams.get('location');
         this.authCustomUser = this.navParams.get('authCustomUser');
+        this.locationsProvider.loadRemoteAreas().then(returnedCopyOfAreas => {
+            this.availableAreas = returnedCopyOfAreas;
+            console.log(returnedCopyOfAreas);
+        }, errdata => { //failed connection
+            //always remove overlay when done
+            this.openErrorModal('Communication with server failed .. : '+errdata.statusText);
+        });
 
         // set if it is my RV
         this.isMyReturnVisit = (this.location.user.username == this.customApi.authCustomUser.userName && this.location.isReturnVisit);
@@ -171,7 +184,7 @@ export class LocationPage {
 
     onChangeAnything(location) {
         this.changeDetected = true;
-        console.log('change detected . but dont do anything until be gp back');
+        console.log('change detected . but dont do anything until be go back');
     }
 
 
@@ -220,5 +233,10 @@ export class LocationPage {
             ]
         });
         actionSheet.present();
+    }
+
+    openErrorModal(errorMessage: string) {
+        const errorModal = this.modal.create(ModalErrorPage, {errorMessage: errorMessage});
+        errorModal.present();
     }
 }

@@ -18,6 +18,14 @@
                 </ion-select>
             </ion-item>
             <ion-item>
+                <ion-label color="primary" stacked>Area</ion-label>
+                <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.area.id" placeholder="Choose Area">
+                    <ion-option *ngFor = "let area of availableAreas" [value]="area.id">
+                        {{area.areaName}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
                 <ion-label color="primary" stacked>Language</ion-label>
                 <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.language"  placeholder="Choose language">
                     <ion-option *ngFor = "let supportedLanguage of supportedLanguages" [value]="supportedLanguage.languageValue">

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { location } from "../../model/location.model";
+import { location, area } from "../../model/location.model";
 import {Observable} from "rxjs/Observable";
 
 
@@ -137,6 +137,13 @@ export class CustomApiProvider {
         return this.observableToPromise<location[]>(this.http.get<location[]>(urlToCall));
     }
 
+    getAreas(searchString = '') {
+        //don't tac on / if no searchstring provided
+        searchString = (searchString != '')? '/' + searchString : ''; 
+        let urlToCall:string = this.buildApiUrlForCommand('areas'+ searchString);
+        return this.observableToPromise<area[]>(this.http.get<area[]>(urlToCall));
+    }
+
     updateLocation(location) {
         let urlToCall:string = this.buildApiUrlForCommand('location/'+location.id); //TODO pass in as param instead
         return this.observableToPromise<location>(this.http.post<location>(urlToCall, JSON.stringify(location)));
@@ -187,7 +194,6 @@ export class CustomApiProvider {
                 errData => { //when something went wrong
                     // by returning this on error we can use try catch on the returned promise .. which gives us cleaner code
                     console.log(errData.toString());
-                    //always remove overlay when done
                     reject("Connection to server failed ;( ! Errors was: "+errData.statusText);
                 }
             )

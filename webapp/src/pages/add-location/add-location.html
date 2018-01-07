@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+      <ion-title>Add Location</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [(ngModel)]="location">
+    <ion-list>
+      <ion-item>
+          <ion-label color="primary" stacked>Address</ion-label>
+          <ion-input name="formattedAddressString" type="text" placeholder="Add address here"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label color="primary" stacked>Type</ion-label>
+          <ion-select name="type" placeholder="Choose type">
+              <ion-option value="HOUSE">House</ion-option>
+              <ion-option value="APARTMENT">Apartment</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label color="primary" stacked>Language</ion-label>
+          <ion-select name="language" placeholder="Choose language">
+              <ion-option *ngFor = "let supportedLanguage of supportedLanguages" [value]="supportedLanguage.languageValue">
+                  {{supportedLanguage.languageLabel}}
+              </ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label>Business</ion-label>
+          <ion-toggle name="isBusiness"></ion-toggle>
+      </ion-item>
+      <ion-item>
+          <ion-label color="primary" stacked>Note</ion-label>
+          <ion-textarea name="note" placeholder="Add note"></ion-textarea>
+      </ion-item>
+      <ion-item>
+          <ion-label color="primary" stacked>Status</ion-label>
+          <ion-select name="status" placeholder="Current status" disabled>
+              <ion-option value="UNKNOWN">Unknown</ion-option>
+              <ion-option value="NOT_AT_HOME">Not at home</ion-option>
+              <ion-option value="NOT_INTERESTED">Not interested</ion-option>
+              <ion-option value="INTERESTED">Interested</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label>Is my return visit</ion-label>
+          <ion-toggle name="isReturnVisit" ></ion-toggle>
+      </ion-item>
+    </ion-list> 
+  </form>
+
+</ion-content>

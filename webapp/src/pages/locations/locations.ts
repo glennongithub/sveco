@@ -8,6 +8,7 @@ import { LocationPage } from '../location/location';
 import {Storage} from "@ionic/storage";
 import {location} from "../../model/location.model";
 import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
+import { AddLocationPage } from '../add-location/add-location';
 
 @Component({
   selector: 'page-locations',
@@ -18,6 +19,7 @@ import {LocationsProvider} from "../../providers/locations-provider/locations-pr
 export class LocationsPage {
 
     locationPage = LocationPage;
+    addLocationPage = AddLocationPage;
     locations:location[];
     loader:any;
 
@@ -39,18 +41,19 @@ export class LocationsPage {
               authCustomUser:this.customApi.authCustomUser //pas logged in user to .. so we can use that in view conditions
           })
     }
+
+    addLocation() {
+        this.navCtrl.push(this.addLocationPage,
+            {
+                //Probably wont need any data .. but just keep passing user for now
+                authCustomUser:this.customApi.authCustomUser //pas logged in user to .. so we can use that in view conditions
+            })
+      }
+
     /**
      *
      */
     getLocations() {
-        // //needs to be recreated each time
-        // this.loader = this.loadingCtrl.create({
-        //     content:"Talking to server",
-        // });
-        // //pop overlay
-        // this.loader.present();
-
-
         this.locationsProvider.loadRemoteLocations().then(
             returnedCopyOfLocations => { //a successful connection
                 // now locations is loaded in locationsProvider

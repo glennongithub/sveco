@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {location} from "../../model/location.model";
+import {location, area} from "../../model/location.model";
 import {CustomApiProvider} from "../custom-api/custom-api";
 import {LoadingController} from "ionic-angular";
 
@@ -8,6 +8,7 @@ import {LoadingController} from "ionic-angular";
 export class LocationsProvider {
 
     private locations:location[];
+    private areas:area[];
     loader:any;
 
     constructor(
@@ -16,8 +17,9 @@ export class LocationsProvider {
     ) {
 
         console.log('constructing Locations Provider');
-
-
+        //why not always load remote data to local .. if we want to rel on local data
+        //this.loadRemoteAreas();
+        //this.loadRemoteLocations();
     }
 
     addLocation(location: location) {
@@ -62,6 +64,10 @@ export class LocationsProvider {
         return this.locations.slice(); //slice apparently returns a copy instead of a ref.
     }
 
+    getAreas() {
+        return this.areas.slice(); //slice apparently returns a copy instead of a ref.
+    }
+
     async loadRemoteLocations() {
         try {
             // pop spinner
@@ -74,6 +80,23 @@ export class LocationsProvider {
             // remove spinner
             this.loader.dismiss();
             return this.getLocations();
+        } catch (e) {
+            console.log(e.toString())
+        }
+    }
+
+    async loadRemoteAreas() {
+        try {
+            // pop spinner
+            this.loader = this.loadingCtrl.create({
+                content:"Talking to server: loading areas",
+            });
+            //pop overlay
+            this.loader.present();
+            this.areas = await this.customApi.getAreas();
+            // remove spinner
+            this.loader.dismiss();
+            return this.getAreas();
         } catch (e) {
             console.log(e.toString())
         }

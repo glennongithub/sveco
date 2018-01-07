@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
-import { HttpModule } from '@angular/http'; /*this is not added automatically when generating a provider .. but needed :(*/
+/*this is not added automatically when generating a provider .. but needed :(*/
+import { HttpModule } from '@angular/http';  //Not used anymore .. using httpClientModule instead
 import { HttpClientModule } from '@angular/common/http';
 
 import { LocationsPage } from '../pages/locations/locations';
@@ -22,6 +23,7 @@ import { CustomApiProvider } from '../providers/custom-api/custom-api';
 import {LocationsProvider} from "../providers/locations-provider/locations-provider";
 import {GogletestPage} from "../pages/gogletest/gogletest";
 import { Geolocation } from '@ionic-native/geolocation';
+import { AddLocationPage } from '../pages/add-location/add-location';
 
 @NgModule({
   declarations: [
@@ -33,14 +35,15 @@ import { Geolocation } from '@ionic-native/geolocation';
       LocationPage,
       ModalErrorPage,
       ModalInfoPage,
-      GogletestPage
+      GogletestPage,
+      AddLocationPage
   ],
   imports: [
       BrowserModule,
       IonicModule.forRoot(MyApp),
       HttpModule, /*this is not added automatically when generateing a provider .. but needed :(*/
       HttpClientModule,
-      IonicStorageModule.forRoot()
+      IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,7 +55,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     LocationPage,
     ModalErrorPage,
     ModalInfoPage,
-    GogletestPage
+    GogletestPage,
+    AddLocationPage
   ],
   providers: [
       StatusBar,

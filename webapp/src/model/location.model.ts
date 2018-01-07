@@ -1,9 +1,9 @@
 export interface location {
-    id: number;
-    user: user;
-    createdAt: object;
-    modifiedAt: object;
-    visits: visit[];
+    id?: number;
+    user?: user;
+    createdAt?: object;
+    modifiedAt?: object;
+    visits?: visit[];
     language: string;
     address: {};
     formattedAddressString: string,
@@ -13,7 +13,7 @@ export interface location {
     status: string;
     isBusiness: boolean;
     isReturnVisit: boolean,
-    overRideLocation: {}, //not used for now.
+    overRideLocation?: {}, //not used for now.
     apartmentNr: string;
 }
 
@@ -25,7 +25,7 @@ interface user {
     * enough to handle on server-side  maybe some link to user-settings or so. but nothing for now.*/
 }
 
-interface visit {
+export interface visit {
     id: number;
     user: user;
     visitDate: object;
@@ -33,7 +33,7 @@ interface visit {
     note: string;
 }
 
-interface area {
+export interface area {
     id: number;
     areaName: string;
 }
