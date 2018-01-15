@@ -22,8 +22,38 @@ export class LocationsProvider {
         //this.loadRemoteLocations();
     }
 
-    addLocation(location: location) {
+    // make async so we always return a promise and can await if we want.
+    async addLocation(addedLocation: location, waitForResolve: boolean = true) {
+        //make sure to update local copy with it
+        this.locations.push(addedLocation);
 
+        // Now do the api-stuff  comment this if we don't use it
+        try {
+            // then make sure backend is updated to.
+            // should return the updated location
+            if(waitForResolve) {
+                // pop spinner
+                this.loader = this.loadingCtrl.create({
+                    content:"Talking to server: adding location",
+                });
+                //pop overlay
+                this.loader.present();
+                // wait for com to finish
+                addedLocation = await this.customApi.addLocation(addedLocation);
+                // remove spinner
+                this.loader.dismiss();
+
+            }
+            else
+                this.customApi.addLocation(addedLocation); //ignoring promise intentionally
+
+
+        } catch (e) {
+            console.log('catch in locations-provider .. addLocation waiting for resolve. :'+e.toString());
+        }
+
+        //always return the added location
+        return addedLocation;
     }
 
     // make async so we always return a promise and can await if we want.
@@ -61,6 +91,10 @@ export class LocationsProvider {
     }
 
     getLocations() {
+        //if nothing loaded to locations yet. just return empty array
+        if (!this.locations)
+            return this.locations;
+        //else return copy of locations
         return this.locations.slice(); //slice apparently returns a copy instead of a ref.
     }
 

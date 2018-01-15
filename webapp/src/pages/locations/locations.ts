@@ -30,8 +30,20 @@ export class LocationsPage {
                   public loadingCtrl: LoadingController,
                   private customApi: CustomApiProvider,
                   private locationsProvider: LocationsProvider) {
+        // Nothing for now
+    }
 
-      this.getLocations();
+    ionViewWillEnter()
+    {
+        console.log(' About to show page . ');
+        //here we will always make sure to reload the data we need from remote locations.
+        // To make sure se show the most current data.
+        // in this case just load from locationProvider localy .. which should hold updated data
+
+        //for now just always use re-reload from remote
+        this.getLocations();
+
+
     }
 
     viewLocation(location) {
@@ -46,7 +58,7 @@ export class LocationsPage {
         this.navCtrl.push(this.addLocationPage,
             {
                 //Probably wont need any data .. but just keep passing user for now
-                authCustomUser:this.customApi.authCustomUser //pas logged in user to .. so we can use that in view conditions
+                authCustomUser:this.customApi.authCustomUser //pass logged in user to .. so we can use that in view conditions
             })
       }
 
@@ -54,6 +66,7 @@ export class LocationsPage {
      *
      */
     getLocations() {
+        // TODO adjust this to somehow only load locations according to filter
         this.locationsProvider.loadRemoteLocations().then(
             returnedCopyOfLocations => { //a successful connection
                 // now locations is loaded in locationsProvider

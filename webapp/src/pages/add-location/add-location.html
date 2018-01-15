@@ -2,25 +2,37 @@
   <ion-navbar>
       <ion-title>Add Location</ion-title>
   </ion-navbar>
+    <!--<ion-toolbar>
+        <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="updateSearchResults()" placeholder="Search for a place"></ion-searchbar>
+    </ion-toolbar>-->
 </ion-header>
 
 <ion-content>
-  <form [(ngModel)]="location">
     <ion-list>
-      <ion-item>
-          <ion-label color="primary" stacked>Address</ion-label>
-          <ion-input name="formattedAddressString" type="text" placeholder="Add address here"></ion-input>
-      </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Address</ion-label>
+            <ion-input (click)="showAddressModal()" [(ngModel)]="address.input" type="text" placeholder="Pick an address"></ion-input>
+        </ion-item>
+
+        <ion-item>{{location.address | json}}</ion-item>
       <ion-item>
           <ion-label color="primary" stacked>Type</ion-label>
-          <ion-select name="type" placeholder="Choose type">
+          <ion-select [(ngModel)]="location.type" placeholder="Choose type">
               <ion-option value="HOUSE">House</ion-option>
               <ion-option value="APARTMENT">Apartment</ion-option>
           </ion-select>
       </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Area</ion-label>
+            <ion-select [(ngModel)]="selectedAreaId" placeholder="Choose area">
+                <ion-option *ngFor = "let area of availableAreas" [value]="area.id">
+                    {{area.areaName}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
       <ion-item>
           <ion-label color="primary" stacked>Language</ion-label>
-          <ion-select name="language" placeholder="Choose language">
+          <ion-select [(ngModel)]="location.language" placeholder="Choose language">
               <ion-option *ngFor = "let supportedLanguage of supportedLanguages" [value]="supportedLanguage.languageValue">
                   {{supportedLanguage.languageLabel}}
               </ion-option>
@@ -28,26 +40,28 @@
       </ion-item>
       <ion-item>
           <ion-label>Business</ion-label>
-          <ion-toggle name="isBusiness"></ion-toggle>
+          <ion-toggle [(ngModel)]="location.isBusiness" ></ion-toggle>
       </ion-item>
       <ion-item>
           <ion-label color="primary" stacked>Note</ion-label>
-          <ion-textarea name="note" placeholder="Add note"></ion-textarea>
+          <ion-textarea [(ngModel)]="location.note" placeholder="Add note"></ion-textarea>
       </ion-item>
       <ion-item>
           <ion-label color="primary" stacked>Status</ion-label>
-          <ion-select name="status" placeholder="Current status" disabled>
+          <ion-select [(ngModel)]="location.status" placeholder="Current status">
               <ion-option value="UNKNOWN">Unknown</ion-option>
+              <!-- These are not available to set for a newly created location .. but are set to what next visit is telling
               <ion-option value="NOT_AT_HOME">Not at home</ion-option>
               <ion-option value="NOT_INTERESTED">Not interested</ion-option>
               <ion-option value="INTERESTED">Interested</ion-option>
+              -->
           </ion-select>
       </ion-item>
       <ion-item>
           <ion-label>Is my return visit</ion-label>
-          <ion-toggle name="isReturnVisit" ></ion-toggle>
+          <ion-toggle [(ngModel)]="location.isReturnVisit" ></ion-toggle>
       </ion-item>
-    </ion-list> 
-  </form>
+        <button ion-button type="button" (click)="addLocation(location)" lock>Add User</button>
+    </ion-list>
 
 </ion-content>

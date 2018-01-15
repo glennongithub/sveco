@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ModalController
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { ModalErrorPage } from "../modal-error/modal-error";
 import {GogletestPage} from "../gogletest/gogletest";
+import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
 
 @Component({
   selector: 'page-home',
@@ -10,21 +11,36 @@ import {GogletestPage} from "../gogletest/gogletest";
 })
 export class HomePage {
 
-  loader: any;
+    loader: any;
 
-  constructor(public navCtrl: NavController,
+    constructor(public navCtrl: NavController,
               private modal: ModalController,
               public loadingCtrl: LoadingController,
+              private locationsProvider: LocationsProvider,
               private customApi: CustomApiProvider) {
-    //needs to be recreated each time
-    this.loader = this.loadingCtrl.create({
-      content:"Talking to server",
-    });
-    //pop overlay
-    this.loader.present();
 
-    this.customApi.init()
+
+        //needs to be recreated each time
+        this.loader = this.loadingCtrl.create({
+        content:"Talking to server",
+        });
+
+        //maybe move those init and load-from-server methods to some more appropriate place. maybe tabs page
+        // for now use home page as init page
+
+        //pop overlay
+        this.loader.present();
+
+        this.customApi.init()
         .then(message => {
+            //all fine .. also load areas to locationProvider
+            this.locationsProvider.loadRemoteAreas().then(returnedCopyOfAreas => {
+                console.log(returnedCopyOfAreas);
+            }, errdata => { //failed connection
+                console.log('Communication with server failed when loading areas.. : '+errdata.statusText);
+                //always remove overlay when done
+                //this.openErrorModal('Communication with server failed .. : '+errdata.statusText);
+            });
           //all fine just remove overlay
           this.loader.dismiss();
         })
@@ -40,10 +56,14 @@ export class HomePage {
           const errorModal = this.modal.create(ModalErrorPage, {errorMessage: message});
           errorModal.present();
         });
-  }
 
-  open_googletestpage() {
+
+
+
+    }
+
+    open_googletestpage() {
       this.navCtrl.push(GogletestPage)
-  }
+    }
 
 }

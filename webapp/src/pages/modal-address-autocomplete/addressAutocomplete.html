@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Enter address</ion-title>
+        <ion-searchbar [(ngModel)]="autocomplete.query" [showCancelButton]="true" (ionInput)="updateSearch()" (ionCancel)="dismiss()"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let item of autocompleteItems" tappable (click)="chooseItem(item)">
+            {{ item.description }}
+        </ion-item>
+    </ion-list>
+    <button ion-button type="button" (click)="useSelectedAddress()" lock>Use address</button>
+    <div id="map" data-tap-disabled="true" style="height: 100% "></div>
+</ion-content>
+

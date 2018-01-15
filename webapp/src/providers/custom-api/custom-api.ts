@@ -152,6 +152,16 @@ export class CustomApiProvider {
         //    params: new HttpParams().set('id', '3'),}
     }
 
+    addLocation(location)
+    {
+        let urlToCall:string = this.buildApiUrlForCommand('location');
+        console.log('about to post data:'+ JSON.stringify(location));
+        return this.observableToPromise<location>(this.http.post<location>(urlToCall, JSON.stringify(location)));
+        // To set header ad third param like this ..
+        //, {headers: new HttpHeaders().set('Authorization', 'my-auth-token'),
+        //    params: new HttpParams().set('id', '3'),}
+    }
+
     buildApiUrlForCommand(command: string, params?:Map<string, string>)
     {
 

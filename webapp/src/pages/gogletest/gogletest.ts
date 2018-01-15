@@ -23,17 +23,18 @@ export class GogletestPage {
     lat:any;
     long:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private zone: NgZone, private geolocation: Geolocation) {
-      this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
-      this.autocomplete = { input: '' };
-      this.autocompleteItems = [];
-      this.geolocation.getCurrentPosition().then((resp) => {
-          this.lat=resp.coords.latitude;
-          this.long=resp.coords.longitude;
-      }).catch((error) => {
-          console.log('Error getting location', error);
-      });
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams, private zone: NgZone, private geolocation: Geolocation) {
+          this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+          this.autocomplete = { input: '' };
+          this.autocompleteItems = [];
+          this.geolocation.getCurrentPosition().then((resp) => {
+              this.lat=resp.coords.latitude;
+              this.long=resp.coords.longitude;
+          }).catch((error) => {
+              console.log('Error getting location', error);
+          });
+
+    }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad GoogletestPage');
@@ -59,7 +60,7 @@ export class GogletestPage {
                     });
                 });
             });
-        }
+    }
 
     selectSearchResult (item) {
         let request = { placeId: item.place_id };
