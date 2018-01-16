@@ -138,6 +138,7 @@ class Location
     {
         $this->updatedTimestamps();
         $this->address = [];
+        $this->user = $user;
         $this->visits = new ArrayCollection();
 
         $this->overRideLocation = []; //always set it to empty

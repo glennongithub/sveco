@@ -33,15 +33,15 @@ export class LocationsProvider {
             // should return the updated location
             if(waitForResolve) {
                 // pop spinner
-                this.loader = this.loadingCtrl.create({
+                let addLoader = this.loadingCtrl.create({
                     content:"Talking to server: adding location",
                 });
                 //pop overlay
-                this.loader.present();
+                addLoader.present();
                 // wait for com to finish
                 addedLocation = await this.customApi.addLocation(addedLocation);
                 // remove spinner
-                this.loader.dismiss();
+                addLoader.dismiss();
 
             }
             else
@@ -69,15 +69,16 @@ export class LocationsProvider {
                 // should return the updated location
                 if(waitForResolve) {
                     // pop spinner
-                    this.loader = this.loadingCtrl.create({
+                    // trying to use a local spinner so we don't dismiss it from somewhere else
+                    let updateLoader = this.loadingCtrl.create({
                         content:"Talking to server",
                     });
                     //pop overlay
-                    this.loader.present();
+                    updateLoader.present();
                     // wait for com to finish
                     updatedLocation = await this.customApi.updateLocation(location);
                     // remove spinner
-                    this.loader.dismiss();
+                    updateLoader.dismiss();
 
                 }
                 else
@@ -105,14 +106,14 @@ export class LocationsProvider {
     async loadRemoteLocations() {
         try {
             // pop spinner
-            this.loader = this.loadingCtrl.create({
+            let loadLocationsLoader = this.loadingCtrl.create({
                 content:"Talking to server: loading locations",
             });
             //pop overlay
-            this.loader.present();
+            loadLocationsLoader.present();
             this.locations = await this.customApi.getLocations();
             // remove spinner
-            this.loader.dismiss();
+            loadLocationsLoader.dismiss();
             return this.getLocations();
         } catch (e) {
             console.log(e.toString())
@@ -122,14 +123,14 @@ export class LocationsProvider {
     async loadRemoteAreas() {
         try {
             // pop spinner
-            this.loader = this.loadingCtrl.create({
+            let loadAreasLoader = this.loadingCtrl.create({
                 content:"Talking to server: loading areas",
             });
             //pop overlay
-            this.loader.present();
+            loadAreasLoader.present();
             this.areas = await this.customApi.getAreas();
             // remove spinner
-            this.loader.dismiss();
+            loadAreasLoader.dismiss();
             return this.getAreas();
         } catch (e) {
             console.log(e.toString())

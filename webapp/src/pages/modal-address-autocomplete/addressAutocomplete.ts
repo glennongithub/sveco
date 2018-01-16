@@ -1,6 +1,7 @@
 import {Component, NgZone} from '@angular/core';
-import {ViewController} from 'ionic-angular';
+import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 import {Geolocation} from "@ionic-native/geolocation";
+import {location} from "../../model/location.model";
 
 @Component({
     selector: 'page-addressAutocomplete',
@@ -17,32 +18,101 @@ export class AddressAutocompletePage {
     };
     map:any;
     marker:any;
+    location:any;
 
     selectedItem:any;
     dataToSaveInDB:any;
 
-    constructor (public viewCtrl: ViewController, private zone: NgZone, private geolocation: Geolocation,) {
+    constructor (public viewCtrl: ViewController, private zone: NgZone, private geolocation: Geolocation, public navParams: NavParams) {
         this.autocompleteItems = [];
         this.autocomplete = {
             query: ''
         };
-        this.geolocation.getCurrentPosition().then((resp) => {
-            this.pos = {
-                lat:resp.coords.latitude,
-                lng:resp.coords.longitude
-            };
 
+        //if we get a location passed in
+        if(navParams.get('location'))
+        {
+            //set our local var to it
+            this.location = navParams.get('location');
 
-            /*** showing map */
+            //use formatted data as prefilled query
+            this.autocomplete.query = this.location.formattedAddressString;
+
+            //now if we have some correctly formatted data in it
+            if(this.location.address.geolocation )
+            {
+                //use that in in pos and sett marker
+                this.pos = this.location.address.geolocation;
+            }
+        }
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad AddAddressAutoCompletePage');
+        //if pos still not set .. use current position
+        if(!this.pos)
+        {
+            this.geolocation.getCurrentPosition().then((resp) => {
+                this.pos = {
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                };
+                // and we have to wait until we got pos .. so not load map until promise fullfilled
+
+                console.log('showing current location'+JSON.stringify(this.pos));
+                /*** showing map */
                 this.map = new google.maps.Map(document.getElementById('map'), {
+                    center: this.pos,
+                    zoom: 13
+                });
+
+                /** */
+
+                // Drop a pin on selected pos / current pos
+                let name = this.location.formattedAddressString? this.location.formattedAddressString: 'Current location';
+                //Trying to drop marker to
+                if(this.marker)
+                    this.marker.setMap(null); //kill previous marker
+
+                this.marker = new google.maps.Marker({
+                    position: this.pos,
+                    map: this.map,
+                    title: name
+                });
+
+                this.map.setCenter(this.pos);
+
+
+            }).catch((error) => {
+                console.log('Error getting location', error);
+            });
+        } else {
+            console.log('showing stored location'+JSON.stringify(this.pos));
+            /*** showing map */
+            this.map = new google.maps.Map(document.getElementById('map'), {
                 center: this.pos,
                 zoom: 13
             });
-            /** */
+        }
 
-        }).catch((error) => {
-            console.log('Error getting location', error);
+        /*** showing map */
+        this.map = new google.maps.Map(document.getElementById('map'), {
+            center: this.pos,
+            zoom: 13
         });
+        // Drop a pin on selected pos / current pos
+        let name = this.location.formattedAddressString? this.location.formattedAddressString: 'Current location';
+        //Trying to drop marker to
+        if(this.marker)
+            this.marker.setMap(null); //kill previous marker
+
+        this.marker = new google.maps.Marker({
+            position: this.pos,
+            map: this.map,
+            title: name
+        });
+
+        this.map.setCenter(this.pos);
 
 
     }
@@ -117,12 +187,14 @@ export class AddressAutocompletePage {
         }
         let me = this;
         this.service.getPlacePredictions({ input: this.autocomplete.query, bounds: defaultBounds }, function (predictions, status) {
-            me.autocompleteItems = [];
-            me.zone.run(function () {
-                predictions.forEach(function (prediction) {
-                    me.autocompleteItems.push(prediction);
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                me.autocompleteItems = [];
+                me.zone.run(function () {
+                    predictions.forEach(function (prediction) {
+                        me.autocompleteItems.push(prediction);
+                    });
                 });
-            });
+            }
         });
     }
 

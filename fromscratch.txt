@@ -55,6 +55,7 @@ composer require form
 composer require validator
 composer require ramsey/uuid
 composer require symfony/serializer
+composer require logger    <-- to se if I can get 500 errors in som logfile so we can troubleshoot js ajaxcalls
 
 
 installera ngt som behövs för security annotations

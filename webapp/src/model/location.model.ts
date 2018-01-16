@@ -7,7 +7,7 @@ export interface location {
     language: string;
     address: {};
     formattedAddressString: string,
-    area: area;
+    area?: area;
     note: string;
     type: string;
     status: string;

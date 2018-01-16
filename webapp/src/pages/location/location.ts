@@ -7,6 +7,7 @@ import {LocationsProvider} from "../../providers/locations-provider/locations-pr
 
 import { ModalErrorPage } from "../modal-error/modal-error";
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import {AddressAutocompletePage} from "../modal-address-autocomplete/addressAutocomplete";
 
 
 
@@ -48,6 +49,11 @@ export class LocationPage {
         public locationsProvider: LocationsProvider,
     ) {
         this.location = this.navParams.get('location');
+        // if this location does not belong to a array .. we set up a not "selected area"
+        if(!this.location.area)
+            this.location.area = {id:0, areaName:"Not selected"};
+
+
         this.authCustomUser = this.navParams.get('authCustomUser');
         this.locationsProvider.loadRemoteAreas().then(returnedCopyOfAreas => {
             this.availableAreas = returnedCopyOfAreas;
@@ -66,23 +72,43 @@ export class LocationPage {
         this.setBackButtonAction()
     }
 
+    showAddressModal (location) {
+        let modal = this.modal.create(AddressAutocompletePage, {location:location});
+        let me = this;
+        modal.onDidDismiss(data => {
+            //only try to set if finding correct data
+            if(data && data.selectedItem)
+            {
+                me.location.formattedAddressString = data.selectedItem.description;
+                me.location.address = data.parsedData;
+                me.changeDetected = true; //make sure we update always if we visited addressSelectorPage
+            }
+
+        });
+        modal.present();
+    }
+
     setBackButtonAction(){
         this.navbarCustom.backButtonClick = () => {
             console.log("going back");
             // Updating master-array and possibly backend via api
             if(this.changeDetected)
-                this.updateLocation(this.location);
+                this.updateLocation(this.location).then(updatedLocationReturned => {
+                    console.log("Updated location:"+JSON.stringify(updatedLocationReturned));
+                    // will not allow for navigate back untill update is done . because i that case we might get old data when loading in locations
+                    this.navCtrl.pop();
+                });
 
-            //if communication with server takes time .. to navigation will happen instantly but spinner will stay on top until done
-            this.navCtrl.pop()
+
         }
     }
 
-    updateLocation(location) {
-        this.locationsProvider.updateLocation(location).then( updatedLocationReturned => {
-            console.log("Updated location:"+JSON.stringify(updatedLocationReturned))
-            }
-        );
+    async updateLocation(location) {
+        try {
+            return await this.locationsProvider.updateLocation(location);
+        } catch(e) {
+            console.log('catch in locationPge: updateLocation()  .. :'+e.toString());
+        }
     }
 
     test() {

@@ -31,6 +31,7 @@ export class LocationsPage {
                   private customApi: CustomApiProvider,
                   private locationsProvider: LocationsProvider) {
         // Nothing for now
+        //this.getLocations();
     }
 
     ionViewWillEnter()
@@ -41,16 +42,23 @@ export class LocationsPage {
         // in this case just load from locationProvider localy .. which should hold updated data
 
         //for now just always use re-reload from remote
+        //this.getLocations();
+        this.locations = [];
         this.getLocations();
 
 
+    }
+
+    ionViewDidLoad() {
+        console.log(' Loaded locationsPage . ');
+        //this.locations = [];
     }
 
     viewLocation(location) {
       this.navCtrl.push(this.locationPage,
           {
               location:location,
-              authCustomUser:this.customApi.authCustomUser //pas logged in user to .. so we can use that in view conditions
+              authCustomUser:this.customApi.authCustomUser //pass logged in user to .. so we can use that in view conditions
           })
     }
 

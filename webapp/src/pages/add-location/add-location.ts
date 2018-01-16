@@ -95,7 +95,6 @@ export class AddLocationPage {
         // maybe manual or automatic by using whats described here with form-controls and stuff https://www.joshmorony.com/advanced-forms-validation-in-ionic-2/
 
         //user area-id to set correct area on new location
-        // TODO Fix in entity: -> can be null.
         if(this.selectedAreaId != 0)
           this.location.area = this.availableAreas.find(this.findItemById, this.selectedAreaId);
         else

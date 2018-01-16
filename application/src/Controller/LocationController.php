@@ -134,26 +134,33 @@ class LocationController extends Controller
         /** @var Location $locationEntity */
         $locationEntity = new Location($user); //Setting it on creation .. only updating if Myreturnvisit set
 
-        /** @var Area $area */
-        $area = $em->getRepository(Area::class)->find($location['area']['id']);
+        //we cannot be sure an area is selected
+        if(isset($location['area']) && isset($location['area']['id']))
+        {
+            /** @var Area $area */
+            $area = $em->getRepository(Area::class)->find($location['area']['id']);
+            //only set it if we find one
+            if($area)
+                $locationEntity->setArea($area);
+        }
 
         // just set all fields manually for now .. maybe use formType later
-        $locationEntity->setAddress($location['address']);
+        $locationEntity->setAddress($location['address']); //dummydata;
+        $locationEntity->setFormattedAddressString(($location['formattedAddressString']));
         $locationEntity->setLanguage($location['language']);
         $locationEntity->setType($location['type']);
-        $locationEntity->setArea($area);
+
         $locationEntity->setApartmentNr($location['apartmentNr']);
         $locationEntity->setNote($location['note']);
         $locationEntity->setIsBusiness($location['isBusiness']);
+        $locationEntity->setIsReturnVisit($location['isReturnVisit']);
 
         //persist
         $em->persist($locationEntity);
         $em->flush();
 
-        //refetch and return
-        $updatedLocation = $em->getRepository(Location::class)->find($location['id']);
-
-        $serializedLocation = $serializer->serialize($updatedLocation, 'json');
+        //return the added location
+        $serializedLocation = $serializer->serialize($locationEntity, 'json');
 
         $response = JsonResponse::fromJsonString($serializedLocation);
 
