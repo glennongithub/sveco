@@ -98,8 +98,8 @@ export class LocationPage {
                     // will not allow for navigate back untill update is done . because i that case we might get old data when loading in locations
                     this.navCtrl.pop();
                 });
-
-
+            else
+                this.navCtrl.pop();
         }
     }
 
