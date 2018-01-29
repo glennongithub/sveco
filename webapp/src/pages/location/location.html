@@ -67,10 +67,10 @@
         <ion-item *ngFor="let visit of location.visits">
             <ion-row>
                 <ion-col col-4>
-                    <p>20/12-2017</p>
+                    <p>{{ locationsProvider.phpDateObjTojsDateObj(visit.visitDate) | date:"yyyy-MM-dd"}}</p>
                 </ion-col>
                 <ion-col col-4>
-                    <p>At home</p>
+                    <p>{{visit.status}}</p>
                 </ion-col>
                 <ion-col col-4>
                     <p>{{ visit.user.fullname }}</p>

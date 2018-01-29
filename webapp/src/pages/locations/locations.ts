@@ -81,6 +81,7 @@ export class LocationsPage {
                 // we could use them from there .. or load them to local var
                 this.locations = returnedCopyOfLocations;
                 //this.loader.dismiss();
+              console.log(this.locations);
                 /** always make sure to handle failed connections*/
             } , errdata => { //failed connection
                 //always remove overlay when done

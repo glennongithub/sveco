@@ -27,7 +27,8 @@ export class LocationPage {
         userName: string,
         apiKey: string
     };
-    changeDetected: boolean = false
+    changeDetected: boolean = false;
+    temp : Date;
 
     supportedLanguages = [
         {languageValue: 'SWEDISH', languageLabel: 'Swedish' },
@@ -52,7 +53,6 @@ export class LocationPage {
         // if this location does not belong to a array .. we set up a not "selected area"
         if(!this.location.area)
             this.location.area = {id:0, areaName:"Not selected"};
-
 
         this.authCustomUser = this.navParams.get('authCustomUser');
         this.locationsProvider.loadRemoteAreas().then(returnedCopyOfAreas => {
@@ -212,6 +212,9 @@ export class LocationPage {
         this.changeDetected = true;
         console.log('change detected . but dont do anything until be go back');
     }
+
+
+    //
 
 
     openMenu() {

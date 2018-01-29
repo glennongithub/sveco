@@ -28,7 +28,7 @@ interface user {
 export interface visit {
     id: number;
     user: user;
-    visitDate: object;
+    visitDate: any;
     status: string;
     note: string;
 }

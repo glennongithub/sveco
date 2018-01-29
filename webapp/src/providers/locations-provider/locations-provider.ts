@@ -143,6 +143,21 @@ export class LocationsProvider {
     //*************************/
     /* Supportfunctions bellow*/
 
+
+
+
+
+    // Maybe move this to a separate dateService/provider.. but for now .. just have it here :)
+
+    phpDateObjTojsDateObj(phpDateTimeObject)
+    {
+      //TODO handle offset .. right now .. we asume 0 so nvm
+
+      return new Date(phpDateTimeObject.timestamp * 1e3 );
+
+
+    }
+
     // this is a function that just loops through the array using id to look for the matching item
     // so kind of important function here .. so we know that we can keep the local copy of locations uptodate with what
     // we updated on server via api .. instead of always refetch everything.

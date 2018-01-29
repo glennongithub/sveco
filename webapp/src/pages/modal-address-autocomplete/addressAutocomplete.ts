@@ -101,7 +101,7 @@ export class AddressAutocompletePage {
             zoom: 13
         });
         // Drop a pin on selected pos / current pos
-        let name = this.location.formattedAddressString? this.location.formattedAddressString: 'Current location';
+        let name = (this.location && this.location.formattedAddressString)? this.location.formattedAddressString: 'Current location';
         //Trying to drop marker to
         if(this.marker)
             this.marker.setMap(null); //kill previous marker
