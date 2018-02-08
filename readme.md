@@ -2,7 +2,7 @@
 
 ## Getting started
 
-#### Install
+### Install
 ##### 1. Install virtualbox, Vagrant and node.js
 ##### 2. Make sure you have ionic installed globally
 (npm install -g cordova ionic)
@@ -15,7 +15,7 @@
 ##### 7. Run vagrant up in repository mapp
 
 
-#### Create data to begin using the app
+### Create data to begin using the app
 
 ##### 8. Go to sveco.test/createuser 
 (for now use andi:password is created)
@@ -24,7 +24,7 @@
 ##### 11. go to sveco.test/en/admin/locations -> create a dummy location.
 
 
-#### Finished
+### Finished
 
 ##### Got to sveco.test/app and try to use the app.
 
