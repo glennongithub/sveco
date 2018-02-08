@@ -1,33 +1,37 @@
-Install virtualbox
-install vagrant
+# Sveco
 
-install node.js
-make sure you have ionic installed globally
-npm install -g cordova ionic
+## Getting started
 
-cd into repo
+### 1. Install virtualbox, Vagrant and node.js
 
-cd into webapp 
-then make sure your host machine is handling that ionic app 
-run 
-npm install
+### 2. Make sure you have ionic installed globally
+(npm install -g cordova ionic)
 
-npm update  (not needed install will work.)
+### 3. cd into repository
 
-test it by running ionic serve
-ionic serve  (will build the www map needed for the symlink created on first vagrant up)
+### 4. cd into webapp
 
+### 5. Run npm install
+(make sure your host machine is handling that ionic app)
 
-vagrant up
+### 6. Run ionic serve  
+(will build the www map needed for the symlink created on first vagrant up)
 
+### 7. Run vagrant up in repository mapp
 
-Go to sveco.test/createuser   -> for now use andi:password is created
+## Create data to begin using the app
 
-Then got sveco.test/login ->login
+### 8. Go to sveco.test/createuser 
+(for now use andi:password is created)
 
-go to sveco.test/en/admin/areas  ->create an area
+### 9. Then got sveco.test/login ->login
 
-sveco.test/en/admin/locations -> create a dummy location.
+### 10. go to sveco.test/en/admin/areas  ->create an area
 
-got to sveco.test/app and try to use the app.
+### 11. go to sveco.test/en/admin/locations -> create a dummy location.
+
+## Finished
+
+### Got to sveco.test/app and try to use the app.
+
 
