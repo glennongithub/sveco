@@ -2,12 +2,13 @@ import { Component, ViewChild  } from '@angular/core';
 import { NavController, NavParams, Navbar, AlertController  } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
-import { location, area } from "../../model/location.model";
+import {location, area, visit} from "../../model/location.model";
 import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
 
 import { ModalErrorPage } from "../modal-error/modal-error";
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import {AddressAutocompletePage} from "../modal-address-autocomplete/addressAutocomplete";
+import {ModalAddVisitPage} from "../modal-add-visit/modal-add-visit";
 
 
 
@@ -64,7 +65,7 @@ export class LocationPage {
         });
 
         // set if it is my RV
-        this.isMyReturnVisit = (this.location.user.username == this.customApi.authCustomUser.userName && this.location.isReturnVisit);
+        this.isMyReturnVisit = (this.location.user.username == this.customApi.authCustomUser.username && this.location.isReturnVisit);
         this.skipNextRvChange = false; // this is so when a isMyRv status is changed but cancelled we are not poping confirmations
 
     }
@@ -128,7 +129,7 @@ export class LocationPage {
            if(this.isMyReturnVisit)
            {
                // But it already was someone else's
-               if(location.isReturnVisit && location.user.username != this.customApi.authCustomUser.userName)
+               if(location.isReturnVisit && location.user.username != this.customApi.authCustomUser.username)
                {
                    let alert = this.alertCtrl.create({
                        title: 'Confirm RV-claim',
@@ -198,7 +199,7 @@ export class LocationPage {
         this.changeDetected = true; //make sure we run update when clicking back
         // setting both those values below .. should force updating of isReturnVisit and user on server-side.
         location.isReturnVisit = this.isMyReturnVisit;
-        location.user.username = this.customApi.authCustomUser.userName;
+        location.user.username = this.customApi.authCustomUser.username;
         //also setting fullname so that local data display correctly without reload
         location.user.fullname = this.customApi.authCustomUser.fullname;
         // maybe also kill id .. so that we crash if we try to use that on local copy of user
@@ -263,6 +264,17 @@ export class LocationPage {
         });
         actionSheet.present();
     }
+
+    openAddVisitModal(location: location) {
+      const addVisitModal = this.modal.create(ModalAddVisitPage, { location: location, user: this.customApi.authCustomUser });
+      addVisitModal.present();
+    }
+
+    openEditVisitModal(visit: visit) {
+      const editVisitModal = this.modal.create(ModalAddVisitPage, {visit: visit});
+      editVisitModal.present();
+    }
+
 
     openErrorModal(errorMessage: string) {
         const errorModal = this.modal.create(ModalErrorPage, {errorMessage: errorMessage});

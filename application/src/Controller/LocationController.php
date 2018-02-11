@@ -135,6 +135,7 @@ class LocationController extends Controller
         $locationEntity = new Location($user); //Setting it on creation .. only updating if Myreturnvisit set
 
         //we cannot be sure an area is selected
+        //TODO make sure update works solid to .. not sure right now if one can crash it by updating and setting bad data in area
         if(isset($location['area']) && isset($location['area']['id']))
         {
             /** @var Area $area */

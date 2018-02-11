@@ -17,8 +17,9 @@ export interface location {
     apartmentNr: string;
 }
 
-interface user {
-    id: number;
+export interface user {
+    id?: number;
+    apiKey?: string; // not always required ..
     username: string;
     fullname: string;
     /* may add more stuff here like settings or roles .. but don't think roles need to be propagated to client..
@@ -26,11 +27,12 @@ interface user {
 }
 
 export interface visit {
-    id: number;
+    id?: number;
     user: user;
     visitDate: any;
     status: string;
     note: string;
+    locationId?: number; //must be set when adding new visit to till what location it belongs to
 }
 
 export interface area {

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { location, area } from "../../model/location.model";
+import { location, area, visit } from "../../model/location.model";
 import {Observable} from "rxjs/Observable";
 
 
@@ -40,7 +40,7 @@ export class CustomApiProvider {
     customApiUrlPrefix:string;
     customLocalStorageIdentifier:string; /* using this to be able to use unique ids in local storage */
     public authCustomUser:{
-        userName: string,
+        username: string,
         fullname: string,
         apiKey: string
     };
@@ -50,7 +50,7 @@ export class CustomApiProvider {
         //always just init the authCustomUser to empty strings
         // the init method should be used to set it to proper values
         this.authCustomUser = {
-            userName: '',
+            username: '',
             fullname: '',
             apiKey: ''
         };
@@ -68,7 +68,7 @@ export class CustomApiProvider {
         return new Promise((resolve, reject) => {
             //try to get apiKey from localStorage.
             this.loadCustomUserFromStorageToProvider().then(isOk => {
-                if(this.authCustomUser.userName != '' && this.authCustomUser.apiKey != '')
+                if(this.authCustomUser.username != '' && this.authCustomUser.apiKey != '')
                 {
                     //try to run who am i
                     this.whoAmI()
@@ -77,7 +77,7 @@ export class CustomApiProvider {
                             let jsonData = data;
                             console.log(jsonData);
                              // TODO fix this
-                             if(jsonData.username != this.authCustomUser.userName && jsonData.key != this.authCustomUser.apiKey)
+                             if(jsonData.username != this.authCustomUser.username && jsonData.key != this.authCustomUser.apiKey)
                                  reject("Auth don't match .. please reauthorise via settings");
                              else
                                 resolve("OK");
@@ -97,7 +97,7 @@ export class CustomApiProvider {
             this.storage.get(this.customLocalStorageIdentifier).then((authCustomUserFromStorage) => {
                 if(authCustomUserFromStorage == null) {
                     //just set storedUsername to emptyString
-                    this.authCustomUser.userName = '';
+                    this.authCustomUser.username = '';
                     this.authCustomUser.apiKey = '';
                     this.authCustomUser.fullname = '';
                 } else {
@@ -105,17 +105,17 @@ export class CustomApiProvider {
                     let tmpAuthCustomUser = JSON.parse(authCustomUserFromStorage);
 
                     //only continue if we got som sane values
-                    if(tmpAuthCustomUser.userName && tmpAuthCustomUser.apiKey)
+                    if(tmpAuthCustomUser.username && tmpAuthCustomUser.apiKey)
                     {
                         //now just set these values so we can use in in view .. to show who we think we are
                         //not sure if object are just referenced as in php so copying val by val
-                        this.authCustomUser.userName = tmpAuthCustomUser.userName;
+                        this.authCustomUser.username = tmpAuthCustomUser.username;
                         this.authCustomUser.apiKey = tmpAuthCustomUser.apiKey;
                         this.authCustomUser.fullname = tmpAuthCustomUser.fullname;
 
                     } else {
                         //no sane values .. treat as nothing saved
-                        this.authCustomUser.userName = '';
+                        this.authCustomUser.username = '';
                         this.authCustomUser.apiKey = '';
                         this.authCustomUser.fullname = '';
                     }
@@ -139,7 +139,7 @@ export class CustomApiProvider {
 
     getAreas(searchString = '') {
         //don't tac on / if no searchstring provided
-        searchString = (searchString != '')? '/' + searchString : ''; 
+        searchString = (searchString != '')? '/' + searchString : '';
         let urlToCall:string = this.buildApiUrlForCommand('areas'+ searchString);
         return this.observableToPromise<area[]>(this.http.get<area[]>(urlToCall));
     }
@@ -160,6 +160,13 @@ export class CustomApiProvider {
         // To set header ad third param like this ..
         //, {headers: new HttpHeaders().set('Authorization', 'my-auth-token'),
         //    params: new HttpParams().set('id', '3'),}
+    }
+
+    addVisit(visit)
+    {
+      let urlToCall:string = this.buildApiUrlForCommand('visit');
+      console.log('about to post data:'+ JSON.stringify(visit));
+      return this.observableToPromise<visit>(this.http.post<visit>(urlToCall, JSON.stringify(visit)));
     }
 
     buildApiUrlForCommand(command: string, params?:Map<string, string>)

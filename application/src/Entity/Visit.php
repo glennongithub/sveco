@@ -68,8 +68,9 @@ class Visit
     /**
      * Constructor
      * @param User $user
+     * @param Location $location
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Location $location = null)
     {
         //always set default visitdate to now
         $dt_now = new \DateTime(date('Y-m-d H:i:s'));
@@ -77,6 +78,10 @@ class Visit
 
         // All visits must belong to a user. so its kind of required
         $this->user = $user;
+
+        //possible to initiate without location to build form .. but must be there on save ofc
+        if($location)
+            $this->location = $location;
 
     }
 

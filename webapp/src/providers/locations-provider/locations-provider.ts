@@ -56,6 +56,59 @@ export class LocationsProvider {
         return addedLocation;
     }
 
+    async addVisitToLocation(visit, waitForResolve: boolean = true)
+    {
+        // Due to complexity and not yet decided on how to handle ofline data and relations location/user location/visit/user
+        // we do not just tack on to local data first here .. lets update on server first
+
+        // then use returned data to update local locations.
+
+        // first update corresponding item in this master array
+        // and take back the updated item.
+        let addedVisit;
+        let updatedLocation = this.locations.find(this.findItemById, visit.locationId);
+        //Now above is useless untill we build code to add visit to this location .. in the right way.
+        // TODO .. do above .. but to get going .. skipp for now
+
+
+        // so send visit
+        try {
+            // then make sure backend is updated to.
+            // should return the updated location
+            if(waitForResolve) {
+              // pop spinner
+              // trying to use a local spinner so we don't dismiss it from somewhere else
+              let updateLoader = this.loadingCtrl.create({
+                content:"Talking to server",
+              });
+              //pop overlay
+              updateLoader.present();
+              // wait for com to finish
+              addedVisit = await this.customApi.addVisit(visit);
+              // remove spinner
+              updateLoader.dismiss();
+
+            }
+            else
+              this.customApi.addVisit(visit); //ignoring promise intentionally
+        } catch(e) {
+            console.log('catch in locations-provider .. addVisit waiting for resolve. :'+e.toString());
+        }
+
+        // To make suer our local location represent what we added . push the added visit to array of visits for that location
+        updatedLocation.visits.push(addedVisit);
+        // Find the correct index
+        let index = this.locations.indexOf(updatedLocation);
+
+        // Update the actual item in array
+        this.locations[index] = updatedLocation;
+        //that should do it.. now we do not need to reload everything to see it hopefully
+
+        return addedVisit;
+
+        // fetch specific location .. and update that one in local data .. so all visits is included
+    }
+
     // make async so we always return a promise and can await if we want.
     async updateLocation(location: location, waitForResolve: boolean = true) {
         let updatedLocation;
@@ -151,7 +204,7 @@ export class LocationsProvider {
 
     phpDateObjTojsDateObj(phpDateTimeObject)
     {
-      //TODO handle offset .. right now .. we asume 0 so nvm
+      //TODO handle offset .. right now .. we assume 0 so nvm
 
       return new Date(phpDateTimeObject.timestamp * 1e3 );
 

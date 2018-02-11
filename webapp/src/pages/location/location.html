@@ -18,6 +18,11 @@
                     <ion-option value="APARTMENT">Apartment</ion-option>
                 </ion-select>
             </ion-item>
+          <ion-item *ngIf="location.type == 'APARTMENT'">
+            <ion-label color="primary" stacked>Apartment nr</ion-label>
+            <ion-input (ionChange)="onChangeAnything(location)" [(ngModel)]="location.apartmentNr" type="text" placeholder="nr or letter"></ion-input>
+          </ion-item>
+
             <ion-item>
                 <ion-label color="primary" stacked>Area</ion-label>
                 <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.area.id" placeholder="Choose Area">
@@ -85,7 +90,7 @@
     <ion-fab bottom class="add-visit">
         <ion-row>
             <ion-col col-12>
-                <button  ion-fab block (click)="openMenu()">
+                <button  ion-fab block (click)="openAddVisitModal(location)">
                     Add visit
                 </button>
             </ion-col>

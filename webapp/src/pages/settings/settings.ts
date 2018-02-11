@@ -65,7 +65,7 @@ export class SettingsPage {
           {
             //if failed like this .. with error from server..
             // even if we had some working before .. kill tha local storage values ..
-            this.customApi.authCustomUser.userName = '';
+            this.customApi.authCustomUser.username = '';
             this.customApi.authCustomUser.apiKey = '';
             this.customApi.authCustomUser.fullname = '';
             //if successful store in local storage
@@ -77,7 +77,7 @@ export class SettingsPage {
             //Rigth.. no erros reported move along
             if(jsonData.key && jsonData.username )
             {
-              this.customApi.authCustomUser.userName = jsonData.username;
+              this.customApi.authCustomUser.username = jsonData.username;
               this.customApi.authCustomUser.apiKey = jsonData.key;
               this.customApi.authCustomUser.fullname = jsonData.fullname;
               //if successful store in local storage

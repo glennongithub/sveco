@@ -25,6 +25,7 @@ import {GogletestPage} from "../pages/gogletest/gogletest";
 import { Geolocation } from '@ionic-native/geolocation';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import {AddressAutocompletePage} from "../pages/modal-address-autocomplete/addressAutocomplete";
+import {ModalAddVisitPage} from "../pages/modal-add-visit/modal-add-visit";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {AddressAutocompletePage} from "../pages/modal-address-autocomplete/addre
       LocationPage,
       ModalErrorPage,
       ModalInfoPage,
+      ModalAddVisitPage,
       GogletestPage,
       AddLocationPage,
       AddressAutocompletePage
@@ -57,6 +59,7 @@ import {AddressAutocompletePage} from "../pages/modal-address-autocomplete/addre
     LocationPage,
     ModalErrorPage,
     ModalInfoPage,
+    ModalAddVisitPage,
     GogletestPage,
     AddLocationPage,
     AddressAutocompletePage

@@ -22,6 +22,10 @@
               <ion-option value="APARTMENT">Apartment</ion-option>
           </ion-select>
       </ion-item>
+      <ion-item *ngIf="location.type == 'APARTMENT'">
+        <ion-label color="primary" stacked>Apartment nr</ion-label>
+        <ion-input [(ngModel)]="location.apartmentNr" type="text" placeholder="nr or letter"></ion-input>
+      </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Area</ion-label>
             <ion-select [(ngModel)]="selectedAreaId" placeholder="Choose area">

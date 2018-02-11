@@ -15,4 +15,48 @@
 
 <ion-content padding>
 
+  <ion-list id="visit-list">
+    <ion-list-header>
+      VISIT
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Note</ion-label>
+      <ion-textarea [(ngModel)]="visit.note" placeholder="Add note"></ion-textarea>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label color="primary" stacked>Add visit as</ion-label>
+      <ion-select [(ngModel)]="visit.user.username" placeholder="Choose user">
+        <ion-option *ngFor = "let selectedUser of availableUsers" [value]="selectedUser.username">
+          {{selectedUser.fullname}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Status</ion-label>
+      <ion-select [(ngModel)]="visit.status" placeholder="Visit staus">
+        <ion-option *ngFor = "let status of posibleStatuses" [value]="status.statusValue">
+          {{status.statusLabel}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>VisitDate</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="visit.visitDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      tobe hidden.. only show as debug
+      <ion-input [(ngModel)]="visit.locationId">{{ visit.locationId }}</ion-input>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button type="button" (click)="addVisit(location)" lock>Add this visit</button>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
