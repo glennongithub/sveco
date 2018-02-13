@@ -13,7 +13,11 @@
 </ion-header>
 
 <ion-content >
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar  [(ngModel)]="searchString" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
+    <div *ngIf="searching" class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </div>
+
   <ion-list *ngFor="let location of locations">
 
           <ion-item class="item" (click)="viewLocation(location)">
@@ -22,8 +26,11 @@
                       <ion-icon  *ngIf=" location.type == 'HOUSE' " name="ios-home"></ion-icon>
                       <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-people"></ion-icon>
                   </ion-col>
-                  <ion-col col-10>
+                  <ion-col col-8>
                       {{location.formattedAddressString}}
+                  </ion-col>
+                  <ion-col col-2>
+                    {{ (location.visits.length < 1)? 'UNKNOWN': location.visits[location.visits.length -1].status }}
                   </ion-col>
                   <ion-col col-1 class="visits">
                       {{ location.visits.length }}

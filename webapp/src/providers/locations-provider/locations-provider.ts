@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {location, area} from "../../model/location.model";
 import {CustomApiProvider} from "../custom-api/custom-api";
 import {LoadingController} from "ionic-angular";
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
@@ -21,6 +22,17 @@ export class LocationsProvider {
         //this.loadRemoteAreas();
         //this.loadRemoteLocations();
     }
+
+  filterLocationsOnAddress(searchTerm) {
+      //if searchterm empty return unfiltered
+      if(searchTerm == '')
+        return this.getLocations();
+
+      return this.locations.filter((location) => {
+        return location.formattedAddressString.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+      });
+
+  }
 
     // make async so we always return a promise and can await if we want.
     async addLocation(addedLocation: location, waitForResolve: boolean = true) {
