@@ -63,8 +63,7 @@ class VisitController extends Controller
     }
 
     /**
-     * @Route("api/visit/{id}", name="api/visit")
-     * @Method("GET")
+     * @Route("api/visit/{id}", name="api/visit", methods={"GET","HEAD"})
      * @Security("has_role('ROLE_USER')")
      * @param Request $request
      * @param CORSService $CORSService
@@ -100,8 +99,7 @@ class VisitController extends Controller
     }
 
     /**
-     * @Route("api/visit", name="api/add_visit")
-     * @Method("POST")
+     * @Route("api/visit", name="api/add_visit", methods="POST")
      * @Security("has_role('ROLE_USER')")
      * @param Request $request
      * @param CORSService $CORSService
@@ -159,6 +157,55 @@ class VisitController extends Controller
         $serializedVisit = $serializer->serialize($visitEntity, 'json');
 
         $response = JsonResponse::fromJsonString($serializedVisit);
+
+        return $CORSService->getResponseCORS($request, $response);
+    }
+
+    /**
+     * This is a dummy to try to allow OPTIONS header when CORS .. must be a better way . but testing this
+     * DID WORK.
+     * but maybe the correct solution would be to put thi on the  get item rout. ie use both get,head and options on that one.
+     * in away that would verify that the item exists before deleting it.
+     * look here for furter investigation
+     * https://stackoverflow.com/questions/12111936/angularjs-performs-an-options-http-request-for-a-cross-origin-resource
+     * @Route("api/visit/{id}", name="api/ddummy_visit", methods="OPTIONS")
+     * @Security("has_role('ROLE_USER')")
+     * @param Request $request
+     * @param CORSService $CORSService
+     * @param int $id
+     * @return Response
+     */
+    public function dummyVisitApiAction(Request $request, CORSService $CORSService, $id)
+    {
+        $response = new JsonResponse([]);
+
+        return $CORSService->getResponseCORS($request, $response);
+    }
+
+    /**
+     * @Route("api/visit/{id}", name="api/delete_visit", methods="DELETE")
+     * @Security("has_role('ROLE_USER')")
+     * @param Request $request
+     * @param CORSService $CORSService
+     * @param int $id
+     * @return Response
+     */
+    public function deleteVisitApiAction(Request $request, CORSService $CORSService, $id)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Visit $locationEntity */
+        $visitEntity = $em->getRepository(Visit::class)->find($id);
+
+        $em->remove($visitEntity);
+        $em->flush();
+
+        //TODO add som form of error handling here and return errors and so
+        $result = ['result' => 'OK'];
+
+        $response = new JsonResponse($result);
 
         return $CORSService->getResponseCORS($request, $response);
     }
