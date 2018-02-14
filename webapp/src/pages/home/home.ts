@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, LoadingController, ModalController, App} from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { ModalErrorPage } from "../modal-error/modal-error";
 import {GogletestPage} from "../gogletest/gogletest";
 import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
+import {LocationsPage} from "../locations/locations";
 
 @Component({
   selector: 'page-home',
@@ -17,7 +18,8 @@ export class HomePage {
               private modal: ModalController,
               public loadingCtrl: LoadingController,
               private locationsProvider: LocationsProvider,
-              private customApi: CustomApiProvider) {
+              private customApi: CustomApiProvider,
+              private appCtrl:App) {
 
 
         //needs to be recreated each time
@@ -60,6 +62,11 @@ export class HomePage {
 
 
 
+    }
+
+    open_locations()
+    {
+      this.appCtrl.getRootNav().push(LocationsPage);
     }
 
     open_googletestpage() {
