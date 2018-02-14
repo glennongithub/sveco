@@ -9,6 +9,8 @@ import {Storage} from "@ionic/storage";
 import {location} from "../../model/location.model";
 import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
 import { AddLocationPage } from '../add-location/add-location';
+import 'rxjs/add/operator/debounceTime';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'page-locations',
@@ -22,6 +24,9 @@ export class LocationsPage {
     addLocationPage = AddLocationPage;
     locations:location[];
     loader:any;
+    searchString: string = '';
+    searchControl: FormControl;
+    searching:any = false;
 
     constructor(public navCtrl: NavController,
                   public navParams: NavParams,
@@ -30,8 +35,8 @@ export class LocationsPage {
                   public loadingCtrl: LoadingController,
                   private customApi: CustomApiProvider,
                   private locationsProvider: LocationsProvider) {
-        // Nothing for now
-        //this.getLocations();
+        // Prepare so we can use advanced functions on formInputs
+        this.searchControl = new FormControl();
     }
 
     ionViewWillEnter()
@@ -51,7 +56,23 @@ export class LocationsPage {
 
     ionViewDidLoad() {
         console.log(' Loaded locationsPage . ');
+        this.setFilteredLocations();
+        this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+          this.searching = false;
+          this.setFilteredLocations();
+
+        });
         //this.locations = [];
+    }
+
+    setFilteredLocations() {
+
+      this.locations = this.locationsProvider.filterLocationsOnAddress(this.searchString);
+
+    }
+
+    onSearchInput(){
+      this.searching = true;
     }
 
     viewLocation(location) {

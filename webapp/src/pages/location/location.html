@@ -80,9 +80,12 @@
                 <ion-col col-4>
                     <p>{{ visit.user.fullname }}</p>
                 </ion-col>
-                <ion-col col-12>
+                <ion-col col-10>
                     {{ visit.note }}
                 </ion-col>
+              <ion-col col-10>
+                <button ion-button type="button" (click)="deleteVisit(visit)" lock>Delete</button>
+              </ion-col>
             </ion-row>
         </ion-item>
     </ion-list>

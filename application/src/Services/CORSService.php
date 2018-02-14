@@ -52,6 +52,7 @@ class CORSService
             $response = new Response();
 
         $origin = $request->server->get('HTTP_ORIGIN');
+        $access_controll_request_headers = $request->server->get('ACCESS-CONTROL-REQUEST-HEADERS');
 
         // if we don't have a HTTP_ORIGIN header, it isn't a CORS request.
         if (!$origin)
@@ -72,7 +73,8 @@ class CORSService
 
         // we do! add the headers to the response.. :-)
         $response->headers->set('Access-Control-Allow-Origin', $origin);
-        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST');
+        $response->headers->set('Access-Control-Allow-Headers', $access_controll_request_headers);
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT,HEAD,PATCH,OPTIONS'); //we use them all probably in our API
         $response->headers->set('Access-Control-Allow-Credentials', 'true');
 
         return $response;

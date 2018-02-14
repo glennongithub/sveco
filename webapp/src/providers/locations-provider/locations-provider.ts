@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {location, area} from "../../model/location.model";
 import {CustomApiProvider} from "../custom-api/custom-api";
 import {LoadingController} from "ionic-angular";
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
@@ -21,6 +22,17 @@ export class LocationsProvider {
         //this.loadRemoteAreas();
         //this.loadRemoteLocations();
     }
+
+  filterLocationsOnAddress(searchTerm) {
+      //if searchterm empty return unfiltered
+      if(searchTerm == '')
+        return this.getLocations();
+
+      return this.locations.filter((location) => {
+        return location.formattedAddressString.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+      });
+
+  }
 
     // make async so we always return a promise and can await if we want.
     async addLocation(addedLocation: location, waitForResolve: boolean = true) {
@@ -56,9 +68,59 @@ export class LocationsProvider {
         return addedLocation;
     }
 
+    async deleteVisitFromLocation(visit, waitForResolve: boolean = true)
+    {
+      // first update corresponding item in this master array
+      // and take back the updated item.
+      let addedVisit;
+      let response;
+      let updatedLocation = this.locations.find(this.findItemById, visit.locationId);
+      //Now above is useless untill we build code to add visit to this location .. in the right way.
+      // TODO .. do above .. but to get going .. skipp for now
+
+
+      // so delete visit
+      try {
+        // then make sure backend is updated to.
+        // should return the updated location
+        if(waitForResolve) {
+          // pop spinner
+          // trying to use a local spinner so we don't dismiss it from somewhere else
+          let updateLoader = this.loadingCtrl.create({
+            content:"Talking to server",
+          });
+          //pop overlay
+          updateLoader.present();
+          // wait for com to finish
+          response = await this.customApi.deleteVisit(visit);
+          // remove spinner
+          updateLoader.dismiss();
+
+        }
+        else
+          this.customApi.deleteVisit(visit); //ignoring promise intentionally
+      } catch(e) {
+        console.log('catch in locations-provider .. deleteVisit waiting for resolve. :'+e.toString());
+      }
+
+      // To make sure our local location represent what we deleted . push the added visit to array of visits for that location
+      let visitIndex = updatedLocation.visits.indexOf(visit);
+      // Delete it from the local array of visits
+      updatedLocation.visits.splice(visitIndex, 1);
+
+      // Find the correct index for updatedLocation
+      let locationIndex = this.locations.indexOf(updatedLocation);
+
+      // Update the actual item in array
+      this.locations[locationIndex] = updatedLocation;
+      //that should do it.. now we do not need to reload everything to see it hopefully
+
+      return response;
+    }
+
     async addVisitToLocation(visit, waitForResolve: boolean = true)
     {
-        // Due to complexity and not yet decided on how to handle ofline data and relations location/user location/visit/user
+        // Due to complexity and not yet decided on how to handle offline data and relations location/user location/visit/user
         // we do not just tack on to local data first here .. lets update on server first
 
         // then use returned data to update local locations.

@@ -68,6 +68,10 @@ export class LocationPage {
         this.isMyReturnVisit = (this.location.user.username == this.customApi.authCustomUser.username && this.location.isReturnVisit);
         this.skipNextRvChange = false; // this is so when a isMyRv status is changed but cancelled we are not poping confirmations
 
+        //loop through all visits an set locationId .. might be needed in delete
+        this.location.visits.forEach( visit => {
+            visit.locationId = this.location.id;
+        })
     }
     ionViewDidLoad() {
         this.setBackButtonAction()
@@ -215,7 +219,16 @@ export class LocationPage {
     }
 
 
-    //
+    deleteVisit(visit)
+    {
+      try {
+        this.locationsProvider.deleteVisitFromLocation(visit).then(response => {
+          console.log('Visit deleted: ' +response);
+        });
+      } catch(e) {
+          console.log('catch in locationPge: updateLocation()  .. :'+e.toString());
+      }
+    }
 
 
     openMenu() {
