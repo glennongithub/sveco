@@ -1,19 +1,22 @@
 <ion-header>
+    <ion-title>Header</ion-title>
+</ion-header>
+
+<ion-content >
     <ion-toolbar>
-        <ion-buttons start col-6>
+        <ion-buttons start>
             <button ion-button icon-only>
                 <ion-icon name="create"></ion-icon>
             </button>
         </ion-buttons>
-        <ion-buttons end col-6>
+
+        <ion-buttons end>
             <button ion-button icon-only>
                 <ion-icon name="more"></ion-icon>
             </button>
         </ion-buttons>
     </ion-toolbar>
-</ion-header>
 
-<ion-content >
     <ion-searchbar  [(ngModel)]="searchString" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
     <div *ngIf="searching" class="spinner-container">
       <ion-spinner></ion-spinner>
