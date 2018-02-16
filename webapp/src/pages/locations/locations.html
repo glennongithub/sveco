@@ -1,17 +1,19 @@
 <ion-header>
-    <ion-title>Header</ion-title>
+    <ion-navbar>
+        <ion-title>245 locations</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content >
     <ion-toolbar>
         <ion-buttons start>
-            <button ion-button icon-only>
+            <button ion-button icon-only (click)="openSortModal()">
                 <ion-icon name="create"></ion-icon>
             </button>
         </ion-buttons>
 
-        <ion-buttons end>
-            <button ion-button icon-only>
+        <ion-buttons start>
+            <button ion-button icon-only (click)="openFilterModal()">
                 <ion-icon name="more"></ion-icon>
             </button>
         </ion-buttons>

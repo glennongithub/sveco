@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {LoadingController, ModalController, NavController, NavParams} from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { ModalErrorPage } from "../modal-error/modal-error";
+import { ModalSortPage } from "../modal-sort/modal-sort";
+import { ModalFilterPage } from "../modal-filter/modal-filter";
 import { ModalInfoPage } from "../modal-info/modal-info";
 
 import { LocationPage } from '../location/location';
@@ -117,5 +119,15 @@ export class LocationsPage {
     openErrorModal(errorMessage: string) {
         const errorModal = this.modal.create(ModalErrorPage, {errorMessage: errorMessage});
         errorModal.present();
+    }
+
+    openSortModal() {
+        const sortModal = this.modal.create(ModalSortPage);
+        sortModal.present();
+    }
+
+    openFilterModal() {
+        const filterModal = this.modal.create(ModalFilterPage);
+        filterModal.present();
     }
 }

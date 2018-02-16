@@ -9,6 +9,7 @@ import { ModalErrorPage } from "../modal-error/modal-error";
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import {AddressAutocompletePage} from "../modal-address-autocomplete/addressAutocomplete";
 import {ModalAddVisitPage} from "../modal-add-visit/modal-add-visit";
+import {ModalSortPage} from "../modal-sort/modal-sort";
 
 
 
@@ -287,7 +288,6 @@ export class LocationPage {
       const editVisitModal = this.modal.create(ModalAddVisitPage, {visit: visit});
       editVisitModal.present();
     }
-
 
     openErrorModal(errorMessage: string) {
         const errorModal = this.modal.create(ModalErrorPage, {errorMessage: errorMessage});

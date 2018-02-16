@@ -15,6 +15,44 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+@font-face{
+    font-family: Lato300;
+    src: url('../assets/fonts/lato300.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato300Italic;
+    src: url('../assets/fonts/lato300Italic.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato400;
+    src: url('../assets/fonts/lato400.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato400Italic;
+    src: url('../assets/fonts/lato400Italic.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato700;
+    src: url('../assets/fonts/lato700.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato700Italic;
+    src: url('../assets/fonts/lato700Italic.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato900;
+    src: url('../assets/fonts/lato900.woff2') format('woff2');
+}
+@font-face{
+    font-family: Lato900Italic;
+    src: url('../assets/fonts/lato900Italic.woff2') format('woff2');
+}
+
+*{
+    font-family: Lato400;
+}
+
+
 .toolbar-background-md {
     background: #9370DB;
 }
@@ -35,11 +73,11 @@
         }
     }
 }
-.tabbar {
-
+.tabs-md .tabbar {
+    background: #28304f;
 }
 .content {
-    background: #f9fafb;
+    background: #28304f;
 }
 .header {
     .toolbar-title {

@@ -1,3 +1,31 @@
 page-home {
+    background: #28304f;
+    .toolbar-background-md {
+        background: #28304f;
+    }
+    .content {
+        h1 {
+            color: #6cceec;
+            text-transform: uppercase;
+            font-family: Lato900;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 20px 0 0 0;
+            font-size: 60px;
+        }
+        h2 {
+            color: #6cceec;
+            text-transform: uppercase;
+            font-family: Lato300;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 0 20px 0;
+            font-size: 16px;
+        }
+        button {
 
+            font-size: 14px;
+
+        }
+    }
 }
