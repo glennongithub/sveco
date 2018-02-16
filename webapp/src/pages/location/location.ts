@@ -227,8 +227,9 @@ export class LocationPage {
           console.log('Visit deleted: ' +response);
         });
       } catch(e) {
-          console.log('catch in locationPge: updateLocation()  .. :'+e.toString());
+          console.log('catch in locationPage: deleteVisit()  .. :'+e.toString());
       }
+
     }
 
 

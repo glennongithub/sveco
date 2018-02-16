@@ -238,4 +238,42 @@ class LocationController extends Controller
 
         return $CORSService->getResponseCORS($request, $response);
     }
+
+    /**
+     * https://stackoverflow.com/questions/12111936/angularjs-performs-an-options-http-request-for-a-cross-origin-resource
+     *
+     * Adding method options to allow for the test done when CORS is used
+     * @Route("api/location/{id}", name="api/delete_location", methods={"DELETE", "OPTIONS"})
+     * @Security("has_role('ROLE_USER')")
+     * @param Request $request
+     * @param CORSService $CORSService
+     * @param int $id
+     * @return Response
+     */
+    public function deleteLocationApiAction(Request $request, CORSService $CORSService, $id)
+    {
+        // Maybe bad solution but testing for now
+        if($request->getMethod() == 'OPTIONS')
+        {
+            // just return anything for now. this is a testrun request
+            return $CORSService->getResponseCORS($request, new JsonResponse(['OK']));
+        }
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Location $locationEntity */
+        $LocationEntity = $em->getRepository(Location::class)->find($id);
+
+        $em->remove($LocationEntity);
+        $em->flush();
+
+        //TODO add som form of error handling here and return errors and so
+        $result = ['result' => 'OK'];
+
+        $response = new JsonResponse($result);
+
+        return $CORSService->getResponseCORS($request, $response);
+    }
 }

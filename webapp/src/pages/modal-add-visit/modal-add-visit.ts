@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import {location, visit, user} from "../../model/location.model"
 import {LocationsProvider} from "../../providers/locations-provider/locations-provider";
 
@@ -27,7 +27,7 @@ export class ModalAddVisitPage {
     ];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public locationsProvider: LocationsProvider) {
+  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public locationsProvider: LocationsProvider) {
     //set our local var to the location this should be added to
     let d = new Date;
     console.log(d.toISOString());
@@ -71,6 +71,7 @@ export class ModalAddVisitPage {
       console.log('This was added');
       console.log(addedVisit);
       //this.navCtrl.pop();
+      this.viewCtrl.dismiss(); //makes it possible to  send data back to parent .. if handler set up properly there
 
     });
 

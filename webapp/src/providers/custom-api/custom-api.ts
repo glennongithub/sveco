@@ -162,6 +162,13 @@ export class CustomApiProvider {
         //    params: new HttpParams().set('id', '3'),}
     }
 
+    deleteLocation(location)
+    {
+      let urlToCall:string = this.buildApiUrlForCommand('location/'+location.id);
+      console.log('about to delete location:'+ JSON.stringify(location));
+      return this.observableToPromise<any>(this.http.delete<any>(urlToCall));
+    }
+
     addVisit(visit)
     {
       let urlToCall:string = this.buildApiUrlForCommand('visit');

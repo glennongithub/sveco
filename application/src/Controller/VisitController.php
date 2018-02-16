@@ -161,29 +161,13 @@ class VisitController extends Controller
         return $CORSService->getResponseCORS($request, $response);
     }
 
+
+
     /**
-     * This is a dummy to try to allow OPTIONS header when CORS .. must be a better way . but testing this
-     * DID WORK.
-     * but maybe the correct solution would be to put thi on the  get item rout. ie use both get,head and options on that one.
-     * in away that would verify that the item exists before deleting it.
-     * look here for furter investigation
      * https://stackoverflow.com/questions/12111936/angularjs-performs-an-options-http-request-for-a-cross-origin-resource
-     * @Route("api/visit/{id}", name="api/ddummy_visit", methods="OPTIONS")
-     * @Security("has_role('ROLE_USER')")
-     * @param Request $request
-     * @param CORSService $CORSService
-     * @param int $id
-     * @return Response
-     */
-    public function dummyVisitApiAction(Request $request, CORSService $CORSService, $id)
-    {
-        $response = new JsonResponse([]);
-
-        return $CORSService->getResponseCORS($request, $response);
-    }
-
-    /**
-     * @Route("api/visit/{id}", name="api/delete_visit", methods="DELETE")
+     *
+     * Adding method options to allow for the test done when CORS is used
+     * @Route("api/visit/{id}", name="api/delete_visit", methods={"DELETE", "OPTIONS"})
      * @Security("has_role('ROLE_USER')")
      * @param Request $request
      * @param CORSService $CORSService
@@ -192,6 +176,13 @@ class VisitController extends Controller
      */
     public function deleteVisitApiAction(Request $request, CORSService $CORSService, $id)
     {
+        // Maybe bad solution but testing for now
+        if($request->getMethod() == 'OPTIONS')
+        {
+            // just return anything for now. this is a testrun request
+            return $CORSService->getResponseCORS($request, new JsonResponse(['OK']));
+        }
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $em = $this->getDoctrine()->getManager();

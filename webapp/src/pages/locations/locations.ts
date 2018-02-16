@@ -91,7 +91,23 @@ export class LocationsPage {
                 //Probably wont need any data .. but just keep passing user for now
                 authCustomUser:this.customApi.authCustomUser //pass logged in user to .. so we can use that in view conditions
             })
+    }
+
+    deleteLocation(location)
+    {
+
+      try {
+        this.locationsProvider.deleteLocation(location).then(response => {
+          console.log('Location deleted: ' +response);
+          //update local var with updated list of locations.
+          this.locations = this.locationsProvider.getLocations();
+        });
+      } catch(e) {
+        console.log('catch in locationsPage: deleteLocation()  .. :'+e.toString());
       }
+    }
+
+
 
     /**
      *

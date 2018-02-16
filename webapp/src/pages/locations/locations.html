@@ -32,7 +32,7 @@
                       <ion-icon  *ngIf=" location.type == 'HOUSE' " name="ios-home"></ion-icon>
                       <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-people"></ion-icon>
                   </ion-col>
-                  <ion-col col-8>
+                  <ion-col col-7>
                       {{location.formattedAddressString}}
                   </ion-col>
                   <ion-col col-2>
@@ -40,6 +40,9 @@
                   </ion-col>
                   <ion-col col-1 class="visits">
                       {{ location.visits.length }}
+                  </ion-col>
+                  <ion-col col-1>
+                    <button ion-button type="button" (click)="deleteLocation(location); $event.stopPropagation();" lock>Delete</button>
                   </ion-col>
               </ion-row>
           </ion-item>
