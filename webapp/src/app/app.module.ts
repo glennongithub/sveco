@@ -28,6 +28,7 @@ import {AddressAutocompletePage} from "../pages/modal-address-autocomplete/addre
 import {ModalAddVisitPage} from "../pages/modal-add-visit/modal-add-visit";
 import { ModalSortPage } from '../pages/modal-sort/modal-sort';
 import { ModalFilterPage } from '../pages/modal-filter/modal-filter';
+import {FaIconComponent} from "../components/fa-icon/fa-icon.component";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ModalFilterPage } from '../pages/modal-filter/modal-filter';
       AddLocationPage,
       AddressAutocompletePage,
       ModalSortPage,
-      ModalFilterPage
+      ModalFilterPage,
+      FaIconComponent,
   ],
   imports: [
       BrowserModule,
@@ -68,7 +70,8 @@ import { ModalFilterPage } from '../pages/modal-filter/modal-filter';
     AddLocationPage,
     AddressAutocompletePage,
     ModalSortPage,
-    ModalFilterPage
+    ModalFilterPage,
+    FaIconComponent,
   ],
   providers: [
       StatusBar,

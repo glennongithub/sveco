@@ -294,4 +294,5 @@ export class LocationPage {
         const errorModal = this.modal.create(ModalErrorPage, {errorMessage: errorMessage});
         errorModal.present();
     }
+
 }

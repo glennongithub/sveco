@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import {LoadingController, ModalController, NavController, NavParams} from 'ionic-angular';
 import { CustomApiProvider } from '../../providers/custom-api/custom-api';
 import { ModalErrorPage } from "../modal-error/modal-error";
@@ -29,6 +30,8 @@ export class LocationsPage {
     searchString: string = '';
     searchControl: FormControl;
     searching:any = false;
+    showSearchbar: boolean = false;
+    scrollDirection: string;
 
     constructor(public navCtrl: NavController,
                   public navParams: NavParams,
@@ -36,9 +39,11 @@ export class LocationsPage {
                   private modal: ModalController,
                   public loadingCtrl: LoadingController,
                   private customApi: CustomApiProvider,
-                  private locationsProvider: LocationsProvider) {
+                  private locationsProvider: LocationsProvider,
+                  private changeDetectorRef: ChangeDetectorRef) {
         // Prepare so we can use advanced functions on formInputs
         this.searchControl = new FormControl();
+        this.scrollDirection = 'up';
     }
 
     ionViewWillEnter()
@@ -145,5 +150,10 @@ export class LocationsPage {
     openFilterModal() {
         const filterModal = this.modal.create(ModalFilterPage);
         filterModal.present();
+    }
+
+    getScrollPosition(e) {
+        this.scrollDirection = e.directionY;
+        this.changeDetectorRef.detectChanges();
     }
 }

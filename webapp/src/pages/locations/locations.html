@@ -2,35 +2,39 @@
     <ion-navbar>
         <ion-title>245 locations</ion-title>
     </ion-navbar>
+    <ion-toolbar [ngClass]="scrollDirection">
+        <ion-row>
+            <ion-buttons ion-col="4">
+                <button ion-button icon-only (click)="openSortModal()">
+                    <fa-icon name="sort"></fa-icon>
+                </button>
+            </ion-buttons>
+            <ion-buttons ion-col="4">
+                <button ion-button icon-only (click)="openSortModal()">
+                    <fa-icon name="filter"></fa-icon>
+                </button>
+            </ion-buttons>
+            <ion-buttons ion-col="4">
+                <button ion-button icon-only (click)="openFilterModal()">
+                    <fa-icon name="map"></fa-icon>
+                </button>
+            </ion-buttons>
+        </ion-row>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content >
-    <ion-toolbar>
-        <ion-buttons start>
-            <button ion-button icon-only (click)="openSortModal()">
-                <ion-icon name="create"></ion-icon>
-            </button>
-        </ion-buttons>
-
-        <ion-buttons start>
-            <button ion-button icon-only (click)="openFilterModal()">
-                <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-toolbar>
-
+<ion-content (ionScroll)="getScrollPosition($event)" [ngClass]="scrollDirection">
     <ion-searchbar  [(ngModel)]="searchString" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
     <div *ngIf="searching" class="spinner-container">
-      <ion-spinner></ion-spinner>
+        <ion-spinner></ion-spinner>
     </div>
-
   <ion-list *ngFor="let location of locations">
-
+      <ion-item-sliding>
           <ion-item class="item" (click)="viewLocation(location)">
               <ion-row>
                   <ion-col col-1>
-                      <ion-icon  *ngIf=" location.type == 'HOUSE' " name="ios-home"></ion-icon>
-                      <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-people"></ion-icon>
+                      <ion-icon  *ngIf=" location.type == 'HOUSE' " name="ios-pin"></ion-icon>
+                      <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-pin"></ion-icon>
                   </ion-col>
                   <ion-col col-7>
                       {{location.formattedAddressString}}
@@ -41,14 +45,18 @@
                   <ion-col col-1 class="visits">
                       {{ location.visits.length }}
                   </ion-col>
-                  <ion-col col-1>
-                    <button ion-button type="button" (click)="deleteLocation(location); $event.stopPropagation();" lock>Delete</button>
-                  </ion-col>
               </ion-row>
           </ion-item>
 
+          <ion-item-options side="right">
+              <button ion-button color="danger" (click)="deleteLocation(location); $event.stopPropagation();" lock>
+                  Delete
+              </button>
+          </ion-item-options>
+      </ion-item-sliding>
+
   </ion-list>
   <ion-fab right bottom>
-    <button ion-fab color="primary" (click)="addLocation()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="primary" [ngClass]="scrollDirection" (click)="addLocation()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

@@ -27,6 +27,7 @@
     "@ionic/storage": "2.1.3",
     "@types/googlemaps": "^3.30.3",
     "cordova-plugin-geolocation": "^4.0.1",
+    "font-awesome": "4.7.0",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "rxjs": "5.5.2",
@@ -44,5 +45,9 @@
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
       }
     }
+  },
+  "config": {
+    "ionic_copy": "./config/copy.config.js",
+    "ionic_sass": "./config/sass.config.js"
   }
 }

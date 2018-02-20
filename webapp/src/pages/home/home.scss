@@ -4,6 +4,7 @@ page-home {
         background: #28304f;
     }
     .content {
+        background: #28304f;
         h1 {
             color: #6cceec;
             text-transform: uppercase;
@@ -19,12 +20,15 @@ page-home {
             font-family: Lato300;
             letter-spacing: 1px;
             text-align: center;
-            padding: 0 0 20px 0;
+            padding: 0 0 40px 0;
             font-size: 16px;
         }
         button {
-
             font-size: 14px;
+            max-width: 300px;
+            width: 100%;
+            margin: 0 auto;
+            display: inherit;
 
         }
     }
