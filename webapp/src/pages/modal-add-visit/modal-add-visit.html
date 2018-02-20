@@ -49,13 +49,13 @@
       <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="visit.visitDate"></ion-datetime>
     </ion-item>
 
-    <ion-item>
-      tobe hidden.. only show as debug
+    <ion-item style="display: none">
       <ion-input [(ngModel)]="visit.locationId">{{ visit.locationId }}</ion-input>
     </ion-item>
 
     <ion-item>
-      <button ion-button type="button" (click)="addVisit(location)" lock>Add this visit</button>
+      <button ion-button type="button" (click)="addVisit(location)">Add this visit</button>
+      <button ion-button type="button" (click)="cancel()">Cancel</button>
     </ion-item>
   </ion-list>
 

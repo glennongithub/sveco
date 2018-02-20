@@ -10,7 +10,7 @@
                 <ion-label color="primary" stacked>Address</ion-label>
                 <ion-input (click)="showAddressModal(location)" type="text" [(ngModel)]="location.formattedAddressString" placeholder="Add address here"></ion-input>
             </ion-item>
-            <ion-item>{{location.address | json}}</ion-item>
+            <ion-item style="display: none">{{location.address | json}}</ion-item>
             <ion-item>
                 <ion-label color="primary" stacked>Type</ion-label>
                 <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.type" placeholder="Choose type">
