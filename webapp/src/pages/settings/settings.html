@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Settings</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,28 +15,22 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row>
-      <ion-col>
+    <ion-row justify-content-center>
+      <ion-col col-md-6>
         <ion-list *ngIf="customApi.authCustomUser.username">
           <ion-item >
             <ion-label>
-              App authenticaed for user: {{customApi.authCustomUser.username}} ({{customApi.authCustomUser.fullname}})
+              Logged in as user: {{customApi.authCustomUser.username}} ({{customApi.authCustomUser.fullname}})
             </ion-label>
           </ion-item>
         </ion-list>
         <ion-list>
           <form (ngSubmit)="reAuthenticate()">
             <ion-item>
-              <ion-label fixed>
-                Username
-              </ion-label>
-              <ion-input [(ngModel)]="reauthUsername" name="reauthUsername" type="text"></ion-input>
+              <ion-input [(ngModel)]="reauthUsername" name="reauthUsername" type="text" placeholder="Username"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label fixed>
-                Password
-              </ion-label>
-              <ion-input [(ngModel)]="reauthPassword" name="reauthPassword" type="text"></ion-input>
+              <ion-input [(ngModel)]="reauthPassword" name="reauthPassword" type="text" placeholder="Password"></ion-input>
             </ion-item>
             <button ion-button type="submit" block>Connect as user</button>
           </form>
