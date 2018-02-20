@@ -28,11 +28,55 @@ page-locations {
         color: #555;
     }
     .content {
-
         .searchbar-md .searchbar-input {
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
             box-shadow: none;
+        }
+        ion-list {
+            ion-item-sliding {
+                ion-item {
+                    .item-inner {
+                        .input-wrapper {
+                            ion-label {
+                                margin: 10px 8px 10px 0;
+                                ion-grid {
+                                    ion-row {
+                                        ion-col {
+                                            ion-icon {
+                                                font-size: 1.6em !important;
+                                                color:#A0B0BA !important;
+                                            }
+                                            ion-icon.not_interested {
+                                                color:#fdb45d !important;
+                                            }
+                                            ion-icon.interested {
+                                                color:#3ecf8e !important;
+                                            }
+                                        }
+                                        .pin {
+                                            max-width: 30px;
+                                        }
+                                        .visits {
+                                            max-width: 30px;
+                                            border-radius: 50%;
+                                            padding: 3.5px 8px !important;
+                                            font-size: 14px;
+                                            font-family: Lato700;
+                                            text-align: center;
+                                            background: #f3f6f8;
+                                            color: #28304f;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                ion-item-options {
+                    border-bottom: 0px !important;
+                }
+            }
         }
     }
     .spinner-container {
@@ -64,5 +108,6 @@ page-locations {
     }
     fa-icon {
         font-size: 1.4em !important;
+        color: #A0B0BA !important;
     }
 }

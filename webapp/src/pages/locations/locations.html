@@ -31,21 +31,19 @@
   <ion-list *ngFor="let location of locations">
       <ion-item-sliding>
           <ion-item class="item" (click)="viewLocation(location)">
-              <ion-row>
-                  <ion-col col-1>
-                      <ion-icon  *ngIf=" location.type == 'HOUSE' " name="ios-pin"></ion-icon>
-                      <ion-icon  *ngIf=" location.type == 'APARTMENT' " name="ios-pin"></ion-icon>
-                  </ion-col>
-                  <ion-col col-7>
-                      {{location.formattedAddressString}}
-                  </ion-col>
-                  <ion-col col-2>
-                    {{ (location.visits.length < 1)? 'UNKNOWN': location.visits[location.visits.length -1].status }}
-                  </ion-col>
-                  <ion-col col-1 class="visits">
-                      {{ location.visits.length }}
-                  </ion-col>
-              </ion-row>
+              <ion-grid>
+                  <ion-row align-items-center>
+                      <ion-col col-auto ngClass="pin">
+                          <ion-icon name="ios-pin" ngClass="{{ (location.visits.length < 1)? 'UNKNOWN': location.visits[location.visits.length -1].status }}"></ion-icon>
+                      </ion-col>
+                      <ion-col col>
+                          {{location.formattedAddressString}}
+                      </ion-col>
+                      <ion-col col-auto ngClass="visits" align-self-center>
+                            {{ location.visits.length }}
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
           </ion-item>
 
           <ion-item-options side="right">
