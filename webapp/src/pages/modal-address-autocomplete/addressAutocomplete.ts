@@ -9,8 +9,8 @@ import {location} from "../../model/location.model";
 })
 
 export class AddressAutocompletePage {
-    autocompleteItems;
-    autocomplete;
+    autocompleteItems : any[];
+    autocomplete: any;
     service = new google.maps.places.AutocompleteService();
     pos:{
         lat: any,
@@ -19,6 +19,7 @@ export class AddressAutocompletePage {
     map:any;
     marker:any;
     location:any;
+    itemSelected: boolean;
 
     selectedItem:any;
     dataToSaveInDB:any;
@@ -28,6 +29,7 @@ export class AddressAutocompletePage {
         this.autocomplete = {
             query: ''
         };
+        this.itemSelected = false;
 
         //if we get a location passed in
         if(navParams.get('location'))
@@ -123,6 +125,8 @@ export class AddressAutocompletePage {
 
     chooseItem(item: any) {
 
+      this.itemSelected = true;
+
         this.selectedItem = item;
         this.autocomplete.query = item.description;
         let request = { placeId: item.place_id };
@@ -173,10 +177,19 @@ export class AddressAutocompletePage {
 
     useSelectedAddress()
     {
-        this.viewCtrl.dismiss({selectedItem: this.selectedItem, parsedData:this.dataToSaveInDB});
+        if(!this.itemSelected)
+        {
+            alert('No valid adret-item selected. You must pick one from the selection.');
+        } else {
+          this.viewCtrl.dismiss({selectedItem: this.selectedItem, parsedData:this.dataToSaveInDB});
+        }
+
     }
 
     updateSearch() {
+        // if input field change we require user to pick a new item in the list.
+        this.itemSelected = false;
+
         let defaultBounds = new google.maps.LatLngBounds(
             new google.maps.LatLng(this.pos.lat, this.pos.lng)
         );

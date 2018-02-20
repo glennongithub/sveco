@@ -37,7 +37,7 @@ export class ModalAddVisitPage {
       visitDate: d.toISOString(),
       user: this.user,
       status: 'not_at_home',
-      note: 'test',
+      note: '',
       locationId: this.location.id //must be set when adding new visit to till what location it belongs to
     };
     /*fetch available users.. maybe should it only have self for regular users .. and all users for admins .. to let them create visits*/
@@ -75,6 +75,11 @@ export class ModalAddVisitPage {
 
     });
 
+  }
+
+  cancel()
+  {
+      this.viewCtrl.dismiss();
   }
 
 }

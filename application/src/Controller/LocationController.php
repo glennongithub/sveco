@@ -90,6 +90,10 @@ class LocationController extends Controller
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
+
+        //TODO here we need to implement possibillity to filter search.
+        // decide what we can filter on and what parameters that shall have.
+        // will probably be an advanced DQL query to make all possible seaches possible.
         $locations = $em->getRepository(Location::class)->findAll();
 
         $serializedLocations = $serializer->serialize($locations, 'json');
