@@ -47,7 +47,10 @@
           </ion-item>
 
           <ion-item-options side="right">
-              <button ion-button color="danger" (click)="deleteLocation(location); $event.stopPropagation();" lock>
+              <!--<button ion-button color="danger" (click)="deleteLocation(location); $event.stopPropagation();" lock>
+                  Delete
+              </button>-->
+              <button ion-button color="danger" (click)="presentActionSheet();">
                   Delete
               </button>
           </ion-item-options>
