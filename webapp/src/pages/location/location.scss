@@ -1,3 +1,22 @@
+.header .row {
+    padding-bottom: 0px;
+    .item {
+        color: #247A54;
+        background: #92E5BC;
+        text-align: center;
+        min-height: 2rem;
+        .item-inner{
+            border-bottom: 0px;
+            .label {
+                margin: 10px 8px 10px 0;
+                font-size: 12px;
+                text-transform: uppercase;
+                font-family: Lato700;
+            }
+        }
+    }
+}
+
 button.button-block-md {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -16,6 +35,13 @@ button.button-block-md {
     }
     .item-md {
         background: none;
+    }
+    ion-item {
+        border-bottom: 0px;
+        ion-row {
+            background: #fff;
+            padding: 5px;
+        }
     }
 }
 .add-visit {

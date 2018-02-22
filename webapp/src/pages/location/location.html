@@ -2,62 +2,66 @@
     <ion-navbar>
         <ion-title>{{location.formattedAddressString}}</ion-title>
     </ion-navbar>
+
+        <ion-row>
+            <ion-item *ngIf="location.isReturnVisit">
+                <ion-label>Return Visit {{location.user.fullname}}</ion-label>
+            </ion-item>
+        </ion-row>
+
 </ion-header>
 
 <ion-content>
     <ion-list>
-            <ion-item>
-                <ion-label color="primary" stacked>Address</ion-label>
-                <ion-input (click)="showAddressModal(location)" type="text" [(ngModel)]="location.formattedAddressString" placeholder="Add address here"></ion-input>
-            </ion-item>
-            <ion-item style="display: none">{{location.address | json}}</ion-item>
-            <ion-item>
-                <ion-label color="primary" stacked>Type</ion-label>
-                <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.type" placeholder="Choose type">
-                    <ion-option value="HOUSE">House</ion-option>
-                    <ion-option value="APARTMENT">Apartment</ion-option>
-                </ion-select>
-            </ion-item>
-          <ion-item *ngIf="location.type == 'APARTMENT'">
-            <ion-label color="primary" stacked>Apartment nr</ion-label>
-            <ion-input (ionChange)="onChangeAnything(location)" [(ngModel)]="location.apartmentNr" type="text" placeholder="nr or letter"></ion-input>
-          </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Address</ion-label>
+            <ion-input (click)="showAddressModal(location)" type="text" [(ngModel)]="location.formattedAddressString" placeholder="Add address here"></ion-input>
+        </ion-item>
+        <ion-item style="display: none">{{location.address | json}}</ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Type</ion-label>
+            <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.type" placeholder="Choose type">
+                <ion-option value="HOUSE">House</ion-option>
+                <ion-option value="APARTMENT">Apartment</ion-option>
+            </ion-select>
+        </ion-item>
+      <ion-item *ngIf="location.type == 'APARTMENT'">
+        <ion-label color="primary" stacked>Apartment nr</ion-label>
+        <ion-input (ionChange)="onChangeAnything(location)" [(ngModel)]="location.apartmentNr" type="text" placeholder="nr or letter"></ion-input>
+      </ion-item>
 
-            <ion-item>
-                <ion-label color="primary" stacked>Area</ion-label>
-                <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.area.id" placeholder="Choose Area">
-                    <ion-option *ngFor = "let area of availableAreas" [value]="area.id">
-                        {{area.areaName}}
-                    </ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label color="primary" stacked>Language</ion-label>
-                <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.language"  placeholder="Choose language">
-                    <ion-option *ngFor = "let supportedLanguage of supportedLanguages" [value]="supportedLanguage.languageValue">
-                        {{supportedLanguage.languageLabel}}
-                    </ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label>Business</ion-label>
-                <ion-toggle (ionChange)="onChangeAnything(location)" [(ngModel)]="location.isBusiness" ></ion-toggle>
-            </ion-item>
-            <ion-item>
-                <ion-label color="primary" stacked>Note</ion-label>
-                <ion-textarea (ionChange)="onChangeAnything(location)" [(ngModel)]="location.note" placeholder="Add note"></ion-textarea>
-            </ion-item>
-            <ion-item>
-                <ion-label color="primary" stacked>Status</ion-label>
-                <ion-select [ngModel]="location.status" placeholder="Current status" disabled>
-                    <ion-option value="UNKNOWN">Unknown</ion-option>
-                    <ion-option value="NOT_AT_HOME">Not at home</ion-option>
-                    <ion-option value="NOT_INTERESTED">Not interested</ion-option>
-                    <ion-option value="INTERESTED">Interested</ion-option>
-                </ion-select>
-            </ion-item>
-        <ion-item *ngIf="location.isReturnVisit">
-            <ion-label>Is Return Visit to {{location.user.fullname}}</ion-label>
+        <ion-item>
+            <ion-label color="primary" stacked>Area</ion-label>
+            <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.area.id" placeholder="Choose Area">
+                <ion-option *ngFor = "let area of availableAreas" [value]="area.id">
+                    {{area.areaName}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Language</ion-label>
+            <ion-select (ionChange)="onChangeAnything(location)" [(ngModel)]="location.language"  placeholder="Choose language">
+                <ion-option *ngFor = "let supportedLanguage of supportedLanguages" [value]="supportedLanguage.languageValue">
+                    {{supportedLanguage.languageLabel}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Business</ion-label>
+            <ion-toggle (ionChange)="onChangeAnything(location)" [(ngModel)]="location.isBusiness" ></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Note</ion-label>
+            <ion-textarea (ionChange)="onChangeAnything(location)" [(ngModel)]="location.note" placeholder="Add note"></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Status</ion-label>
+            <ion-select [ngModel]="location.status" placeholder="Current status" disabled>
+                <ion-option value="UNKNOWN">Unknown</ion-option>
+                <ion-option value="NOT_AT_HOME">Not at home</ion-option>
+                <ion-option value="NOT_INTERESTED">Not interested</ion-option>
+                <ion-option value="INTERESTED">Interested</ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
             <ion-label>Is my return visit</ion-label>
@@ -88,17 +92,15 @@
               </ion-col>
             </ion-row>
         </ion-item>
-    </ion-list>
-
-    <ion-fab bottom class="add-visit">
+        <ion-col col-12>
+            <button ion-button full (click)="openAddVisitModal(location)">
+                Add visit
+            </button>
+        </ion-col>
         <ion-row>
-            <ion-col col-12>
-                <button  ion-fab block (click)="openAddVisitModal(location)">
-                    Add visit
-                </button>
-            </ion-col>
+
         </ion-row>
-    </ion-fab>
+    </ion-list>
 
 
 </ion-content>
