@@ -159,20 +159,14 @@ export class LocationsPage {
         this.changeDetectorRef.detectChanges();
     }
 
-    presentActionSheet() {
+    presentActionSheet(location) {
         let actionSheet = this.actionSheetCtrl.create({
-            title: 'Modify your album',
             buttons: [
                 {
-                    text: 'Destructive',
+                    text: 'Delete Location',
                     role: 'destructive',
                     handler: () => {
-                        console.log('Destructive clicked');
-                    }
-                },{
-                    text: 'Archive',
-                    handler: () => {
-                        console.log('Archive clicked');
+                        this.deleteLocation(location);
                     }
                 },{
                     text: 'Cancel',
