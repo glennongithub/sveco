@@ -33,6 +33,7 @@ export class LocationsPage {
     searching:any = false;
     showSearchbar: boolean = false;
     scrollDirection: string;
+    numberOfLocations: any = 0;
 
     constructor(public navCtrl: NavController,
                   public navParams: NavParams,
@@ -126,6 +127,7 @@ export class LocationsPage {
                 // now locations is loaded in locationsProvider
                 // we could use them from there .. or load them to local var
                 this.locations = returnedCopyOfLocations;
+                this.numberOfLocations = this.locations.length;
                 //this.loader.dismiss();
               console.log(this.locations);
                 /** always make sure to handle failed connections*/
@@ -179,4 +181,5 @@ export class LocationsPage {
         });
         actionSheet.present();
     }
+
 }

@@ -32,15 +32,44 @@ button.button-block-md {
         border-top: 0px;
         color: #000;
         font-weight: bold;
+        text-align: center;
     }
     .item-md {
         background: none;
     }
     ion-item {
-        border-bottom: 0px;
+        .item-inner {
+            border-bottom: 0px;
+            ion-label {
+                margin: 0px 8px 0px 0;
+                ion-row {
+                    background: #fff;
+                    padding: 10px;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    p {
+                        font-family: Lato700;
+
+                    }
+                }
+            }
+        }
+    }
+    ion-item.not_interested {
         ion-row {
-            background: #fff;
-            padding: 5px;
+            background:#f2dede !important;
+            p {
+                color: #a94442;
+            }
+        }
+    }
+    ion-item.interested {
+        ion-row {
+            background: rgba(62,207,142,0.2)!important;
+            p {
+                color: #247A54;
+            }
         }
     }
 }

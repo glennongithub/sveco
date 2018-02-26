@@ -55,15 +55,6 @@
             <ion-textarea (ionChange)="onChangeAnything(location)" [(ngModel)]="location.note" placeholder="Add note"></ion-textarea>
         </ion-item>
         <ion-item>
-            <ion-label color="primary" stacked>Status</ion-label>
-            <ion-select [ngModel]="location.status" placeholder="Current status" disabled>
-                <ion-option value="UNKNOWN">Unknown</ion-option>
-                <ion-option value="NOT_AT_HOME">Not at home</ion-option>
-                <ion-option value="NOT_INTERESTED">Not interested</ion-option>
-                <ion-option value="INTERESTED">Interested</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
             <ion-label>Is my return visit</ion-label>
             <ion-toggle (ionChange)="changeReturnVisitStatusHandler(location)" [(ngModel)]="isMyReturnVisit" ></ion-toggle>
         </ion-item>
@@ -73,30 +64,30 @@
         <ion-list-header>
         VISITS
         </ion-list-header>
-        <ion-item *ngFor="let visit of location.visits">
+        <ion-item *ngFor="let visit of location.visits" ngClass="{{ visit.status }}">
             <ion-row>
                 <ion-col col-4>
                     <p>{{ locationsProvider.phpDateObjTojsDateObj(visit.visitDate) | date:"yyyy-MM-dd"}}</p>
                 </ion-col>
                 <ion-col col-4>
-                    <p>{{visit.status}}</p>
-                </ion-col>
-                <ion-col col-4>
                     <p>{{ visit.user.fullname }}</p>
                 </ion-col>
-                <ion-col col-10>
-                    {{ visit.note }}
+                <ion-col col-4>
+                    <p>{{visit.status}}</p>
                 </ion-col>
-              <ion-col col-10>
+                <!--<ion-col col-10>
+                    {{ visit.note }}
+                </ion-col>-->
+              <!--<ion-col col-10>
                 <button ion-button type="button" (click)="deleteVisit(visit)" lock>Delete</button>
-              </ion-col>
+              </ion-col>-->
             </ion-row>
         </ion-item>
-        <ion-col col-12>
+        <ion-item col-12>
             <button ion-button full (click)="openAddVisitModal(location)">
                 Add visit
             </button>
-        </ion-col>
+        </ion-item>
         <ion-row>
 
         </ion-row>
