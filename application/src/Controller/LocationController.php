@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Area;
 use App\Entity\Location;
 use App\Entity\User;
+use App\Entity\Visit;
 use App\Form\LocationType;
 use App\Services\CORSService;
 use function MongoDB\BSON\toJSON;
@@ -163,6 +164,37 @@ class LocationController extends Controller
         //persist
         $em->persist($locationEntity);
         $em->flush();
+
+        //
+        //now also save visit if that was supplied
+        //
+        if(array_key_exists('visits', $location) && count($location['visits']) > 0)
+        {
+            // only one visit posible on creation .. so hard-point to 0
+            $visitData = $location['visits'][0];
+
+            /** @var User $user */
+            $user = $this->getUser();
+
+            /** @var Visit $locationEntity */
+            $visitEntity = new Visit($user, $locationEntity); //Setting it on creation ..
+
+            // just set all fields manually for now .. maybe use formType later
+            $visitEntity->setNote($visitData['note']);
+            $visitEntity->setStatus($visitData['status']);
+
+            // visitDate may be overriden by what user set.. but also if nothing is set .. it is set to now in the contructor
+            if($visitData['visitDate'])
+            {
+                //$visitDate = \DateTime::createFromFormat('Y-m-d H:i:s', $visit['visitDate']);
+                $visitDate = \DateTime::createFromFormat('Y-m-d\TH:i:s+', $visitData['visitDate']);
+                $visitEntity->setVisitDate($visitDate );
+            }
+
+            //persist
+            $em->persist($visitEntity);
+            $em->flush();
+        }
 
         //return the added location
         $serializedLocation = $serializer->serialize($locationEntity, 'json');
