@@ -7,6 +7,7 @@ import { ModalSortPage } from "../modal-sort/modal-sort";
 import { ModalFilterPage } from "../modal-filter/modal-filter";
 import { ModalInfoPage } from "../modal-info/modal-info";
 
+
 import { LocationPage } from '../location/location';
 import {Storage} from "@ionic/storage";
 import {location} from "../../model/location.model";

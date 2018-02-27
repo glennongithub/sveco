@@ -9,6 +9,7 @@ import { ModalErrorPage } from "../modal-error/modal-error";
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import {AddressAutocompletePage} from "../modal-address-autocomplete/addressAutocomplete";
 import {ModalAddVisitPage} from "../modal-add-visit/modal-add-visit";
+import {ModalViewVisitPage} from "../modal-view-visit/modal-view-visit";
 import {ModalSortPage} from "../modal-sort/modal-sort";
 
 
@@ -286,7 +287,7 @@ export class LocationPage {
     }
 
     openEditVisitModal(visit: visit) {
-      const editVisitModal = this.modal.create(ModalAddVisitPage, {visit: visit});
+      const editVisitModal = this.modal.create(ModalViewVisitPage, {visit: visit, user: this.customApi.authCustomUser });
       editVisitModal.present();
     }
 

@@ -28,6 +28,7 @@ import {AddressAutocompletePage} from "../pages/modal-address-autocomplete/addre
 import {ModalAddVisitPage} from "../pages/modal-add-visit/modal-add-visit";
 import { ModalSortPage } from '../pages/modal-sort/modal-sort';
 import { ModalFilterPage } from '../pages/modal-filter/modal-filter';
+import { ModalViewVisitPage } from '../pages/modal-view-visit/modal-view-visit';
 import {FaIconComponent} from "../components/fa-icon/fa-icon.component";
 
 @NgModule({
@@ -46,6 +47,7 @@ import {FaIconComponent} from "../components/fa-icon/fa-icon.component";
       AddressAutocompletePage,
       ModalSortPage,
       ModalFilterPage,
+      ModalViewVisitPage,
       FaIconComponent,
   ],
   imports: [
@@ -71,6 +73,7 @@ import {FaIconComponent} from "../components/fa-icon/fa-icon.component";
     AddressAutocompletePage,
     ModalSortPage,
     ModalFilterPage,
+    ModalViewVisitPage,
     FaIconComponent,
   ],
   providers: [
