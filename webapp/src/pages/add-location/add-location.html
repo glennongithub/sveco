@@ -65,7 +65,46 @@
           <ion-label>Is my return visit</ion-label>
           <ion-toggle [(ngModel)]="location.isReturnVisit" ></ion-toggle>
       </ion-item>
-        <button ion-button type="button" (click)="addLocation(location)" lock>Add Location</button>
+      <ion-item>
+        <ion-label>Include first visit</ion-label>
+        <ion-toggle [(ngModel)]="includeVisit" ></ion-toggle>
+      </ion-item>
+        <button ion-button type="button" (click)="addLocation(location)">Add Location</button>
     </ion-list>
+
+  <ion-list id="visit-list" *ngIf="includeVisit">
+    <ion-list-header>
+      Include first visit
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Note</ion-label>
+      <ion-textarea [(ngModel)]="visit.note" placeholder="Add note"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Add visit as</ion-label>
+      <ion-select [(ngModel)]="visit.user.username" placeholder="Choose user">
+        <ion-option *ngFor = "let selectedUser of availableUsers" [value]="selectedUser.username">
+          {{selectedUser.fullname}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Status</ion-label>
+      <ion-select [(ngModel)]="visit.status" placeholder="Visit staus">
+        <ion-option *ngFor = "let status of posibleStatuses" [value]="status.statusValue">
+          {{status.statusLabel}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>VisitDate</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="visit.visitDate"></ion-datetime>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

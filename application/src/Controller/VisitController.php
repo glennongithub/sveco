@@ -134,8 +134,6 @@ class VisitController extends Controller
 
 
         // just set all fields manually for now .. maybe use formType later
-
-
         $visitEntity->setNote($visit['note']);
         $visitEntity->setStatus($visit['status']);
 

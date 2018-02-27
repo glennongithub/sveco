@@ -10,7 +10,7 @@ export interface location {
     area?: area;
     note: string;
     type: string;
-    status: string;
+    status?: string; // This is a virtual status .. that is set depending on some logic dependency for visits.. set in ap when reading locations
     isBusiness: boolean;
     isReturnVisit: boolean,
     overRideLocation?: {}, //not used for now.
