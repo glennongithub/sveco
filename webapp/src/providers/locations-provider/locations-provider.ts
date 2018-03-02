@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {location, area} from "../../model/location.model";
+import {location, area, location_filter} from "../../model/location.model";
 import {CustomApiProvider} from "../custom-api/custom-api";
 import {LoadingController} from "ionic-angular";
 import 'rxjs/add/operator/map';
@@ -10,6 +10,7 @@ export class LocationsProvider {
 
     private locations:location[];
     private areas:area[];
+    public filter: location_filter;
     loader:any;
 
     constructor(

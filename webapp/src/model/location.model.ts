@@ -17,6 +17,14 @@ export interface location {
     apartmentNr: string;
 }
 
+export interface location_filter { //all filter values are optional. if they exists.. we apply them.
+  areas?: number[], //id's of areas
+  myReturnVisit?: boolean,
+  isBusiness?: boolean,
+  language?: string[],
+  status?: string[],
+}
+
 export interface user {
     id?: number;
     apiKey?: string; // not always required ..

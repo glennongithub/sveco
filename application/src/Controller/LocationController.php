@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Visit;
 use App\Form\LocationType;
 use App\Services\CORSService;
+use Doctrine\ORM\EntityManager;
 use function MongoDB\BSON\toJSON;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -90,12 +91,41 @@ class LocationController extends Controller
         $serializer = new Serializer(array($normalizer), $encoders);
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         //TODO here we need to implement possibillity to filter search.
         // decide what we can filter on and what parameters that shall have.
-        // will probably be an advanced DQL query to make all possible seaches possible.
-        $locations = $em->getRepository(Location::class)->findAll();
+        // will probably be an advanced DQL query to make all possible searches possible.
+        //$locations = $em->getRepository(Location::class)->findAll();
+
+        $qb = $em->createQueryBuilder();
+        //get all non-executed callbacks that has not been run at all or has not been tried for at least 30min
+        $exp = $qb->select('l')
+            ->from(Location::class, 'l');
+
+        if($request->get('area'))
+        {
+            $exp = $exp->where('l.area = :area');
+            $exp = $exp->setParameter('area', $request->get('area'));
+        }
+
+        // here we might continue add filer server side .. but for now .. I think we always return everything ..
+        // and let the filtering be done client side
+
+            /*->where('l.area = :area AND c.nrOfRetries < 1 AND c.response NOT LIKE :httpOk') //new ones
+            //->orWhere('c.action = :actionType AND c.nrOfRetries < :maxRetries AND c.response NOT LIKE :httpOk AND c.lastRetryTime < :halfAnHourAgo')
+            ->orderBy('c.regTime', 'ASC')
+            ->setParameter('actionType', $actionType)
+            ->setParameter('maxRetries', $maxRetries)
+            ->setParameter('httpOk', 200)
+            ->setParameter('halfAnHourAgo', $halfAnHourAgo)
+            */
+
+            $locations = $exp->getQuery()
+            //->setMaxResults(50) // limit 50 results
+            ->getResult();
+
 
         $serializedLocations = $serializer->serialize($locations, 'json');
 
@@ -166,7 +196,7 @@ class LocationController extends Controller
         $em->flush();
 
         //
-        //now also save visit if that was supplied
+        // now also save visit if that was supplied
         //
         if(array_key_exists('visits', $location) && count($location['visits']) > 0)
         {
