@@ -28,4 +28,25 @@
 
 ##### Got to sveco.test/app and try to use the app.
 
+Some note to be moved to other doc on how to get simple apache on aws-server with certs and stuff working 
 
+
+sudo apt-get -y install acl apache2 libapache2-mod-php libapache2-mod-security2 git unzip libwww-perl libdatetime-perl python mc htop mysql-client
+
+sudo a2enmod ssl
+sudo a2ensite default-ssl.conf
+
+open https in security group on aws
+
+Install certboot
+$ sudo apt-get update
+$ sudo apt-get install software-properties-common
+$ sudo add-apt-repository universe
+// need userinput .. se what can be done to outo-answer.. 
+$ sudo add-apt-repository ppa:certbot/certbot
+$ sudo apt-get update
+$ sudo apt-get install python-certbot-apache 
+
+// auto get cert and conf apache
+//  we need http open for this script to be able to do it's thing
+sudo certbot --apache
