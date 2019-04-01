@@ -14,7 +14,7 @@ Pointed ns to ns servers listed for zone
 Then I installed the following to get basic webservices up and running
 
 ```
-sudo apt-get -y install acl apache2 libapache2-mod-php libapache2-mod-security2 git unzip libwww-perl libdatetime-perl python mc htop mysql-client
+sudo apt-get -y install acl apache2 libapache2-mod-php libapache2-mod-security2 php php-apcu php-curl php-gd php-intl php-imap php-mysql php-mbstring php-redis php-soap php-xml php-zip php-gettext git unzip libwww-perl libdatetime-perl python mc htop mysql-client
 
 sudo a2enmod ssl
 sudo a2ensite default-ssl.conf
