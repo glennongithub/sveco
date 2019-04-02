@@ -37,3 +37,25 @@ $ sudo apt-get install python-certbot-apache
 sudo certbot --apache
 
 ```
+
+
+Added a new 18.04 ubuntu .. some things changed here .. create a new file like this
+
+tested code-server on it .. do not get everything to work but still here are a few instructions on what I did
+
+goto https://github.com/codercom/code-server/releases
+
+and find link to lates tar.gz release
+
+Download it
+wget https://github.com/codercom/code-server/releases/download/1.408-vsc1.32.0/code-server1.408-vsc1.32.0-linux-x64.tar.gz
+
+
+unpack it 
+tar xvfz code-server1.408-vsc1.32.0-linux-x64.tar.gz
+
+move binary to bin
+cd code-server1.408-vsc1.32.0-linux-x64/
+sudo mv code-server /bin/
+
+run code-server
